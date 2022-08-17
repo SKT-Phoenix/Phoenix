@@ -1,2 +1,2 @@
 # Summary_Model
-KoBART 문장 요약 모델
+[KoBERT](https://sktelecom.github.io/project/kobert/) 문장 요약 모델
