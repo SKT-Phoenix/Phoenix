@@ -1,4 +1,5 @@
 ## Nate 뉴스 크롤링
+[들어가기](https://github.com/SKT-Phoenix/News_Crowling)
 
 - 각 분야별 랭킹 1~3위.
 - 제목, 내용, 출처, 원문링크
@@ -6,6 +7,7 @@
 
 
 ## Flask & Azure
+[들어가기](https://github.com/SKT-Phoenix/Flask_Server)
 
 + Cloud Service: Azure
 + Server: Flask
@@ -26,18 +28,22 @@
 
 
 ## Kobart 문장 요약모델
+[들어가기](https://github.com/SKT-Phoenix/Summary_Model)
 
 -
 
 ## Q&A 생성모델
+[들어가기](https://github.com/SKT-Phoenix/QnA_Model)
 
 -
 
 ## Chrome 확장 프로그램
+[들어가기](https://github.com/SKT-Phoenix/Chrome_Client)
 
 -
 
 ## 어플리케이션
+[들어가기](https://github.com/SKT-Phoenix/App_Client)
 
 1. 회원가입/로그인
     - 계정 정보 : 찬님이 구현한 적 있던 구글 계정 로그인 구현, T 로그인은 되면 좋지만 어려울 수 있음
