@@ -1,3 +1,25 @@
+# Stack
+- **Cloud Service:** Azure
+    - **Server**:
+        - Framework: Flask
+        - Language: Python
+    - **Crowling**: Python
+    - **Database**: MySQL? 뭐쓸까요 아니면 Azure에서 제공하는 DB써도 되고
+    
+- **Client**:
+    - **Chrome Extension**:
+        - Framework: Jquary
+        - Language: JavaScript
+    - **Application**:
+        - Framework: Flutter
+        - Language: Dart
+- **Summary Model**:
+    - **SKT KoBART**:
+        - Framework: Pytorch
+        - Language: Python
+- **Q&A Model**:
+    - ?
+
 ## Nate 뉴스 크롤링
 [들어가기](https://github.com/SKT-Phoenix/News_Crowling)
 
