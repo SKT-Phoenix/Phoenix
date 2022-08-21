@@ -1,2 +1,2 @@
 # App_Client
-Android/IOS 동시 구현
+- Flutter SDK Version: 3.0.5
