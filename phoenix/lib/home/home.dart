@@ -138,11 +138,11 @@ class _HomeState extends State<Home> {
     Alignment.centerLeft,
     Alignment.centerRight
   ];
-  List<double> container_size = [40, 60];
+  List<double> container_size = [40, 70];
 
   Widget Mic_Key_Button() {
     return Container(
-      color: Colors.black12,
+      // color: Color.fromARGB(255, 250, 250, 250),
       height: MediaQuery.of(context).size.height * 0.09,
       child: Row(
         children: [
@@ -159,6 +159,15 @@ class _HomeState extends State<Home> {
             child: Container(
                 alignment: Alignment.centerRight,
                 padding: EdgeInsets.only(right: 20),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(50),
+                    boxShadow: [
+                      BoxShadow(
+                          color: Colors.grey,
+                          offset: Offset(0.0, 1.0),
+                          blurRadius: 100.0,
+                          spreadRadius: -20.0)
+                    ]),
                 child: IconButton(
                     iconSize: 50,
                     onPressed: () {},
@@ -173,6 +182,14 @@ class _HomeState extends State<Home> {
     return Center(
       child: Container(
         alignment: Alignment.center,
+        decoration:
+            BoxDecoration(borderRadius: BorderRadius.circular(50), boxShadow: [
+          BoxShadow(
+              color: Colors.grey,
+              offset: Offset(0.0, 1.0),
+              blurRadius: 100.0,
+              spreadRadius: -20.0)
+        ]),
         child: ToggleButtons(
           borderRadius: BorderRadius.circular(50),
           borderColor: Colors.white,
@@ -225,16 +242,26 @@ class _HomeState extends State<Home> {
     return Center(
       child: Container(
         alignment: align,
-        width: 111,
-        height: 55,
+        width: 120,
+        height: 60,
         child: Container(
             alignment: Alignment.center,
-            width: 55,
-            height: 55,
+            width: 60,
+            height: 60,
             decoration: BoxDecoration(
                 color: Colors_SKT_Blue(),
-                borderRadius: BorderRadius.circular(50)),
-            child: IconButton(onPressed: () {}, icon: icon)),
+                borderRadius: BorderRadius.circular(50),
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.grey,
+                      offset: Offset(0.0, 1.0),
+                      blurRadius: 6.0)
+                ]),
+            child: IconButton(
+              onPressed: () {},
+              icon: icon,
+              iconSize: 30,
+            )),
       ),
     );
   }
