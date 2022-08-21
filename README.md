@@ -1,5 +1,6 @@
 # Version
 ## Flutter Version
+- Dart Version: 2.17.6
 - Flutter SDK Version: 3.0.5
 ## Package
 - get: `^4.6.5` - 상태/세션 관리
