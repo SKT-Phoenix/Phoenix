@@ -2,7 +2,7 @@
 ## Flutter Version
 - Flutter SDK Version: 3.0.5
 ## Package
-- Get
+- get: `^4.6.5` - 상태/세션 관리
 
 ## AI Hackaton
 - **Title**: 에이닷을 이용한 딥러닝 기반 뉴스요약 및 퀴즈서비스
