@@ -22,10 +22,9 @@ class Phoenix extends StatelessWidget {
         ),
       ),
       home: Home(),
-      initialRoute: "/home",
       getPages: [
         getPage("/home", Home()),
-        getPage("/menu", Menu()),
+        getMenu("/menu", Menu()),
       ],
     );
   }
@@ -34,6 +33,14 @@ class Phoenix extends StatelessWidget {
     return GetPage(
         name: name,
         page: () => pageName,
-        transition: Transition.cupertinoDialog);
+        transitionDuration: Duration(milliseconds: 300));
+  }
+
+  GetPage getMenu(String name, Widget pageName) {
+    return GetPage(
+        name: name,
+        page: () => pageName,
+        transition: Transition.leftToRightWithFade,
+        popGesture: false);
   }
 }
