@@ -120,6 +120,7 @@ class Menu extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 15),
       child: Container(
+        height: 40,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(20),
@@ -127,9 +128,19 @@ class Menu extends StatelessWidget {
         child: Row(
           children: [
             Expanded(
+              flex: 2,
+              child: Padding(
+                padding: const EdgeInsets.only(
+                    left: 8.0, right: 8.0, top: 2.0, bottom: 2.0),
+                child: Image.asset("assets/cube.png"),
+              ),
+            ),
+            Expanded(
               flex: 4,
-              child: customIconButton("     75", Color.fromARGB(255, 0, 10, 62),
-                  Image.asset("assets/cube.png")),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 20.0, right: 20),
+                child: customIconButton("75", Color.fromARGB(255, 0, 10, 62)),
+              ),
             ),
             Expanded(
                 flex: 1,
@@ -139,11 +150,20 @@ class Menu extends StatelessWidget {
                   style: TextStyle(color: Colors.grey),
                 ))),
             Expanded(
+              flex: 2,
+              child: Padding(
+                padding: const EdgeInsets.only(
+                    left: 8.0, right: 8.0, top: 2.0, bottom: 2.0),
+                child: Image.asset("assets/con.png"),
+              ),
+            ),
+            Expanded(
               flex: 4,
-              child: customIconButton(
-                  "    1,049",
-                  Color.fromARGB(255, 0, 10, 62),
-                  Image.asset("assets/con.png")),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 20.0, right: 20),
+                child:
+                    customIconButton("1,049", Color.fromARGB(255, 0, 10, 62)),
+              ),
             )
           ],
         ),
@@ -151,18 +171,11 @@ class Menu extends StatelessWidget {
     );
   }
 
-  Widget customIconButton(String label, Color color, Widget icon) {
-    return TextButton.icon(
-      onPressed: () {},
-      label: Text(
-        label,
-        style:
-            TextStyle(color: color, fontWeight: FontWeight.bold, fontSize: 16),
-      ),
-      icon: icon,
-      style: ButtonStyle(
-          fixedSize: MaterialStateProperty.resolveWith(
-              (states) => Size.fromHeight(30))),
+  Widget customIconButton(String label, Color color) {
+    return Text(
+      label,
+      style: TextStyle(color: color, fontWeight: FontWeight.bold, fontSize: 16),
+      textAlign: TextAlign.end,
     );
   }
 }
