@@ -9,6 +9,7 @@ from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
 from datetime import datetime, timedelta
 from pandas import DataFrame
+import pandas as pd
 import time
 from openpyxl.workbook import Workbook
 from selenium.webdriver.common.by import By
@@ -40,6 +41,7 @@ def crawling_main_text(url):
 
 
 part_name = ['pol', 'eco', 'soc', 'int', 'its'] # 정치, 경제, 사회, 세계, IT/과학
+news_df=pd.DataFrame()
 
 
 def news_crawling(part_name):
@@ -48,7 +50,6 @@ def news_crawling(part_name):
     browser = webdriver.Chrome(service=service)
 
     print('검색할 분야 : {}'.format(part_name))
-
 
     print('브라우저를 실행시킵니다(자동 제어)\n')
 
@@ -61,14 +62,12 @@ def news_crawling(part_name):
     print('\n크롤링을 시작합니다.')
 
     #####동적 제어로 페이지 넘어가며 크롤링
-    news_dict = {}
     idx = 1
+    news_dict = {}
 
     table = browser.find_element(By.XPATH,'//div[@id="newsContents"]')
     li_list = table.find_elements(By.XPATH,'.//div[@class="mduSubjectList f_clear"]')
-    a_list = [li.find_element(By.XPATH,'.//a[@class="lt1"]') for li in li_list][:3]
-
-    print(a_list)
+    a_list = [li.find_element(By.XPATH,'.//a[@class="lt1"]') for li in li_list][:2]
 
     
     for n in a_list:
@@ -80,21 +79,23 @@ def news_crawling(part_name):
                         '본문' : crawling_main_text(n_url)[0]}
             
         idx += 1
+
+    part_df = DataFrame(news_dict).T
+    return part_df
             
-
-        
-    ################# 데이터 전처리 #################
-
-    print('데이터프레임 변환\n')
-    news_df = DataFrame(news_dict).T
-
-    folder_path = os.getcwd()
-    xlsx_file_name = '{0}_{1}.xlsx'.format(yesterday, part_name)
-
-    news_df.to_excel(xlsx_file_name, index=False)
-
-    print('엑셀 저장 완료 | 경로 : {}\\{}\n'.format(folder_path, xlsx_file_name))
-    
     
 for pn in part_name:
-    news_crawling(pn)
+    df = news_crawling(pn)
+    news_df = pd.concat([news_df,df])
+
+
+
+print('데이터프레임 변환\n')
+
+folder_path = os.getcwd()
+xlsx_file_name = '{0}.xlsx'.format(yesterday)
+
+news_df.to_excel(xlsx_file_name, index=False)
+
+print('엑셀 저장 완료 | 경로 : {}\\{}\n'.format(folder_path, xlsx_file_name))
+
