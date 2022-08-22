@@ -25,10 +25,21 @@ session = DBSession()
 
 @app.route('/', methods=['GET', 'POST'])
 def news():
+    
+    # 크롬 확장프로그램 버전
     if request.method == 'POST':
+        pass
+    
+    
+    # app 버전
+    elif request.method == 'GET':
+        pass
+    
+    
+if __name__ == '__main__':
+    app.debug = True
+    app.run(host='0.0.0.0', port=8000)
         
-
-    else:
         
 
 
