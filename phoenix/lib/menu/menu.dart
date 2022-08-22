@@ -52,7 +52,12 @@ class _MenuState extends State<Menu> {
               Container(
                 padding: EdgeInsets.all(25),
                 child: Column(
-                  children: [services(), voice_change()],
+                  children: [
+                    services(),
+                    voice_change(),
+                    ad_item(),
+                    bottom_bar(),
+                  ],
                 ),
               )
             ],
@@ -176,7 +181,7 @@ class _MenuState extends State<Menu> {
                 child: Center(
                     child: Text(
                   "|",
-                  style: TextStyle(color: Colors.grey),
+                  style: TextStyle(color: Color.fromARGB(30, 277, 277, 235)),
                 ))),
             Expanded(
               flex: 2,
@@ -294,6 +299,95 @@ class _MenuState extends State<Menu> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget ad_item() {
+    return Padding(
+      padding: const EdgeInsets.only(top: 25.0, bottom: 10),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Color.fromARGB(255, 230, 232, 254),
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: FractionallySizedBox(
+          widthFactor: 1,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 8.0, bottom: 8.0, right: 8.0),
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 5,
+                  child: Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Column(
+                      children: [
+                        Container(
+                          alignment: Alignment.bottomLeft,
+                          child: Text(
+                            "A. 에서 T멤버십 쓰면?",
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 76, 84, 113),
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.only(top: 5.0),
+                          alignment: Alignment.bottomLeft,
+                          child: Text(
+                            "T포인트 5,000p 적립!",
+                            style:
+                                TextStyle(color: Colors.black54, fontSize: 14),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                Expanded(
+                    flex: 2,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Image.asset("assets/ad_img.png"),
+                    )),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget bottom_bar() {
+    return Padding(
+      padding: const EdgeInsets.only(top: 40.0, bottom: 80.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Expanded(
+              flex: 4,
+              child: Text(
+                "이벤트",
+                style: TextStyle(fontSize: 16),
+                textAlign: TextAlign.right,
+              )),
+          Expanded(
+              flex: 1,
+              child: Text(
+                "|",
+                style: TextStyle(color: Color.fromARGB(30, 277, 277, 235)),
+                textAlign: TextAlign.center,
+              )),
+          Expanded(
+              flex: 4,
+              child: Text(
+                "공지사항",
+                style: TextStyle(fontSize: 16),
+                textAlign: TextAlign.left,
+              ))
+        ],
       ),
     );
   }
