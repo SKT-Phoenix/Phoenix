@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
+import 'package:phoenix/custom_utils.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -202,7 +203,7 @@ class _HomeState extends State<Home> {
                 child: Icon(
                   Icons.mic_outlined,
                   size: 30,
-                  color: Colors_SKT_Blue(),
+                  color: Custom_Utils().Colors_SKT_Blue(),
                 ),
               ),
               width: mic_size,
@@ -213,7 +214,7 @@ class _HomeState extends State<Home> {
               child: Padding(
                 padding: EdgeInsets.only(right: 15.0),
                 child: Icon(Icons.keyboard_outlined,
-                    size: 30, color: Colors_SKT_Blue()),
+                    size: 30, color: Custom_Utils().Colors_SKT_Blue()),
               ),
               width: keyboard_size,
             ),
@@ -249,7 +250,7 @@ class _HomeState extends State<Home> {
             width: 60,
             height: 60,
             decoration: BoxDecoration(
-                color: Colors_SKT_Blue(),
+                color: Custom_Utils().Colors_SKT_Blue(),
                 borderRadius: BorderRadius.circular(50),
                 boxShadow: [
                   BoxShadow(
@@ -264,9 +265,5 @@ class _HomeState extends State<Home> {
             )),
       ),
     );
-  }
-
-  Color Colors_SKT_Blue() {
-    return Color.fromARGB(255, 11, 13, 235);
   }
 }
