@@ -18,7 +18,15 @@ class Summarizer_with_KoBart(Summarizer_with_Bart):
     def __init__(self):
         super().__init__('gogamza/kobart-summarization')
         
-    def generate(self, text, input_size=9182, deep=False):
+    def generate(self, text, input_size=1024, deep=False):
+        
+        if len(text)%input_size < 800:
+            index = len(text)//input_size 
+            text = text[:input_size*index]
+        
+        # text길이 확인    
+        print(len(text))
+        
         result = ""
         
         loop = 1
