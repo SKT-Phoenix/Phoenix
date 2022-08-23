@@ -1,7 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from database_setup import *
+import pymysql
 
 
 from crawler import *
@@ -13,12 +11,10 @@ News = News()
 
 
 
-# DB 연결
-engine = create_engine('mysql+pymysql://root:root@localhost/news')
-Base.metadata.bind = engine
+# DB connection
+conn = pymysql.connect(host='localhost', user='root', password='root',
+                       db='madang', charset='utf8')
 
-DBSession = sessionmaker(bind=engine)
-session = DBSession()
 
 # ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
