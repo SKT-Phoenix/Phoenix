@@ -39,8 +39,23 @@ class _QuestState extends State<Quest> {
           )
         ],
       ),
-      body: Column(
-        children: [NavBar(), Nav_Animation(), QuestContent()],
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            backgroundColor: Custom_Utils().Colors_SKT_Background(),
+            pinned: true,
+            flexibleSpace: Column(
+              children: [NavBar(), Nav_Animation()],
+            ),
+            bottom: PreferredSize(
+              preferredSize: Size.fromHeight(-6.0),
+              child: SizedBox(),
+            ),
+          ),
+          QuestTitle("A. 더 잘 쓰기"),
+          // QuestSubContent(1)
+          QuestSubContent(subcontents.length)
+        ],
       ),
     );
   }
@@ -48,8 +63,6 @@ class _QuestState extends State<Quest> {
   final List<bool> isSelected = [true, false];
   Widget NavBar() {
     return Container(
-      alignment: Alignment.center,
-      width: double.infinity,
       color: Colors.white,
       child: ToggleButtons(
         selectedColor: Colors.black,
@@ -80,6 +93,7 @@ class _QuestState extends State<Quest> {
   Widget Nav_Content(String name) {
     return Container(
         width: MediaQuery.of(context).size.width * 0.5,
+        // height: 30,
         child: Text(
           name,
           textAlign: TextAlign.center,
@@ -113,9 +127,81 @@ class _QuestState extends State<Quest> {
     );
   }
 
-  Widget QuestContent() {
-    return Column(
-      children: [],
+  Widget QuestTitle(String string) {
+    return SliverList(
+      delegate: SliverChildBuilderDelegate(
+          (context, index) => ListTile(
+                title: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                  child: Text(
+                    string,
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+          childCount: 1),
+    );
+  }
+
+  final List<String> subcontents = [
+    "[동영상] '드라마 볼래'로 볼만한 드라마 찾기",
+    "[음악] '인기 음악 틀어줘'로 핫한 음악 틀어보기",
+    "[캘린더] '오늘 일정 등록해줘'라고 말해보기",
+    "[큐피드], '근처 산책하기 좋은 곳 추천해줘'와 같이 질문하기",
+    "[길안내] 'TMAP 켜줘'로 TMAP 실행하기",
+    "[날씨] '날씨 알려줘'와 같이 날씨 확인하기",
+  ];
+  final List<String> pointcontents = ["50", "75", "65", "35", "80", "70"];
+  Widget QuestSubContent(int count) {
+    return SliverList(
+      delegate: SliverChildBuilderDelegate(
+          (context, index) => ListTile(
+                title: Padding(
+                  padding: const EdgeInsets.only(bottom: 20),
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 25),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Row(children: [
+                      Expanded(
+                        flex: 2,
+                        child: Column(
+                          children: [
+                            Image.asset(
+                              "assets/con.png",
+                              width: 20,
+                            ),
+                            Text(
+                              pointcontents[index],
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold),
+                            )
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        flex: 5,
+                        child: Text(
+                          subcontents[index],
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Expanded(
+                          flex: 3,
+                          child: IconButton(
+                            icon: Image.asset("assets/move.png"),
+                            onPressed: () {},
+                          )),
+                    ]),
+                  ),
+                ),
+              ),
+          childCount: count),
     );
   }
 }

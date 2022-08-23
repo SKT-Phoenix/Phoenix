@@ -226,6 +226,7 @@ class _MenuState extends State<Menu> {
             service_item("assets/tmap.png", "TMAP"),
             service_item("assets/qpeed.png", "큐피드"),
             service_item("assets/quest.png", "퀘스트"),
+            service_item("assets/issuedot.png", "이슈닷"),
             service_item("assets/reword.png", "리워드"),
           ],
         ),
@@ -254,10 +255,7 @@ class _MenuState extends State<Menu> {
               alignment: Alignment.centerLeft,
               overlayColor: MaterialStateColor.resolveWith(
                   (states) => Custom_Utils().Colors_SKT_Background()),
-            )
-            // backgroundColor:
-            //     MaterialStateColor.resolveWith((states) => Colors.amber)),
-            ),
+            )),
       ),
     );
   }

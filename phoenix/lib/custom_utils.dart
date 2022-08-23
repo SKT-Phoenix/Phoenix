@@ -13,12 +13,3 @@ class Custom_Utils {
     return Color.fromARGB(255, 244, 245, 249);
   }
 }
-
-class WH extends StatelessWidget {
-  const WH({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold();
-  }
-}
