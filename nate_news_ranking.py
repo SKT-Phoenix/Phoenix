@@ -11,12 +11,9 @@ from datetime import datetime, timedelta
 from pandas import DataFrame
 import pandas as pd
 import time
-from openpyxl.workbook import Workbook
 from selenium.webdriver.common.by import By
 
 sleep_sec = 0.5
-
-wb = Workbook()
 
 # User-Agent를 입력해주세요.
 headers = {'User-Agent' : '________________'}
@@ -34,10 +31,11 @@ def crawling_main_text(url):
 
     text = soup.find('div', {'id' : 'realArtcContents'}).text
     date = soup.find('em').text
+    title = soup.find('h3', {'class' : 'articleSubecjt'}).text
     date = date[0:10]
 
         
-    return (text.replace('\n','').replace('\r','').replace('<br>','').replace('\t',''), date)
+    return (text.replace('\n','').replace('\r','').replace('<br>','').replace('\t',''), date,title)
 
 
 part_name = ['pol', 'eco', 'soc', 'int', 'its'] # 정치, 경제, 사회, 세계, IT/과학
@@ -73,7 +71,7 @@ def news_crawling(part_name):
     for n in a_list:
         n_url = n.get_attribute('href')
         news_dict[idx] = {'분야': part_name,
-                        '타이틀' : n.find_element(By.XPATH,'.//strong[@class="tit"]').text,
+                        '타이틀' : crawling_main_text(n_url)[2],
                         '발행일자' : crawling_main_text(n_url)[1],
                         '링크' : n_url,
                         '본문' : crawling_main_text(n_url)[0]}
@@ -87,7 +85,6 @@ def news_crawling(part_name):
 for pn in part_name:
     df = news_crawling(pn)
     news_df = pd.concat([news_df,df])
-
 
 
 print('데이터프레임 변환\n')
