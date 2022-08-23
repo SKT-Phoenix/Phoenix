@@ -86,13 +86,9 @@ for pn in part_name:
     df = news_crawling(pn)
     news_df = pd.concat([news_df,df])
 
-
-print('데이터프레임 변환\n')
-
 folder_path = os.getcwd()
-xlsx_file_name = '{0}.xlsx'.format(yesterday)
+csv_file_name = '{0}.csv'.format(yesterday)
+news_df.to_csv(csv_file_name, index=False, encoding='utf-8')
 
-news_df.to_excel(xlsx_file_name, index=False)
-
-print('엑셀 저장 완료 | 경로 : {}\\{}\n'.format(folder_path, xlsx_file_name))
+print('CSV 저장 완료 | 경로 : {}\\{}\n'.format(folder_path, csv_file_name))
 
