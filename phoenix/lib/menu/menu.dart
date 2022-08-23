@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
-
 import '../custom_utils.dart';
 
 class Menu extends StatefulWidget {
@@ -18,7 +17,7 @@ class _MenuState extends State<Menu> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 244, 245, 249),
+      backgroundColor: Custom_Utils().Colors_SKT_Background(),
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.black),
         backgroundColor: Colors.white, //appbar 투명색
@@ -113,7 +112,7 @@ class _MenuState extends State<Menu> {
         children: [
           Container(
             decoration: BoxDecoration(
-              color: Color.fromARGB(255, 244, 245, 249),
+              color: Custom_Utils().Colors_SKT_Background(),
               borderRadius: BorderRadius.circular(20),
             ),
             child: Column(children: [points_text(), points_token()]),
@@ -235,18 +234,30 @@ class _MenuState extends State<Menu> {
   }
 
   Widget service_item(String image_path, String name) {
-    return Container(
-      alignment: Alignment.centerLeft,
-      child: Padding(
-        padding: const EdgeInsets.only(top: 5.0, bottom: 5.0),
+    return Padding(
+      padding: const EdgeInsets.all(5.0),
+      child: SizedBox(
+        width: double.infinity,
         child: TextButton.icon(
-            onPressed: () {},
+            onPressed: () {
+              if (name == "퀘스트") {
+                Get.offAndToNamed("/quest");
+              }
+            },
             icon: Image.asset(image_path, height: 38),
             label: Text(
               name,
               textAlign: TextAlign.start,
               style: TextStyle(fontSize: 16, color: Colors.black),
-            )),
+            ),
+            style: ButtonStyle(
+              alignment: Alignment.centerLeft,
+              overlayColor: MaterialStateColor.resolveWith(
+                  (states) => Custom_Utils().Colors_SKT_Background()),
+            )
+            // backgroundColor:
+            //     MaterialStateColor.resolveWith((states) => Colors.amber)),
+            ),
       ),
     );
   }

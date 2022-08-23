@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:phoenix/menu/quest.dart';
 import 'home/home.dart';
 import 'menu/menu.dart';
 
@@ -23,13 +24,14 @@ class Phoenix extends StatelessWidget {
       ),
       home: Home(),
       getPages: [
-        getPage("/home", Home()),
+        getHome("/home", Home()),
         getMenu("/menu", Menu()),
+        GetQuest("/quest", Quest())
       ],
     );
   }
 
-  GetPage getPage(String name, Widget pageName) {
+  GetPage getHome(String name, Widget pageName) {
     return GetPage(
         name: name,
         page: () => pageName,
@@ -41,6 +43,14 @@ class Phoenix extends StatelessWidget {
         name: name,
         page: () => pageName,
         transition: Transition.leftToRightWithFade,
+        popGesture: false);
+  }
+
+  GetPage GetQuest(String name, Widget pageName) {
+    return GetPage(
+        name: name,
+        page: () => pageName,
+        transition: Transition.downToUp,
         popGesture: false);
   }
 }
