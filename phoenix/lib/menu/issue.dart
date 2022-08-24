@@ -22,8 +22,10 @@ class _IssueState extends State<Issue> {
         centerTitle: true,
         elevation: 0.0, // 그림자 농도 0
         leading: IconButton(
-          icon: Image.asset("assets/attendance.png"),
-          onPressed: () {},
+          icon: Image.asset("assets/a_dot_menu.png"),
+          onPressed: () {
+            Get.offAndToNamed("menu");
+          },
         ),
         title: Text(
           "이슈닷",

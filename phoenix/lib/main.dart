@@ -60,7 +60,7 @@ class Phoenix extends StatelessWidget {
     return GetPage(
         name: name,
         page: () => pageName,
-        transition: Transition.rightToLeftWithFade,
+        transition: Transition.leftToRight,
         popGesture: false);
   }
 }
