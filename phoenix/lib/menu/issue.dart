@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:phoenix/custom_utils.dart';
 
 class Issue extends StatefulWidget {
@@ -75,15 +76,15 @@ class _IssueState extends State<Issue> {
               ),
               IssueExpanded(),
               IssueTitle("정치"),
-              IssueSubContent(subcontents.length),
+              IssueSubContent(titlecontents.length),
               IssueTitle("경제"),
-              IssueSubContent(subcontents.length),
+              IssueSubContent(titlecontents.length),
               IssueTitle("사회"),
-              IssueSubContent(subcontents.length),
+              IssueSubContent(titlecontents.length),
               IssueTitle("세계"),
-              IssueSubContent(subcontents.length),
+              IssueSubContent(titlecontents.length),
               IssueTitle("IT/과학"),
-              IssueSubContent(subcontents.length),
+              IssueSubContent(titlecontents.length),
             ],
           ),
         ],
@@ -188,9 +189,10 @@ class _IssueState extends State<Issue> {
     );
   }
 
-  final List<String> subcontents = [
-    "[동영상] '드라마 볼래'로 볼만한 드라마 찾기",
-    "[음악] '인기 음악 틀어줘'로 핫한 음악 틀어보기"
+  final List<String> titlecontents = ["남북관계 더 나빠져..", "국민의힘 이준석 또 울어?"];
+  final List<String> summarycontents = [
+    "남북관계가 더 나빠진 이유를 말씀드리자면, 먼저 제가 샌프란시스코에 있을 때 부터 얘기를 해야하는데요...",
+    "이준석 머리만 좋지 정치쪽으론 재능 없어.. 하지만 영욱이형을 접견한 같은 사람으로써 마음이 아파와.."
   ];
   final List<String> pointsubcontents = ["50", "75"];
   Widget IssueSubContent(int count) {
@@ -198,46 +200,44 @@ class _IssueState extends State<Issue> {
       delegate: SliverChildBuilderDelegate(
           (context, index) => ListTile(
                 title: Container(
-                  padding: EdgeInsets.symmetric(vertical: 25),
-                  decoration: BoxDecoration(
-                    color: Color.fromARGB(220, 245, 245, 250),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Row(children: [
-                    Expanded(
-                      flex: 2,
-                      child: Column(
-                        children: [
-                          Image.asset(
-                            "assets/con.png",
-                            width: 20,
+                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(220, 245, 245, 250),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(
+                                flex: 7,
+                                child: Container(
+                                    alignment: Alignment.topLeft,
+                                    child: Text(
+                                      titlecontents[index],
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold),
+                                    ))),
+                            Expanded(
+                                flex: 3,
+                                child: Container(
+                                  alignment: Alignment.topRight,
+                                  child: TextButton(
+                                    child: Text("원문 보기"),
+                                    onPressed: () {},
+                                  ),
+                                ))
+                          ],
+                        ),
+                        Container(
+                          child: Text(
+                            summarycontents[index],
+                            style: TextStyle(color: Colors.black54),
                           ),
-                          Text(
-                            pointsubcontents[index],
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold),
-                          )
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      flex: 5,
-                      child: Text(
-                        subcontents[index],
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    Expanded(
-                        flex: 3,
-                        child: IconButton(
-                          icon: Image.asset("assets/move.png"),
-                          onPressed: () {},
-                        )),
-                  ]),
-                ),
+                        )
+                      ],
+                    )),
               ),
           childCount: count),
     );
