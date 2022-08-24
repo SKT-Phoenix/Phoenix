@@ -77,15 +77,15 @@ class _IssueState extends State<Issue> {
               ),
               IssueExpanded(),
               IssueTitle("정치"),
-              IssueSubContent(titlecontents.length),
+              IssueContent(titlecontents.length),
               IssueTitle("경제"),
-              IssueSubContent(titlecontents.length),
+              IssueContent(titlecontents.length),
               IssueTitle("사회"),
-              IssueSubContent(titlecontents.length),
+              IssueContent(titlecontents.length),
               IssueTitle("세계"),
-              IssueSubContent(titlecontents.length),
+              IssueContent(titlecontents.length),
               IssueTitle("IT/과학"),
-              IssueSubContent(titlecontents.length),
+              IssueContent(titlecontents.length),
             ],
           ),
         ],
@@ -163,8 +163,11 @@ class _IssueState extends State<Issue> {
   Widget IssueExpanded() {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
-          (context, index) => Container(
-                height: MediaQuery.of(context).size.height * 0.4,
+          (context, index) => Visibility(
+                visible: isSelected[0],
+                child: Container(
+                  height: MediaQuery.of(context).size.height * 0.4,
+                ),
               ),
           childCount: 1),
     );
@@ -173,15 +176,18 @@ class _IssueState extends State<Issue> {
   Widget IssueTitle(String string) {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
-          (context, index) => Container(
-                padding: EdgeInsets.only(top: 20),
-                child: ListTile(
-                  title: Padding(
-                    padding: const EdgeInsets.only(left: 5.0, right: 5.0),
-                    child: Text(
-                      string,
-                      style:
-                          TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+          (context, index) => Visibility(
+                visible: isSelected[0],
+                child: Container(
+                  padding: EdgeInsets.only(top: 20),
+                  child: ListTile(
+                    title: Padding(
+                      padding: const EdgeInsets.only(left: 5.0, right: 5.0),
+                      child: Text(
+                        string,
+                        style: TextStyle(
+                            fontSize: 30, fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ),
                 ),
@@ -200,96 +206,70 @@ class _IssueState extends State<Issue> {
     "https://news.nate.com/view/20220824n07008?mid=n1006"
   ];
   final List<String> pointsubcontents = ["50", "75"];
-  Widget IssueSubContent(int count) {
+  Widget IssueContent(int count) {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
-          (context, index) => ListTile(
-                title: Container(
-                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                    decoration: BoxDecoration(
-                      color: Color.fromARGB(220, 245, 245, 250),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            Expanded(
-                                flex: 7,
-                                child: Container(
-                                    alignment: Alignment.topLeft,
-                                    child: Text(
-                                      titlecontents[index],
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold),
-                                    ))),
-                            Expanded(
-                                flex: 3,
-                                child: Container(
-                                  alignment: Alignment.topRight,
-                                  child: TextButton(
-                                    child: Text("원문 보기"),
-                                    onPressed: () {
-                                      Get.defaultDialog(
-                                          title: "이슈닷",
-                                          content: Container(
-                                            width: MediaQuery.of(context)
-                                                .size
-                                                .width,
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.7,
-                                            child: WebviewScaffold(
-                                              url: newscontents[index],
-                                              withZoom: true,
-                                              withLocalStorage: true,
-                                            ),
-                                          ));
-                                      // Navigator.of(context)
-                                      //     .push(MaterialPageRoute<Null>(
-                                      //         builder: (BuildContext context) {
-                                      //           return Container(
-                                      //             width: MediaQuery.of(context)
-                                      //                     .size
-                                      //                     .width *
-                                      //                 0.8,
-                                      //             height: MediaQuery.of(context)
-                                      //                 .size
-                                      //                 .height,
-                                      //             child: WebviewScaffold(
-                                      //               url:
-                                      //                   "https:www.google.com/",
-                                      //               withZoom: true,
-                                      //               withLocalStorage: true,
-                                      //             ),
-                                      //           );
-                                      //         },
-                                      //         fullscreenDialog: false));
-
-                                      // Navigator.of(context)
-                                      //     .push(new MaterialPageRoute<Null>(
-                                      //         builder: (BuildContext context) {
-                                      //           return WebView(
-                                      //             initialUrl:
-                                      //                 newscontents[index],
-                                      //           );
-                                      //         },
-                                      //         fullscreenDialog: false));
-                                    },
-                                  ),
-                                ))
-                          ],
-                        ),
-                        Container(
-                          child: Text(
-                            summarycontents[index],
-                            style: TextStyle(color: Colors.black54),
+          (context, index) => Visibility(
+                visible: isSelected[0],
+                child: ListTile(
+                  title: Container(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                      decoration: BoxDecoration(
+                        color: Color.fromARGB(220, 245, 245, 250),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Expanded(
+                                  flex: 7,
+                                  child: Container(
+                                      alignment: Alignment.topLeft,
+                                      child: Text(
+                                        titlecontents[index],
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold),
+                                      ))),
+                              Expanded(
+                                  flex: 3,
+                                  child: Container(
+                                    alignment: Alignment.topRight,
+                                    child: TextButton(
+                                      child: Text("원문 보기"),
+                                      onPressed: () {
+                                        Get.defaultDialog(
+                                            title: "이슈닷",
+                                            content: Container(
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.7,
+                                              child: WebviewScaffold(
+                                                url: newscontents[index],
+                                                withZoom: true,
+                                                withLocalStorage: true,
+                                              ),
+                                            ));
+                                      },
+                                    ),
+                                  ))
+                            ],
                           ),
-                        )
-                      ],
-                    )),
+                          Container(
+                            child: Text(
+                              summarycontents[index],
+                              style: TextStyle(color: Colors.black54),
+                            ),
+                          )
+                        ],
+                      )),
+                ),
               ),
           childCount: count),
     );
