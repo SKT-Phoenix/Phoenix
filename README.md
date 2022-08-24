@@ -3,10 +3,11 @@ Q&amp;A 생성 모델
 
 - [Q&A생성 모델 학습용 데이터](https://github.com/seopbo/nlp_classification/tree/master/BERT_pairwise_text_classification/qpair)
 
-
 - [Question Generation Model with KorQuAD](https://github.com/codertimo/KorQuAD-Question-Generation.git)
 
-- [KorQUAD 2.0](https://korquad.github.io/)
+- [KorQuAD 2.0](https://korquad.github.io/)
+
+- [KorQuAD 1.0](https://korquad.github.io/KorQuad%201.0/)
 
 
 ----
@@ -17,8 +18,11 @@ Q&amp;A 생성 모델
 * Multilingual BERT
 
 ### 22/08/24
-* KorQUAD 2.0은 1.0과 달라서 1.0을 이용한 모델은 적용시키는 것에 한계 있음
-* Multilingual BERT + KorQUAD 1.0 학습 => 질문에 대한 답 생성
+* 질문 생성 모델로 KoBART 이용해보기
+    * [참고: KoBART-Question-Generation](https://github.com/Seoneun/KoBART-Question-Generation)
+* KorQuAD 2.0은 1.0과 달라서 1.0을 이용한 모델은 적용시키는 것에 한계 있음
+    * [참고: SQuAD로 학습된 모델 KoQuAD로 Q&A 구현하기](https://github.com/kimwoonggon/publicservant_AI/blob/master/05_%EC%BC%80%EB%9D%BC%EC%8A%A4%EB%A1%9C_KorQuAD(%ED%95%9C%EA%B5%AD%EC%96%B4_Q%26A)_%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0.ipynb)
+* Multilingual BERT + KorQuAD 1.0 학습 => 질문에 대한 답 생성
     * 02_케라스로_KorQuAD(한국어 Q&A) 구현하기.ipynb
     * 03_question_generation.ipynb
 * 중요한 뉴스가 무엇일지 고민
