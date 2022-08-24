@@ -5,7 +5,6 @@ import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:phoenix/custom_utils.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
 class Issue extends StatefulWidget {
   const Issue({Key? key}) : super(key: key);
