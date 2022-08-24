@@ -76,7 +76,7 @@ class _IssueState extends State<Issue> {
                 ),
               ),
               IssueExpanded(),
-              IssueTitle("정치"),
+              IssueTitle("정치/시사"),
               IssueContent(titlecontents.length),
               IssueTitle("경제"),
               IssueContent(titlecontents.length),
@@ -86,6 +86,7 @@ class _IssueState extends State<Issue> {
               IssueContent(titlecontents.length),
               IssueTitle("IT/과학"),
               IssueContent(titlecontents.length),
+              TestData("Test")
             ],
           ),
         ],
@@ -272,6 +273,31 @@ class _IssueState extends State<Issue> {
                 ),
               ),
           childCount: count),
+    );
+  }
+
+  Widget TestData(String data) {
+    return SliverList(
+      delegate: SliverChildBuilderDelegate(
+          (context, index) => Visibility(
+                visible: isSelected[1],
+                child: Container(
+                  height: MediaQuery.of(context).size.height * 0.5,
+                  alignment: Alignment.bottomCenter,
+                  padding: EdgeInsets.only(top: 20),
+                  child: ListTile(
+                    title: Padding(
+                      padding: const EdgeInsets.only(left: 5.0, right: 5.0),
+                      child: Text(
+                        data,
+                        style: TextStyle(
+                            fontSize: 30, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+          childCount: 1),
     );
   }
 }
