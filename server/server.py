@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify
+from datetime import date, timedelta
 from crawler import *
 from models import *
 
@@ -48,17 +49,19 @@ def news():
     
     # app 버전
     elif request.method == 'GET':
+        # SQL문 실행, %s : 문자열이든 숫자이든 %s 사용
+        sql = "select * from `news`.summarized where 발행일자=%s"
+        curs.execute(sql, ((date.today() - timedelta(1)).strftime("%Y-%m-%d")))
         
+        result = curs.fetchall()
         
+        conn.close()
         
+
         # JSON 객체 생성
-        result = {
-            'text': text_res,
-            'deep': deep,
-            'target_lang': target_lang
-            
-        }
         return jsonify(result)
+    
+    
     
     
 @app.route('/rank', methods=['GET', 'POST'])
