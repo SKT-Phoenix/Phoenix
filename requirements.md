@@ -6,15 +6,21 @@
 
 - Crawling
 ```
-    pip install 
+    pip install bs4
+    pip install requests
+    pip install selenium==4.4.0
+    pip install webdriver_manager
+    pip install openpyxl
 ```
 
-- Summarize 
+- DB set
 ```
-    pip install 
+    pip install pymysql
 ```
 
-- QnA
+- Summarize, QnA Model 
 ```
-    pip install 
+    pip install torch
+    pip install transformers
 ```
+
