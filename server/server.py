@@ -18,7 +18,7 @@ print("[INFO]: summarizer 초기화 성공")
 # DB connection
 conn = pymysql.connect(host='localhost', user='root', password='root',
                        db='news', charset='utf8')
-
+curs = conn.cursor(pymysql.cursors.DictCursor)
 
 # ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
@@ -60,6 +60,17 @@ def news():
         }
         return jsonify(result)
     
+    
+@app.route('/rank', methods=['GET', 'POST'])
+def rank():
+    # user point update
+    if request.method == 'POST':
+        pass
+    
+    
+    # user point return
+    elif request.method == 'GET':
+        pass
     
 if __name__ == '__main__':
     app.debug = True

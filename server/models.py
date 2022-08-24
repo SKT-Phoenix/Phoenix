@@ -20,12 +20,13 @@ class Summarizer_with_KoBart(Summarizer_with_Bart):
         
     def generate(self, text, input_size=1024, deep=False):
         
-        if len(text)%input_size < 800:
-            index = len(text)//input_size 
-            text = text[:input_size*index]
+        if len(text)//input_size >= 1:
+            if len(text)%input_size < 600:
+                index = len(text)//input_size 
+                text = text[:input_size*index]
         
         # text길이 확인    
-        print(len(text))
+        print(F"text길이 : {len(text)}")
         
         result = ""
         
@@ -51,5 +52,7 @@ class Summarizer_with_KoBart(Summarizer_with_Bart):
                 summary_ids = self.model.generate(torch.tensor([input_ids]),  num_beams=4,  max_length=512,  eos_token_id=1)
                 result += self.tokenizer.decode(summary_ids.squeeze().tolist(), skip_special_tokens=True)
         return result
+
+
 
 # QnA 모델

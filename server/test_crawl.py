@@ -7,7 +7,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 from pandas import DataFrame
 import pandas as pd
 import time
@@ -66,16 +66,18 @@ def news_crawling(part_name):
 
     table = browser.find_element(By.XPATH,'//div[@id="newsContents"]')
     li_list = table.find_elements(By.XPATH,'.//div[@class="mduSubjectList f_clear"]')
-    a_list = [li.find_element(By.XPATH,'.//a[@class="lt1"]') for li in li_list][:2]
+    a_list = [li.find_element(By.XPATH,'.//a[@class="lt1"]') for li in li_list][:3]
 
     
     for n in a_list:
         n_url = n.get_attribute('href')
-        news_dict[idx] = {'발행일자' : crawling_main_text(n_url)[1],
+        texts = crawling_main_text(n_url)[0]
+        texts = texts[:-400]  # 뒷 문장(추천 기사 자르기)
+        news_dict[idx] = {'발행일자' : str(date.today() - timedelta(1)),
                         '분야': part_name,
                         '타이틀' : crawling_main_text(n_url)[2],
                         '링크' : n_url,
-                        '본문' : crawling_main_text(n_url)[0]}
+                        '본문' : texts}
             
         idx += 1
 
@@ -94,7 +96,13 @@ print('데이터프레임 변환\n')
 yesterday = (datetime.today() - timedelta(1)).strftime("%Y-%m-%d")
 
 folder_path = os.getcwd()
-xlsx_file_name = '{0}.xlsx'.format(yesterday)
+xlsx_file_name = 'static\{0}.xlsx'.format(yesterday)
+
+news_df['분야'].replace('pol', '정치', inplace=True)
+news_df['분야'].replace('eco', '경제', inplace=True)
+news_df['분야'].replace('soc', '사회', inplace=True)
+news_df['분야'].replace('int', '세계', inplace=True)
+news_df['분야'].replace('its', 'IT/과학', inplace=True)
 
 news_df.to_excel(xlsx_file_name, index=False)
 
