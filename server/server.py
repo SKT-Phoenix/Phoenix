@@ -1,12 +1,14 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 from datetime import date, timedelta
-from crawler import *
 from models import *
 
 import pymysql
 import time
 
+import ssl
+
 app = Flask(__name__)
+# app.config['JSON_AS_ASCII'] = False
 
 summa_model = Summarizer_with_KoBart()
 print("=" * 50)
@@ -17,9 +19,9 @@ print("[INFO]: summarizer 초기화 성공")
 
 
 # DB connection
-conn = pymysql.connect(host='localhost', user='root', password='root',
-                       db='news', charset='utf8mb4')
-curs = conn.cursor(pymysql.cursors.DictCursor)
+# conn = pymysql.connect(host='localhost', user='root', password='root',
+#                        db='news', charset='utf8mb4')
+# curs = conn.cursor(pymysql.cursors.DictCursor)
 
 # ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
@@ -50,6 +52,9 @@ def news():
     # app 버전
     elif request.method == 'GET':
         # SQL문 실행, %s : 문자열이든 숫자이든 %s 사용
+        conn = pymysql.connect(host='localhost', user='root', password='root',
+                       db='news', charset='utf8mb4')
+        curs = conn.cursor(pymysql.cursors.DictCursor)
         sql = "select * from `news`.summarized where 발행일자=%s"
         curs.execute(sql, ((date.today() - timedelta(1)).strftime("%Y-%m-%d")))
         
@@ -57,10 +62,16 @@ def news():
         
         conn.close()
         
+        # result = {
+        #     'text': "안녕",
+        #     'deep': "ㅋㅋ",
+        #     'target_lang': "ㄷㄷ"
+        # }
 
         # JSON 객체 생성
         return jsonify(result)
     
+        
     
     
     
@@ -76,24 +87,14 @@ def rank():
         pass
     
 if __name__ == '__main__':
+    
+    # ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS)
+    # ssl_context.load_cert_chain(certfile='private.crt', keyfile='private.key', password='root')
+    
     app.debug = True
     app.run(host='0.0.0.0', port=8000)
         
         
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 # ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
