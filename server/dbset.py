@@ -17,19 +17,40 @@ df = pd.read_excel(filename, engine='openpyxl')
 
 # 요약 모델 적용
 summarized = []
-for i, text in enumerate(df['본문']):
+del_index = []
+category = {'정치': 0, '경제': 0, '사회': 0, '세계': 0, 'IT/과학': 0}
+i = 0
+for cate, text in zip(df['분야'], df['본문']):
+    # 본문길이가 500자 이하인 뉴스는 pass
+    if len(text) < 900:
+        del_index.append(i)
+        i += 1
+        continue
+    
+    # 3번째 뉴스는 pass
+    category[cate] += 1
+    if category[cate] >= 3:
+        del_index.append(i)
+        i += 1
+        continue
+    
+    
+    # 본문길이가 3000자 이상이면 본문길이 3/4로 축소
     text_len = len(text)
     if(text_len) > 3000:
         text = text[:int(text_len/1.5)]
         
-    print(f"{i+1}번째 요약")
+    print(f"{cate}{category[cate]}번째뉴스 요약")
     start = time.time()
     result = summarizer.generate(text, input_size=1024)
     summarized.append(result)
     now = time.time()-start
     print(f'요약시간: {round(now, 2)}\n')
+    i += 1
     
+df.drop(del_index, axis=0, inplace = True)
 df['요약문'] = summarized
+df.reset_index(drop=True, inplace=True)
 
 
 

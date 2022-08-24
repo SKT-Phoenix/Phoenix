@@ -1,8 +1,7 @@
-import sys, os
+import  os
 from bs4 import BeautifulSoup
 import requests
 from selenium import webdriver
-import selenium
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
@@ -29,7 +28,9 @@ def crawling_main_text(url):
     req.encoding = None
     soup = BeautifulSoup(req.text, 'html.parser')
 
-    text = soup.find('div', {'id' : 'realArtcContents'}).text
+    text = soup.find('div', {'id' : 'realArtcContents'})
+    text.find('a').decompose()
+    text = text.text
     date = soup.find('em').text
     title = soup.find('h3', {'class' : 'articleSubecjt'}).text
     date = date[0:10]
@@ -66,18 +67,18 @@ def news_crawling(part_name):
 
     table = browser.find_element(By.XPATH,'//div[@id="newsContents"]')
     li_list = table.find_elements(By.XPATH,'.//div[@class="mduSubjectList f_clear"]')
-    a_list = [li.find_element(By.XPATH,'.//a[@class="lt1"]') for li in li_list][:3]
+    a_list = [li.find_element(By.XPATH,'.//a[@class="lt1"]') for li in li_list][:4]
 
     
     for n in a_list:
         n_url = n.get_attribute('href')
         texts = crawling_main_text(n_url)[0]
-        texts = texts[:-400]  # 뒷 문장(추천 기사 자르기)
+        texts = texts[:]  # 뒷 문장(추천 기사 자르기)
         news_dict[idx] = {'발행일자' : str(date.today() - timedelta(1)),
                         '분야': part_name,
                         '타이틀' : crawling_main_text(n_url)[2],
                         '링크' : n_url,
-                        '본문' : texts}
+                        '본문' : texts.strip()}
             
         idx += 1
 
