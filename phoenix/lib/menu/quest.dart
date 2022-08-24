@@ -349,7 +349,11 @@ class _QuestState extends State<Quest> {
             flex: 4,
             child: IconButton(
               icon: Image.asset("assets/move.png"),
-              onPressed: () {},
+              onPressed: () {
+                if (index == 3) {
+                  Get.offAndToNamed("/issue");
+                }
+              },
             )),
       ]),
     );

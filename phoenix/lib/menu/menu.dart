@@ -243,6 +243,8 @@ class _MenuState extends State<Menu> {
             onPressed: () {
               if (name == "퀘스트") {
                 Get.offAndToNamed("/quest");
+              } else if (name == "이슈닷") {
+                Get.offAndToNamed("/issue");
               }
             },
             icon: Image.asset(image_path, height: 38),
