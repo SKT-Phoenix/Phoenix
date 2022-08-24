@@ -12,4 +12,6 @@ class Custom_Utils {
   Color Colors_SKT_Background() {
     return Color.fromARGB(255, 244, 245, 249);
   }
+
+  List<String> dummydata = ["아침", "점심", "저녁", "새벽", "밥", "날씨"];
 }

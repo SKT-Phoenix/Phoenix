@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:phoenix/custom_utils.dart';
+
+import 'dart:core';
+import 'dart:async';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class Issue extends StatefulWidget {
   const Issue({Key? key}) : super(key: key);
@@ -14,6 +16,25 @@ class Issue extends StatefulWidget {
 }
 
 class _IssueState extends State<Issue> {
+  void _callAPI() async {
+    var url = Uri.parse(
+      'http://20.249.210.78:8000/',
+    );
+    var response = await http.get(url);
+
+    print('Response status: ${response.statusCode}');
+    List<dynamic> testdatas = json.decode(response.body);
+    print(testdatas[0]['링크'].runtimeType);
+
+    List<String> columns = ["발행일자", "분야", "타이틀", "링크", "요약문"]; // +"본문"
+    // print(testdatas.length);
+    for (int x = 0; x < testdatas.length - 1; x++) {
+      for (var y in columns) {
+        print('Response body: ${testdatas[x][y]}');
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -86,7 +107,7 @@ class _IssueState extends State<Issue> {
               IssueContent(titlecontents.length),
               IssueTitle("IT/과학"),
               IssueContent(titlecontents.length),
-              TestData("Test")
+              TestData("test")
             ],
           ),
         ],
@@ -288,10 +309,14 @@ class _IssueState extends State<Issue> {
                   child: ListTile(
                     title: Padding(
                       padding: const EdgeInsets.only(left: 5.0, right: 5.0),
-                      child: Text(
-                        data,
-                        style: TextStyle(
-                            fontSize: 30, fontWeight: FontWeight.bold),
+                      child: TextButton(
+                        onPressed: _callAPI,
+                        child: testText(data),
+                        // child: Text(
+                        //   data,
+                        //   style: TextStyle(
+                        //       fontSize: 30, fontWeight: FontWeight.bold),
+                        // ),
                       ),
                     ),
                   ),
@@ -299,5 +324,19 @@ class _IssueState extends State<Issue> {
               ),
           childCount: 1),
     );
+  }
+
+  Widget testText(String text) {
+    for (var checker in Custom_Utils().dummydata) {
+      if (text == checker) {
+        print(checker);
+      }
+    }
+    print(text);
+    return Text(text);
+  }
+
+  Widget testTextButton(String text) {
+    return TextButton(onPressed: () {}, child: Text(text));
   }
 }
