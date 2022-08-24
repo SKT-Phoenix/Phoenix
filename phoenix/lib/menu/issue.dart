@@ -8,6 +8,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+List<dynamic> crowlingdata = [];
+
 class Issue extends StatefulWidget {
   const Issue({Key? key}) : super(key: key);
 
@@ -23,16 +25,22 @@ class _IssueState extends State<Issue> {
     var response = await http.get(url);
 
     print('Response status: ${response.statusCode}');
-    List<dynamic> testdatas = json.decode(response.body);
-    print(testdatas[0]['링크'].runtimeType);
+    crowlingdata = json.decode(response.body);
+    print(crowlingdata[0]['링크'].runtimeType);
 
     List<String> columns = ["발행일자", "분야", "타이틀", "링크", "요약문"]; // +"본문"
     // print(testdatas.length);
-    for (int x = 0; x < testdatas.length - 1; x++) {
+    for (int x = 0; x < crowlingdata.length; x++) {
       for (var y in columns) {
-        print('Response body: ${testdatas[x][y]}');
+        print('Response body: ${crowlingdata[x][y]}');
       }
     }
+  }
+
+  @override
+  void initState() {
+    _callAPI();
+    super.initState();
   }
 
   @override
@@ -98,15 +106,15 @@ class _IssueState extends State<Issue> {
               ),
               IssueExpanded(),
               IssueTitle("정치/시사"),
-              IssueContent(titlecontents.length),
+              IssueContent(2),
               IssueTitle("경제"),
-              IssueContent(titlecontents.length),
+              IssueContent(2),
               IssueTitle("사회"),
-              IssueContent(titlecontents.length),
+              IssueContent(2),
               IssueTitle("세계"),
-              IssueContent(titlecontents.length),
+              IssueContent(2),
               IssueTitle("IT/과학"),
-              IssueContent(titlecontents.length),
+              IssueContent(2),
               TestData("test")
             ],
           ),
