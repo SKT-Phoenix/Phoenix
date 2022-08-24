@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:phoenix/custom_utils.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class Issue extends StatefulWidget {
   const Issue({Key? key}) : super(key: key);
@@ -194,6 +196,10 @@ class _IssueState extends State<Issue> {
     "남북관계가 더 나빠진 이유를 말씀드리자면, 먼저 제가 샌프란시스코에 있을 때 부터 얘기를 해야하는데요...",
     "이준석 머리만 좋지 정치쪽으론 재능 없어.. 하지만 영욱이형을 접견한 같은 사람으로써 마음이 아파와.."
   ];
+  final List<String> newscontents = [
+    "https://news.nate.com/view/20220824n20041?mid=n1006",
+    "https://news.nate.com/view/20220824n07008?mid=n1006"
+  ];
   final List<String> pointsubcontents = ["50", "75"];
   Widget IssueSubContent(int count) {
     return SliverList(
@@ -225,7 +231,54 @@ class _IssueState extends State<Issue> {
                                   alignment: Alignment.topRight,
                                   child: TextButton(
                                     child: Text("원문 보기"),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Get.defaultDialog(
+                                          title: "이슈닷",
+                                          content: Container(
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.7,
+                                            child: WebviewScaffold(
+                                              url: newscontents[index],
+                                              withZoom: true,
+                                              withLocalStorage: true,
+                                            ),
+                                          ));
+                                      // Navigator.of(context)
+                                      //     .push(MaterialPageRoute<Null>(
+                                      //         builder: (BuildContext context) {
+                                      //           return Container(
+                                      //             width: MediaQuery.of(context)
+                                      //                     .size
+                                      //                     .width *
+                                      //                 0.8,
+                                      //             height: MediaQuery.of(context)
+                                      //                 .size
+                                      //                 .height,
+                                      //             child: WebviewScaffold(
+                                      //               url:
+                                      //                   "https:www.google.com/",
+                                      //               withZoom: true,
+                                      //               withLocalStorage: true,
+                                      //             ),
+                                      //           );
+                                      //         },
+                                      //         fullscreenDialog: false));
+
+                                      // Navigator.of(context)
+                                      //     .push(new MaterialPageRoute<Null>(
+                                      //         builder: (BuildContext context) {
+                                      //           return WebView(
+                                      //             initialUrl:
+                                      //                 newscontents[index],
+                                      //           );
+                                      //         },
+                                      //         fullscreenDialog: false));
+                                    },
                                   ),
                                 ))
                           ],
