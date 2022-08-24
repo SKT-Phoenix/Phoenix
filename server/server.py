@@ -11,17 +11,10 @@ app = Flask(__name__)
 # app.config['JSON_AS_ASCII'] = False
 
 summa_model = Summarizer_with_KoBart()
-print("=" * 50)
-print("[INFO]: summarizer 초기화 성공") 
+print(" "+"=" * 50)
+print("∥          [INFO]: summarizer 초기화 성공         ∥") 
+print(" "+"=" * 50)
 
-# News = News()
-
-
-
-# DB connection
-# conn = pymysql.connect(host='localhost', user='root', password='root',
-#                        db='news', charset='utf8mb4')
-# curs = conn.cursor(pymysql.cursors.DictCursor)
 
 # ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
@@ -44,14 +37,13 @@ def news():
             'text': text_res,
             'deep': deep,
             'target_lang': target_lang
-            
         }
     
         return jsonify(result)
     
     # app 버전
     elif request.method == 'GET':
-        # SQL문 실행, %s : 문자열이든 숫자이든 %s 사용
+        
         conn = pymysql.connect(host='localhost', user='root', password='root',
                        db='news', charset='utf8mb4')
         curs = conn.cursor(pymysql.cursors.DictCursor)
@@ -62,11 +54,7 @@ def news():
         
         conn.close()
         
-        # result = {
-        #     'text': "안녕",
-        #     'deep': "ㅋㅋ",
-        #     'target_lang': "ㄷㄷ"
-        # }
+       
 
         # JSON 객체 생성
         return jsonify(result)

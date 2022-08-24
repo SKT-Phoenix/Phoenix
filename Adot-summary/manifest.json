@@ -1,0 +1,30 @@
+{
+  "name": "ISSUE_DOT", 
+  "version": "1.0",
+  "description": "이슈닷 요약 서비스",
+  "manifest_version": 2,
+  "browser_action": {
+    "default_icon": "banner.png",
+    "default_popup": "html/popup.html"
+  },
+  "icons": {
+    "128": "banner.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "css": ["css/floating_button.css"],
+      "js": ["js/background.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    "banner.png", 
+    "normal.png", "clicked.png", 
+    "html/iframe.html"],
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "storage",
+    "*://*/*"
+  ]
+}
