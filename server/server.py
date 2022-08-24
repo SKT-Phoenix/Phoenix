@@ -18,7 +18,7 @@ print("[INFO]: summarizer 초기화 성공")
 
 # DB connection
 conn = pymysql.connect(host='localhost', user='root', password='root',
-                       db='news', charset='utf8')
+                       db='news', charset='utf8mb4')
 curs = conn.cursor(pymysql.cursors.DictCursor)
 
 # ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
