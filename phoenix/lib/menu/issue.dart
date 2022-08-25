@@ -76,19 +76,19 @@ class _IssueState extends State<Issue> {
               IssueExpanded(),
               IssueTitle("정치/시사"),
               // IssueContent(2),
-              IssueContentRow(2),
+              IssueContentRow(2, politices),
               IssueTitle("경제"),
               // IssueContent(2),
-              IssueContentRow(2),
+              IssueContentRow(2, business),
               IssueTitle("사회"),
               // IssueContent(2),
-              IssueContentRow(2),
+              IssueContentRow(2, social),
               IssueTitle("세계"),
               // IssueContent(2),
-              IssueContentRow(2),
+              IssueContentRow(2, world),
               IssueTitle("IT/과학"),
               // IssueContent(2),
-              IssueContentRow(2),
+              IssueContentRow(2, science),
               TestData("test"),
             ],
           ),
@@ -265,7 +265,7 @@ class _IssueState extends State<Issue> {
     );
   }
 
-  Widget IssueContentRow(int count) {
+  Widget IssueContentRow(int count, List<dynamic> data) {
     return SliverToBoxAdapter(
       child: Visibility(
         visible: isSelected[0],
@@ -295,7 +295,7 @@ class _IssueState extends State<Issue> {
                                 child: Container(
                                     alignment: Alignment.topLeft,
                                     child: Text(
-                                      titlecontents[index],
+                                      data[index][0], // Title
                                       style: TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold),
@@ -308,7 +308,7 @@ class _IssueState extends State<Issue> {
                                     child: Text("원문 보기"),
                                     onPressed: () {
                                       Get.toNamed("/webview",
-                                          arguments: newscontents[index]);
+                                          arguments: data[index][2]); // link
                                     },
                                     style: ButtonStyle(
                                         alignment: Alignment.topRight),
@@ -319,7 +319,7 @@ class _IssueState extends State<Issue> {
                         Container(
                           padding: EdgeInsets.only(top: 15),
                           child: Text(
-                            summarycontents[index],
+                            data[index][1],
                             style: TextStyle(color: Colors.black54),
                           ),
                         )

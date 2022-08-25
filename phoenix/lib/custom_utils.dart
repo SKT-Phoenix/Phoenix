@@ -10,16 +10,17 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 List<dynamic> crowlingdata = [];
+
 // 정치
-List<List<String>> politices = [[], [], []];
+List<dynamic> politices = [];
 // 경제
-List<List<String>> business = [[], [], []];
+List<dynamic> business = [];
 // 사회
-List<List<String>> social = [[], [], []];
+List<dynamic> social = [];
 // 세계
-List<List<String>> world = [[], [], []];
+List<dynamic> world = [];
 // IT/과학
-List<List<String>> science = [[], [], []];
+List<dynamic> science = [];
 
 class Custom_Utils {
   Color Colors_SKT_Blue() {
@@ -44,12 +45,30 @@ class Crowling_Datas {
     crowlingdata = json.decode(response.body);
 
     List<String> columns = ["발행일자", "분야", "타이틀", "링크", "요약문"]; // +"본문"
-    List<String> need_columns = ["타이틀", "링크", "요약문"];
+    List<String> need_columns = ["타이틀", "요약문", "링크"];
 
     for (int x = 0; x < crowlingdata.length; x++) {
-      for (var y in columns) {
+      var buffer = [];
+      for (var y in need_columns) {
+        buffer.add(crowlingdata[x][y]);
         print(crowlingdata[x][y]);
       }
+      if (x == 0 || x == 1) {
+        politices.add(buffer);
+      } else if (x == 2 || x == 3) {
+        business.add(buffer);
+      } else if (x == 4 || x == 5) {
+        social.add(buffer);
+      } else if (x == 6 || x == 7) {
+        world.add(buffer);
+      } else {
+        science.add(buffer);
+      }
     }
+    // print(politices);
+    // print(business);
+    // print(social);
+    // print(world);
+    // print(science);
   }
 }
