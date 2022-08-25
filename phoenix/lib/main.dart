@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:phoenix/menu/quest.dart';
+import 'package:phoenix/menu/webview.dart';
 import 'home/home.dart';
 import 'menu/issue.dart';
 import 'menu/menu.dart';
@@ -29,6 +30,7 @@ class Phoenix extends StatelessWidget {
         getMenu("/menu", Menu()),
         getQuest("/quest", Quest()),
         getIssue("/issue", Issue()),
+        getWebview("/webview", IssueWebView()),
       ],
     );
   }
@@ -62,5 +64,10 @@ class Phoenix extends StatelessWidget {
         page: () => pageName,
         transition: Transition.leftToRight,
         popGesture: false);
+  }
+
+  GetPage getWebview(String name, Widget pageName) {
+    return GetPage(
+        name: name, page: () => pageName, transition: Transition.fadeIn);
   }
 }

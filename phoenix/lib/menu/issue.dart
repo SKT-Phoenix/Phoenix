@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:get/get.dart';
 import 'package:phoenix/custom_utils.dart';
+import 'package:phoenix/menu/webview.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 import 'dart:core';
 import 'dart:async';
@@ -26,7 +27,7 @@ class _IssueState extends State<Issue> {
 
     print('Response status: ${response.statusCode}');
     crowlingdata = json.decode(response.body);
-    print(crowlingdata[0]['링크'].runtimeType);
+    // print(crowlingdata[0]['링크'].runtimeType);
 
     List<String> columns = ["발행일자", "분야", "타이틀", "링크", "요약문"]; // +"본문"
     // print(testdatas.length);
@@ -115,7 +116,8 @@ class _IssueState extends State<Issue> {
               IssueContent(2),
               IssueTitle("IT/과학"),
               IssueContent(2),
-              TestData("test")
+              TestData("test"),
+              IssueTitle("IT/과학"),
             ],
           ),
         ],
@@ -235,7 +237,6 @@ class _IssueState extends State<Issue> {
     "https://news.nate.com/view/20220824n20041?mid=n1006",
     "https://news.nate.com/view/20220824n07008?mid=n1006"
   ];
-  final List<String> pointsubcontents = ["50", "75"];
   Widget IssueContent(int count) {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
@@ -270,22 +271,8 @@ class _IssueState extends State<Issue> {
                                     child: TextButton(
                                       child: Text("원문 보기"),
                                       onPressed: () {
-                                        Get.defaultDialog(
-                                            title: "이슈닷",
-                                            content: Container(
-                                              width: MediaQuery.of(context)
-                                                  .size
-                                                  .width,
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  0.7,
-                                              child: WebviewScaffold(
-                                                url: newscontents[index],
-                                                withZoom: true,
-                                                withLocalStorage: true,
-                                              ),
-                                            ));
+                                        Get.toNamed("/webview",
+                                            arguments: newscontents[index]);
                                       },
                                     ),
                                   ))
@@ -320,11 +307,6 @@ class _IssueState extends State<Issue> {
                       child: TextButton(
                         onPressed: _callAPI,
                         child: testText(data),
-                        // child: Text(
-                        //   data,
-                        //   style: TextStyle(
-                        //       fontSize: 30, fontWeight: FontWeight.bold),
-                        // ),
                       ),
                     ),
                   ),
