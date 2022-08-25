@@ -21,7 +21,7 @@ class Summarizer_with_KoBart(Summarizer_with_Bart):
     def generate(self, text, input_size=1024, deep=False):
         
         if len(text)//input_size >= 1:
-            if len(text)%input_size < 600:
+            if len(text)%input_size < 600:  # 마지막 문장이 600자 이하이면 delete
                 index = len(text)//input_size 
                 text = text[:input_size*index]
         
