@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify
-# from flask_sslify import SSLify
+from flask_sslify import SSLify
 from datetime import date, timedelta
 from models import *
 
@@ -11,7 +11,7 @@ import ssl
 
 app = Flask(__name__)
 # app.config['JSON_AS_ASCII'] = False
-# sslify = SSLify(app)
+sslify = SSLify(app)
 
 summa_model = Summarizer_with_KoBart()
 print(" "+"=" * 50)
@@ -26,22 +26,24 @@ print(" "+"=" * 50)
 def news():
     # 크롬 확장프로그램 버전
     if request.method == 'POST':
-        text = request.form['content']
-        deep = True if request.form['deep'] == 'true' else False
-        target_lang = request.form['target_lang']
+        # text = request.form['content']
+        # deep = True if request.form['deep'] == 'true' else False
+        # target_lang = request.form['target_lang']
         
-        print("요약 start")
-        start = time.time()
-        text_res = summa_model.generate(text) # 번역
-        print("요약 소요시간:", time.time() - start)
+        # print("요약 start")
+        # start = time.time()
+        # text_res = summa_model.generate(text) # 번역
+        # print("요약 소요시간:", time.time() - start)
             
-        # JSON 객체 생성
-        result = {
-            'text': text_res,
-            'deep': deep,
-            'target_lang': target_lang
-        }
-    
+        # # JSON 객체 생성
+        # result = {
+        #     'text': text_res,
+        #     'deep': deep,
+        #     'target_lang': target_lang
+        # }
+
+        result = "hello"
+        
         return jsonify(result)
     
     # app 버전
@@ -70,26 +72,21 @@ def news():
 def rank():
     # user point update
     if request.method == 'POST':
-        result = 'bye'
-        
-        return jsonify(result)
+        pass
     
     
     # user point return
     elif request.method == 'GET':
-        return "hello"
+        pass
     
 if __name__ == '__main__':
     
     # ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS)
-    # ssl_context.load_cert_chain(certfile='private.crt', keyfile='private.key', password='phoenix')
+    # ssl_context.load_cert_chain(certfile='private.crt', keyfile='private.key')
+
     
-    app.debug = True
-    app.run(host='0.0.0.0', port=8000 )
+    # app.debug = True
+    app.run(host='0.0.0.0', port=5000, ssl_context=('private.crt', 'private.key'))
+    # app.run(host='0.0.0.0', port=5000, ssl_context='adhoc')
         
         
-
-
-# ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-
-
