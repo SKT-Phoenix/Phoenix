@@ -15,6 +15,12 @@ class _HomeState extends State<Home> {
   int flag = 0;
 
   @override
+  void initState() {
+    Crowling_Datas().callAPI();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,

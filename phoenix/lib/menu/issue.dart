@@ -4,13 +4,6 @@ import 'package:phoenix/custom_utils.dart';
 import 'package:phoenix/menu/webview.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-import 'dart:core';
-import 'dart:async';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-
-List<dynamic> crowlingdata = [];
-
 class Issue extends StatefulWidget {
   const Issue({Key? key}) : super(key: key);
 
@@ -19,31 +12,6 @@ class Issue extends StatefulWidget {
 }
 
 class _IssueState extends State<Issue> {
-  void _callAPI() async {
-    var url = Uri.parse(
-      'http://20.249.210.78:8000/',
-    );
-    var response = await http.get(url);
-
-    print('Response status: ${response.statusCode}');
-    crowlingdata = json.decode(response.body);
-    // print(crowlingdata[0]['링크'].runtimeType);
-
-    List<String> columns = ["발행일자", "분야", "타이틀", "링크", "요약문"]; // +"본문"
-    // print(testdatas.length);
-    for (int x = 0; x < crowlingdata.length; x++) {
-      for (var y in columns) {
-        print('Response body: ${crowlingdata[x][y]}');
-      }
-    }
-  }
-
-  @override
-  void initState() {
-    _callAPI();
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,7 +56,7 @@ class _IssueState extends State<Issue> {
               ),
               Center(
                   child: Container(
-                      width: MediaQuery.of(context).size.width * 0.8,
+                      width: MediaQuery.of(context).size.width * 0.5,
                       child: Image.asset("assets/final_phoenix.gif"))),
             ],
           ),
@@ -107,17 +75,21 @@ class _IssueState extends State<Issue> {
               ),
               IssueExpanded(),
               IssueTitle("정치/시사"),
-              IssueContent(2),
+              // IssueContent(2),
+              IssueContentRow(2),
               IssueTitle("경제"),
-              IssueContent(2),
+              // IssueContent(2),
+              IssueContentRow(2),
               IssueTitle("사회"),
-              IssueContent(2),
+              // IssueContent(2),
+              IssueContentRow(2),
               IssueTitle("세계"),
-              IssueContent(2),
+              // IssueContent(2),
+              IssueContentRow(2),
               IssueTitle("IT/과학"),
-              IssueContent(2),
+              // IssueContent(2),
+              IssueContentRow(2),
               TestData("test"),
-              IssueTitle("IT/과학"),
             ],
           ),
         ],
@@ -198,7 +170,7 @@ class _IssueState extends State<Issue> {
           (context, index) => Visibility(
                 visible: isSelected[0],
                 child: Container(
-                  height: MediaQuery.of(context).size.height * 0.4,
+                  height: MediaQuery.of(context).size.height * 0.25,
                 ),
               ),
           childCount: 1),
@@ -237,6 +209,7 @@ class _IssueState extends State<Issue> {
     "https://news.nate.com/view/20220824n20041?mid=n1006",
     "https://news.nate.com/view/20220824n07008?mid=n1006"
   ];
+
   Widget IssueContent(int count) {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
@@ -292,6 +265,76 @@ class _IssueState extends State<Issue> {
     );
   }
 
+  Widget IssueContentRow(int count) {
+    return SliverToBoxAdapter(
+      child: Visibility(
+        visible: isSelected[0],
+        child: Padding(
+          padding: EdgeInsets.all(15),
+          child: Container(
+            height: MediaQuery.of(context).size.height * 0.3,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: count,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.only(right: 15.0),
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(220, 245, 245, 250),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(
+                                flex: 7,
+                                child: Container(
+                                    alignment: Alignment.topLeft,
+                                    child: Text(
+                                      titlecontents[index],
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold),
+                                    ))),
+                            Expanded(
+                                flex: 3,
+                                child: Container(
+                                  alignment: Alignment.topRight,
+                                  child: TextButton(
+                                    child: Text("원문 보기"),
+                                    onPressed: () {
+                                      Get.toNamed("/webview",
+                                          arguments: newscontents[index]);
+                                    },
+                                    style: ButtonStyle(
+                                        alignment: Alignment.topRight),
+                                  ),
+                                ))
+                          ],
+                        ),
+                        Container(
+                          padding: EdgeInsets.only(top: 15),
+                          child: Text(
+                            summarycontents[index],
+                            style: TextStyle(color: Colors.black54),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget TestData(String data) {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
@@ -305,7 +348,7 @@ class _IssueState extends State<Issue> {
                     title: Padding(
                       padding: const EdgeInsets.only(left: 5.0, right: 5.0),
                       child: TextButton(
-                        onPressed: _callAPI,
+                        onPressed: () {},
                         child: testText(data),
                       ),
                     ),
