@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, jsonify
+from flask import Flask, request, jsonify
 # from flask_sslify import SSLify
 from datetime import date, timedelta
 from models import *
@@ -7,15 +7,11 @@ from models import *
 import pymysql
 import time
 
-import ssl
-
 app = Flask(__name__)
 # app.config['JSON_AS_ASCII'] = False
-# sslify = SSLify(app)
 
-summa_model = Summarizer_with_KoBart()
 print(" "+"=" * 50)
-print("∥          [INFO]: summarizer 초기화 성공         ∥") 
+print("∥              [INFO] server 초기화 성공          ∥") 
 print(" "+"=" * 50)
 
 
@@ -24,28 +20,9 @@ print(" "+"=" * 50)
 
 @app.route('/', methods=['GET', 'POST'])
 def news():
-    # 크롬 확장프로그램 버전
-    if request.method == 'POST':
-        text = request.form['content']
-        deep = True if request.form['deep'] == 'true' else False
-        target_lang = request.form['target_lang']
-        
-        print("요약 start")
-        start = time.time()
-        text_res = summa_model.generate(text) # 번역
-        print("요약 소요시간:", time.time() - start)
-            
-        # JSON 객체 생성
-        result = {
-            'text': text_res,
-            'deep': deep,
-            'target_lang': target_lang
-        }
-    
-        return jsonify(result)
     
     # app 버전
-    elif request.method == 'GET':
+    if request.method == 'GET':
         
         conn = pymysql.connect(host='localhost', user='root', password='root',
                        db='news', charset='utf8mb4')
@@ -79,17 +56,13 @@ def rank():
     elif request.method == 'GET':
         return "hello"
     
-if __name__ == '__main__':
     
-    # ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS)
-    # ssl_context.load_cert_chain(certfile='private.crt', keyfile='private.key', password='phoenix')
+    
+if __name__ == '__main__':
     
     app.debug = True
     app.run(host='0.0.0.0', port=8000 )
         
         
-
-
-# ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
 
