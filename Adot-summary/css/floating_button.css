@@ -1,0 +1,48 @@
+#floating_button {
+    position: fixed;
+    text-align: center;
+    color: white;
+    cursor: pointer;
+    z-index: 9998;
+}
+
+#floating_button.normal {
+    background: transparent url('chrome-extension://__MSG_@@extension_id__/normal.png');
+    background-size: contain;
+}
+
+#floating_button.clicked {
+    background: transparent url('chrome-extension://__MSG_@@extension_id__/clicked.png');
+    background-size: contain;
+}
+
+.big {
+    bottom: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 16px;
+}
+
+.small {
+    bottom: 30px;
+    right: 30px;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    font-size: 8px;
+}
+
+#ssummary_iframe {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    width: 250px;
+    height: 170px;
+    border: none;
+    z-index: 9999;
+    background-color: white;
+    opacity: 0.95;
+    border-radius: 5px;
+}
