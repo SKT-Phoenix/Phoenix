@@ -2,5 +2,6 @@
 # /static
 
 # 파일 ignore
-debug.py
+test.py
+test2.py
 *.ipynb
