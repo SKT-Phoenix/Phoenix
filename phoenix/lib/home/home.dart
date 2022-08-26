@@ -4,6 +4,8 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:phoenix/custom_utils.dart';
 
+var layoutSize;
+
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
 
@@ -22,6 +24,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    layoutSize = MediaQuery.of(context);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -73,7 +76,7 @@ class _HomeState extends State<Home> {
   Widget Adot(String image_path) {
     return Center(
       child: Container(
-        height: MediaQuery.of(context).size.height * 0.5,
+        height: layoutSize.size.height * 0.5,
         child: Center(
           child: Image(
             image: AssetImage(image_path),
@@ -98,7 +101,7 @@ class _HomeState extends State<Home> {
       Icons.card_giftcard_outlined
     ];
     return Container(
-      height: MediaQuery.of(context).size.height * 0.09,
+      height: layoutSize.size.height * 0.09,
       child: ListView.builder(
           scrollDirection: Axis.horizontal,
           itemCount: imogi.length,
@@ -150,7 +153,7 @@ class _HomeState extends State<Home> {
   Widget Mic_Key_Button() {
     return Container(
       // color: Color.fromARGB(255, 250, 250, 250),
-      height: MediaQuery.of(context).size.height * 0.09,
+      height: layoutSize.size.height * 0.09,
       child: Row(
         children: [
           Expanded(child: Container()),

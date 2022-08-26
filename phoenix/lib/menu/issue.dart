@@ -4,6 +4,8 @@ import 'package:phoenix/custom_utils.dart';
 import 'package:phoenix/menu/webview.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+import '../home/home.dart';
+
 class Issue extends StatefulWidget {
   const Issue({Key? key}) : super(key: key);
 
@@ -48,7 +50,7 @@ class _IssueState extends State<Issue> {
               Container(
                 alignment: Alignment.bottomCenter,
                 color: Colors.white,
-                height: MediaQuery.of(context).size.height * 0.15,
+                height: layoutSize.size.height * 0.15,
                 child: Text(
                   "주요 뉴스를 알려드릴게요!",
                   style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
@@ -56,7 +58,7 @@ class _IssueState extends State<Issue> {
               ),
               Center(
                   child: Container(
-                      width: MediaQuery.of(context).size.width * 0.5,
+                      width: layoutSize.size.width * 0.5,
                       child: Image.asset("assets/final_phoenix.gif"))),
             ],
           ),
@@ -129,7 +131,7 @@ class _IssueState extends State<Issue> {
 
   Widget Nav_Content(String name) {
     return Container(
-        width: MediaQuery.of(context).size.width * 0.5,
+        width: layoutSize.size.width * 0.5,
         // height: 30,
         child: Text(
           name,
@@ -155,7 +157,7 @@ class _IssueState extends State<Issue> {
           duration: const Duration(seconds: 1),
           curve: Curves.fastOutSlowIn,
           child: Container(
-            width: MediaQuery.of(context).size.width * 0.5,
+            width: layoutSize.size.width * 0.5,
             height: 2.0,
             color: Colors.black,
           ),
@@ -170,7 +172,7 @@ class _IssueState extends State<Issue> {
           (context, index) => Visibility(
                 visible: isSelected[0],
                 child: Container(
-                  height: MediaQuery.of(context).size.height * 0.25,
+                  height: layoutSize.size.height * 0.25,
                 ),
               ),
           childCount: 1),
@@ -266,13 +268,20 @@ class _IssueState extends State<Issue> {
   }
 
   Widget IssueContentRow(int count, List<dynamic> data) {
+    int SmaxLength = 0;
+    for (var i = 0; i < count; i++) {
+      (SmaxLength < data[i][1].length)
+          ? SmaxLength = data[i][1].length
+          : SmaxLength = SmaxLength;
+    }
+    print(SmaxLength);
     return SliverToBoxAdapter(
       child: Visibility(
         visible: isSelected[0],
         child: Padding(
           padding: EdgeInsets.all(15),
-          child: Container(
-            height: MediaQuery.of(context).size.height * 0.3,
+          child: SizedBox(
+            height: layoutSize.size.height * dynamic_BoxH(SmaxLength),
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: count,
@@ -285,7 +294,7 @@ class _IssueState extends State<Issue> {
                       color: Color.fromARGB(220, 245, 245, 250),
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    width: MediaQuery.of(context).size.width * 0.8,
+                    width: layoutSize.size.width * 0.8,
                     child: Column(
                       children: [
                         Row(
@@ -335,13 +344,26 @@ class _IssueState extends State<Issue> {
     );
   }
 
+  double dynamic_BoxH(int size) {
+    if (size <= 50) {
+      return 0.2;
+    } else if (size <= 75) {
+      return 0.23;
+    } else if (size <= 150) {
+      return 0.26;
+    } else if (size < 200) {
+      return 0.33;
+    }
+    return 1;
+  }
+
   Widget TestData(String data) {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
           (context, index) => Visibility(
                 visible: isSelected[1],
                 child: Container(
-                  height: MediaQuery.of(context).size.height * 0.5,
+                  height: layoutSize.size.height * 0.5,
                   alignment: Alignment.bottomCenter,
                   padding: EdgeInsets.only(top: 20),
                   child: ListTile(

@@ -65,10 +65,8 @@ class Crowling_Datas {
         science.add(buffer);
       }
     }
-    // print(politices);
-    // print(business);
-    // print(social);
-    // print(world);
-    // print(science);
+    var datas =
+        "법무부가 지난 6월 한동훈 장관의 미국 출장경비 내용을 밝히라는 시민단체 대표의 정보공개 요청을 거부한 것에 대해 시민단체 대표는 법적 대응을 예고하고 있지만, 이전 정부에서도 관련 사항에 대해 정보공개를 한 적이 없음에도 마구잡이식으로 공개하라는 요구는 어떠한 정치적 의도가 담긴 게 아니냐는 비판이 나오고 있다.";
+    print(datas.length);
   }
 }

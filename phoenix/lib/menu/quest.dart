@@ -4,6 +4,8 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:phoenix/custom_utils.dart';
 
+import '../home/home.dart';
+
 class Quest extends StatefulWidget {
   const Quest({Key? key}) : super(key: key);
 
@@ -93,7 +95,7 @@ class _QuestState extends State<Quest> {
 
   Widget Nav_Content(String name) {
     return Container(
-        width: MediaQuery.of(context).size.width * 0.5,
+        width: layoutSize.size.width * 0.5,
         // height: 30,
         child: Text(
           name,
@@ -119,7 +121,7 @@ class _QuestState extends State<Quest> {
           duration: const Duration(seconds: 1),
           curve: Curves.fastOutSlowIn,
           child: Container(
-            width: MediaQuery.of(context).size.width * 0.5,
+            width: layoutSize.size.width * 0.5,
             height: 2.0,
             color: Colors.black,
           ),
