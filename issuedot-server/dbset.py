@@ -17,7 +17,6 @@ df = pd.read_excel(filename, engine='openpyxl')
 major = pd.read_excel("static/용어.xlsx")
 
 
-
 # 요약 모델 적용
 summarized = [] # 요약문
 main_text = []   # 주요 단어
@@ -25,21 +24,21 @@ text_explain = [] # 단어 설명
 
 del_index = []
 category = {'정치': 0, '경제': 0, '사회': 0, '세계': 0, 'IT/과학': 0}
+
 i = 0
 for cate, text in zip(df['분야'], df['본문']):
-    # 본문길이가 500자 이하인 뉴스는 pass
+    # 본문길이가 900자 이하인 뉴스는 pass
     if len(text) < 900:
         del_index.append(i)
         i += 1
         continue
     
-    # 3번째 뉴스는 pass
+    # 3번째이상 뉴스는 pass
     category[cate] += 1
     if category[cate] >= 3:
         del_index.append(i)
         i += 1
         continue
-    
     
     # 본문길이가 3000자 이상이면 본문길이 3/4로 축소
     text_len = len(text)
@@ -93,10 +92,5 @@ for i in range(len(df)):
     sql = "insert into `news`.summarized (발행일자, 분야, 타이틀, 링크, 요약문, 주요단어, 단어설명) values (%s, %s, %s, %s, %s, %s, %s)"
     curs.execute(sql, (df.iloc[i][0], df.iloc[i][1], df.iloc[i][2], df.iloc[i][3], df.iloc[i][5], df.iloc[i][6], df.iloc[i][7]))
 
-
-
-# 데이타 commit
 conn.commit()
-
-# Connection 닫기
 conn.close()

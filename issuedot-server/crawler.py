@@ -17,10 +17,10 @@ sleep_sec = 0.5
 # User-Agent를 입력해주세요.
 headers = {'User-Agent' : '________________'}
 
-
 # 날짜 지정
 query = '(종합)'
 yesterday = (datetime.today() - timedelta(1)).strftime("%Y%m%d")
+
 
 def crawling_dic(str_dic):
 
@@ -42,7 +42,6 @@ def crawling_dic(str_dic):
     
     return dic
 
-
 def crawling_main_text(url):
 
     req = requests.get(url,headers = headers)
@@ -58,12 +57,6 @@ def crawling_main_text(url):
 
         
     return (text.replace('\n','').replace('\r','').replace('<br>','').replace('\t',''), date,title)
-
-
-part_name = ['pol', 'eco', 'soc', 'int', 'its'] # 정치, 경제, 사회, 세계, IT/과학
-part = ['정치', '경제', '사회', '세계', 'IT/과학']
-news_df=pd.DataFrame()
-
 
 def news_crawling(part_name):
     
@@ -107,6 +100,8 @@ def news_crawling(part_name):
     return part_df
             
 
+part_name = ['pol', 'eco', 'soc', 'int', 'its'] # 정치, 경제, 사회, 세계, IT/과학
+news_df=pd.DataFrame()
 
 for pn in part_name:
     df = news_crawling(pn)
