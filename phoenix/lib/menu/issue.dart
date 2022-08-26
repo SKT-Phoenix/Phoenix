@@ -21,8 +21,42 @@ class _IssueState extends State<Issue> {
     super.dispose();
   }
 
+  void showSnackBar(BuildContext context, String text) {
+    final snackBar = SnackBar(
+      backgroundColor: Custom_Utils().Colors_SKT_Background(),
+      content: Wrap(
+        children: [
+          Container(
+            width: layoutSize.size.width * 0.8,
+            child: Text(
+              text,
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                  color: Colors.black87),
+            ),
+          ),
+          Padding(padding: EdgeInsets.only(bottom: 30)),
+          Text(
+            " 정보를 공개하라는 뜻",
+            style: TextStyle(color: Colors.black45),
+          ),
+        ],
+      ),
+      duration: Duration(seconds: 10),
+      action: SnackBarAction(
+        label: 'OK',
+        textColor: Colors.blue,
+        disabledTextColor: Colors.white,
+        onPressed: () {},
+      ),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
   @override
   Widget build(BuildContext context) {
+    Crowling_Datas().callAPI();
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -84,15 +118,15 @@ class _IssueState extends State<Issue> {
               ),
               IssueExpanded(),
               IssueTitle("정치/시사"),
-              IssueContentRow(2, politices),
-              IssueTitle("경제"),
-              IssueContentRow(2, business),
-              IssueTitle("사회"),
-              IssueContentRow(2, social),
-              IssueTitle("세계"),
-              IssueContentRow(2, world),
-              IssueTitle("IT/과학"),
-              IssueContentRow(2, science),
+              IssueContentRow(10, resultData),
+              // IssueTitle("경제"),
+              // IssueContentRow(2, business),
+              // IssueTitle("사회"),
+              // IssueContentRow(2, social),
+              // IssueTitle("세계"),
+              // IssueContentRow(2, world),
+              // IssueTitle("IT/과학"),
+              // IssueContentRow(2, science),
               // TestData(split_summary, keywords),
             ],
           ),
@@ -211,15 +245,16 @@ class _IssueState extends State<Issue> {
           ? SmaxLength = data[i][1].length
           : SmaxLength = SmaxLength;
     }
-    print(SmaxLength);
-    print(split_summary);
+
+    // print(SmaxLength);
+    // print(split_summary);
     return SliverToBoxAdapter(
       child: Visibility(
         visible: isSelected[0],
         child: Padding(
           padding: EdgeInsets.all(15),
           child: SizedBox(
-            height: layoutSize.size.height * dynamic_BoxH(SmaxLength),
+            height: layoutSize.size.height * dynamic_BoxH(200),
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: count,
@@ -320,15 +355,18 @@ class _IssueState extends State<Issue> {
   }
 
   List<Widget> _createChildren(List<String> summary, List<String> keyword) {
-    var summarybuf = summary;
-    return List<Widget>.generate(summarybuf.length, (int index) {
-      var buf = summarybuf[0];
-      print(summarybuf);
-      for (var s in summarybuf) {
+    Crowling_Datas().callAPI();
+    print(summary);
+
+    return List<Widget>.generate(summary.length, (int index) {
+      var buf = summary[0];
+      for (var s in summary) {
         if (keyword.contains(s)) {
-          summarybuf.removeAt(0);
+          summary.removeAt(0);
           return TextButton(
-            onPressed: () {},
+            onPressed: () {
+              showSnackBar(context, buf.toString());
+            },
             style: TextButton.styleFrom(
                 padding: EdgeInsets.zero,
                 minimumSize: Size(50, 5),
@@ -337,7 +375,7 @@ class _IssueState extends State<Issue> {
             child: Text("${buf.toString()} "),
           );
         } else {
-          summarybuf.removeAt(0);
+          summary.removeAt(0);
           return Text("${buf.toString()} ");
         }
       }

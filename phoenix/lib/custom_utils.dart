@@ -14,7 +14,9 @@ import 'menu/quest.dart';
 List<dynamic> crowlingdata = [];
 List<String> keywords = ["법무부가", "시민단체", "정치적", "정보공개"];
 List<List<String>> split_summary = [];
+List<int> SmaxLength = [];
 
+List<dynamic> resultData = [];
 // 정치
 List<dynamic> politices = [];
 // 경제
@@ -59,17 +61,18 @@ class Crowling_Datas {
         buffer.add(crowlingdata[x][y]);
         print(crowlingdata[x][y]);
       }
-      if (x == 0 || x == 1) {
-        politices.add(buffer);
-      } else if (x == 2 || x == 3) {
-        business.add(buffer);
-      } else if (x == 4 || x == 5) {
-        social.add(buffer);
-      } else if (x == 6 || x == 7) {
-        world.add(buffer);
-      } else {
-        science.add(buffer);
-      }
+      resultData.add(buffer);
+      // if (x == 0 || x == 1) {
+      //   politices.add(buffer);
+      // } else if (x == 2 || x == 3) {
+      //   business.add(buffer);
+      // } else if (x == 4 || x == 5) {
+      //   social.add(buffer);
+      // } else if (x == 6 || x == 7) {
+      //   world.add(buffer);
+      // } else {
+      //   science.add(buffer);
+      // }
     }
     print(split_summary);
   }
