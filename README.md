@@ -11,11 +11,11 @@
 ---
 
 # Issuedot-server 
-### Flow chart
+### Architecture
 ![뉴스 서버](https://user-images.githubusercontent.com/48705487/186928327-a8451745-96c0-4f98-bce5-318b7df6220e.jpg)
 
 ---
 # Adot-server
-### Flow chart
+### Architecture
 ![크롬서버](https://user-images.githubusercontent.com/48705487/186928657-1d9aef97-a826-4c91-bdee-c9825602f0fa.jpg)
 > Adot-server에선 summarizer model만 사용   
