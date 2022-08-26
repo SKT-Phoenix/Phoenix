@@ -29,7 +29,7 @@ def crawling_main_text(url):
     soup = BeautifulSoup(req.text, 'html.parser')
 
     text = soup.find('div', {'id' : 'realArtcContents'})
-    text.find('a').decompose()
+    # text.find('a').decompose()
     text = text.text
     date = soup.find('em').text
     title = soup.find('h3', {'class' : 'articleSubecjt'}).text
