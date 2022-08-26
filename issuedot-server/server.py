@@ -8,7 +8,7 @@ import pymysql
 import time
 
 app = Flask(__name__)
-app.config['JSON_AS_ASCII'] = False
+# app.config['JSON_AS_ASCII'] = False
 
 print(" "+"=" * 50)
 print("∥              [INFO] server 초기화 성공          ∥") 

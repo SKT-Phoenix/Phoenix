@@ -78,7 +78,10 @@ df['단어설명'] = text_explain
 
 df.reset_index(drop=True, inplace=True)
 
-
+# excel파일 변경
+yesterday = (datetime.today() - timedelta(1)).strftime("%Y-%m-%d")
+xlsx_file_name = 'static\{0}.xlsx'.format(yesterday)
+df.to_excel(xlsx_file_name, index=False)
 
 # DB connection
 conn = pymysql.connect(host='localhost', user='root', password='root',
