@@ -8,7 +8,7 @@ import pymysql
 import time
 
 app = Flask(__name__)
-# app.config['JSON_AS_ASCII'] = False
+app.config['JSON_AS_ASCII'] = False
 
 print(" "+"=" * 50)
 print("∥              [INFO] server 초기화 성공          ∥") 
@@ -18,7 +18,7 @@ print(" "+"=" * 50)
 # ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET'])
 def news():
     # summarized news transmission
     if request.method == 'GET':
@@ -27,6 +27,22 @@ def news():
                        db='news', charset='utf8mb4')
         curs = conn.cursor(pymysql.cursors.DictCursor)
         sql = "select * from `news`.summarized where 발행일자=%s"
+        curs.execute(sql, ((date.today() - timedelta(1)).strftime("%Y-%m-%d")))
+        
+        result = curs.fetchall()
+        
+        conn.close()
+        
+        return jsonify(result)
+    
+@app.route('/qna', methods=['GET'])
+def qna():
+    # summarized news transmission
+    if request.method == 'GET':
+        conn = pymysql.connect(host='localhost', user='root', password='root',
+                       db='news', charset='utf8mb4')
+        curs = conn.cursor(pymysql.cursors.DictCursor)
+        sql = "select * from `news`.qna where 발행일자=%s"
         curs.execute(sql, ((date.today() - timedelta(1)).strftime("%Y-%m-%d")))
         
         result = curs.fetchall()
@@ -96,6 +112,7 @@ def rank():
         print(result)
         
         return jsonify(result)
+        # return 형식 ex) [{'유저': '아이유', '포인트': 150, 'ranking': 1}, {'유저': '현우', '포인트': 90, 'ranking': 2}]
     
     
 if __name__ == '__main__':

@@ -3,20 +3,26 @@ import pandas as pd
 import time
 from datetime import date, timedelta
 from models import *
+from crawler import *
 
 # 요약 모델 load
 summarizer = Summarizer_with_KoBart()
 
-# 읽어올 엑셀 파일 지정
+# 읽어올 엑셀 파일 지정 (어제자 뉴스)
 filename = f'./static/{date.today() - timedelta(1)}.xlsx'
 
 # 엑셀 파일 읽어 오기
 df = pd.read_excel(filename, engine='openpyxl')
 
+major = pd.read_excel("static/용어.xlsx")
+
 
 
 # 요약 모델 적용
-summarized = []
+summarized = [] # 요약문
+main_text = []   # 주요 단어
+text_explain = [] # 단어 설명
+
 del_index = []
 category = {'정치': 0, '경제': 0, '사회': 0, '세계': 0, 'IT/과학': 0}
 i = 0
@@ -40,16 +46,37 @@ for cate, text in zip(df['분야'], df['본문']):
     if(text_len) > 3000:
         text = text[:int(text_len/1.5)]
         
-    print(f"{cate}{category[cate]}번째뉴스 요약")
+    # 요약문 생성
+    print(f"\n{cate}{category[cate]}번째뉴스 요약")
     start = time.time()
     result = summarizer.generate(text, input_size=1024)
     summarized.append(result)
     now = time.time()-start
-    print(f'요약시간: {round(now, 2)}\n')
+    print(f'요약시간: {round(now, 2)}')
+    
+    # 주요단어 생성
+    text_temp = [] # 주요 단어 담을 임시 리스트
+    explain_temp = [] # 설명 담을 임시 str문
+    
+    print('주요 단어 검색')
+    for idx, j in enumerate(major.iloc[:, 1]):
+        if j in result:
+            print(j, end=' ')
+            news_dic = crawling_dic(j) # 설명 검색
+            text_temp.append(j)
+            explain_temp.append(news_dic)
+        
+            
+    main_text.append('§'.join(text_temp))
+    text_explain.append('§'.join(explain_temp))
+    
     i += 1
     
 df.drop(del_index, axis=0, inplace = True)
 df['요약문'] = summarized
+df['주요단어'] = main_text
+df['단어설명'] = text_explain
+
 df.reset_index(drop=True, inplace=True)
 
 
@@ -63,8 +90,8 @@ curs = conn.cursor(pymysql.cursors.DictCursor)
 
 # insert summarized into db
 for i in range(len(df)):
-    sql = "insert into `news`.summarized (발행일자, 분야, 타이틀, 링크, 본문, 요약문) values (%s, %s, %s, %s, %s, %s)"
-    curs.execute(sql, (df.iloc[i][0], df.iloc[i][1], df.iloc[i][2], df.iloc[i][3], df.iloc[i][4], df.iloc[i][5]))
+    sql = "insert into `news`.summarized (발행일자, 분야, 타이틀, 링크, 요약문, 주요단어, 단어설명) values (%s, %s, %s, %s, %s, %s, %s)"
+    curs.execute(sql, (df.iloc[i][0], df.iloc[i][1], df.iloc[i][2], df.iloc[i][3], df.iloc[i][5], df.iloc[i][6], df.iloc[i][7]))
 
 
 

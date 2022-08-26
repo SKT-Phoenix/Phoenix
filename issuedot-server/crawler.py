@@ -22,6 +22,27 @@ headers = {'User-Agent' : '________________'}
 query = '(종합)'
 yesterday = (datetime.today() - timedelta(1)).strftime("%Y%m%d")
 
+def crawling_dic(str_dic):
+
+    service = Service(executable_path=ChromeDriverManager().install())
+    browser = webdriver.Chrome(service=service)
+
+    news_url = 'https://dic.daum.net/search.do?q={0}&dic=kor'.format(str_dic)
+
+    browser.get(news_url)
+    time.sleep(sleep_sec)
+    
+    try:
+        table = browser.find_element(By.XPATH,'//div[@class="cleanword_type kokk_type"]')
+        dic = table.find_element(By.XPATH,'.//span[@class="txt_search"]').text
+        
+    except:
+        table = browser.find_element(By.XPATH,'//ul[@class="list_mean"]')
+        dic = table.find_element(By.XPATH,'.//span[@class="txt_mean"]').text
+    
+    return dic
+
+
 def crawling_main_text(url):
 
     req = requests.get(url,headers = headers)
