@@ -5,6 +5,7 @@ import 'package:phoenix/menu/webview.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../home/home.dart';
+import 'quest.dart';
 
 class Issue extends StatefulWidget {
   const Issue({Key? key}) : super(key: key);
@@ -14,6 +15,12 @@ class Issue extends StatefulWidget {
 }
 
 class _IssueState extends State<Issue> {
+  @override
+  void dispose() {
+    Crowling_Datas().callAPI();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,21 +84,16 @@ class _IssueState extends State<Issue> {
               ),
               IssueExpanded(),
               IssueTitle("정치/시사"),
-              // IssueContent(2),
               IssueContentRow(2, politices),
               IssueTitle("경제"),
-              // IssueContent(2),
               IssueContentRow(2, business),
               IssueTitle("사회"),
-              // IssueContent(2),
               IssueContentRow(2, social),
               IssueTitle("세계"),
-              // IssueContent(2),
               IssueContentRow(2, world),
               IssueTitle("IT/과학"),
-              // IssueContent(2),
               IssueContentRow(2, science),
-              TestData("test"),
+              // TestData(split_summary, keywords),
             ],
           ),
         ],
@@ -202,71 +204,6 @@ class _IssueState extends State<Issue> {
     );
   }
 
-  final List<String> titlecontents = ["남북관계 더 나빠져..", "국민의힘 이준석 또 울어?"];
-  final List<String> summarycontents = [
-    "남북관계가 더 나빠진 이유를 말씀드리자면, 먼저 제가 샌프란시스코에 있을 때 부터 얘기를 해야하는데요...",
-    "이준석 머리만 좋지 정치쪽으론 재능 없어.. 하지만 영욱이형을 접견한 같은 사람으로써 마음이 아파와.."
-  ];
-  final List<String> newscontents = [
-    "https://news.nate.com/view/20220824n20041?mid=n1006",
-    "https://news.nate.com/view/20220824n07008?mid=n1006"
-  ];
-
-  Widget IssueContent(int count) {
-    return SliverList(
-      delegate: SliverChildBuilderDelegate(
-          (context, index) => Visibility(
-                visible: isSelected[0],
-                child: ListTile(
-                  title: Container(
-                      padding:
-                          EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                      decoration: BoxDecoration(
-                        color: Color.fromARGB(220, 245, 245, 250),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              Expanded(
-                                  flex: 7,
-                                  child: Container(
-                                      alignment: Alignment.topLeft,
-                                      child: Text(
-                                        titlecontents[index],
-                                        style: TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold),
-                                      ))),
-                              Expanded(
-                                  flex: 3,
-                                  child: Container(
-                                    alignment: Alignment.topRight,
-                                    child: TextButton(
-                                      child: Text("원문 보기"),
-                                      onPressed: () {
-                                        Get.toNamed("/webview",
-                                            arguments: newscontents[index]);
-                                      },
-                                    ),
-                                  ))
-                            ],
-                          ),
-                          Container(
-                            child: Text(
-                              summarycontents[index],
-                              style: TextStyle(color: Colors.black54),
-                            ),
-                          )
-                        ],
-                      )),
-                ),
-              ),
-          childCount: count),
-    );
-  }
-
   Widget IssueContentRow(int count, List<dynamic> data) {
     int SmaxLength = 0;
     for (var i = 0; i < count; i++) {
@@ -275,6 +212,7 @@ class _IssueState extends State<Issue> {
           : SmaxLength = SmaxLength;
     }
     print(SmaxLength);
+    print(split_summary);
     return SliverToBoxAdapter(
       child: Visibility(
         visible: isSelected[0],
@@ -327,9 +265,9 @@ class _IssueState extends State<Issue> {
                         ),
                         Container(
                           padding: EdgeInsets.only(top: 15),
-                          child: Text(
-                            data[index][1],
-                            style: TextStyle(color: Colors.black54),
+                          child: Wrap(
+                            children:
+                                _createChildren(split_summary[index], keywords),
                           ),
                         )
                       ],
@@ -357,7 +295,7 @@ class _IssueState extends State<Issue> {
     return 1;
   }
 
-  Widget TestData(String data) {
+  Widget TestData(List<String> summary, List<String> split_data) {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
           (context, index) => Visibility(
@@ -371,7 +309,7 @@ class _IssueState extends State<Issue> {
                       padding: const EdgeInsets.only(left: 5.0, right: 5.0),
                       child: TextButton(
                         onPressed: () {},
-                        child: testText(data),
+                        child: Text("test"),
                       ),
                     ),
                   ),
@@ -381,17 +319,29 @@ class _IssueState extends State<Issue> {
     );
   }
 
-  Widget testText(String text) {
-    for (var checker in Custom_Utils().dummydata) {
-      if (text == checker) {
-        print(checker);
+  List<Widget> _createChildren(List<String> summary, List<String> keyword) {
+    var summarybuf = summary;
+    return List<Widget>.generate(summarybuf.length, (int index) {
+      var buf = summarybuf[0];
+      print(summarybuf);
+      for (var s in summarybuf) {
+        if (keyword.contains(s)) {
+          summarybuf.removeAt(0);
+          return TextButton(
+            onPressed: () {},
+            style: TextButton.styleFrom(
+                padding: EdgeInsets.zero,
+                minimumSize: Size(50, 5),
+                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                alignment: Alignment.centerLeft),
+            child: Text("${buf.toString()} "),
+          );
+        } else {
+          summarybuf.removeAt(0);
+          return Text("${buf.toString()} ");
+        }
       }
-    }
-    print(text);
-    return Text(text);
-  }
-
-  Widget testTextButton(String text) {
-    return TextButton(onPressed: () {}, child: Text(text));
+      return Text("error");
+    });
   }
 }
