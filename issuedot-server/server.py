@@ -20,8 +20,7 @@ print(" "+"=" * 50)
 
 @app.route('/', methods=['GET', 'POST'])
 def news():
-    
-    # app 버전
+    # summarized news transmission
     if request.method == 'GET':
         
         conn = pymysql.connect(host='localhost', user='root', password='root',
@@ -34,7 +33,6 @@ def news():
         
         conn.close()
         
-        # JSON 객체 생성
         return jsonify(result)
     
         
@@ -44,10 +42,10 @@ def rank():
     # user point update
     if request.method == 'POST':
         # 테스트용
-        user = '아이유'
-        point = 30
-        # user = request.form['user']
+        # user = '아이유'
+        user = request.form['user']
         # point = request.form['point']
+        point = 30
         
         
         conn = pymysql.connect(host='localhost', user='root', password='root',
@@ -86,13 +84,18 @@ def rank():
     
     # user point return
     elif request.method == 'GET':
+        conn = pymysql.connect(host='localhost', user='root', password='root',
+                       db='news', charset='utf8mb4')
+        curs = conn.cursor(pymysql.cursors.DictCursor)
+        sql = "select 유저, 포인트, rank() over (order by 포인트 desc) as ranking from `news`.point"
+        curs.execute(sql)
         
+        result = curs.fetchall()
         
+        conn.close()
+        print(result)
         
-        
-        
-        return "hello"
-    
+        return jsonify(result)
     
     
 if __name__ == '__main__':
