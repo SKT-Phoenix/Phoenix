@@ -4,6 +4,8 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:phoenix/custom_utils.dart';
 
+import '../crowling_datas.dart';
+
 var layoutSize;
 
 class Home extends StatefulWidget {

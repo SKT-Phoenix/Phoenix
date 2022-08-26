@@ -4,6 +4,7 @@ import 'package:phoenix/custom_utils.dart';
 import 'package:phoenix/menu/webview.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+import '../crowling_datas.dart';
 import '../home/home.dart';
 import 'quest.dart';
 
@@ -15,15 +16,10 @@ class Issue extends StatefulWidget {
 }
 
 class _IssueState extends State<Issue> {
-  @override
-  void dispose() {
-    Crowling_Datas().callAPI();
-    super.dispose();
-  }
-
   void showSnackBar(BuildContext context, String text) {
     final snackBar = SnackBar(
-      backgroundColor: Custom_Utils().Colors_SKT_Background(),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+      backgroundColor: Color.fromARGB(255, 255, 241, 164),
       content: Wrap(
         children: [
           Container(
@@ -43,7 +39,7 @@ class _IssueState extends State<Issue> {
           ),
         ],
       ),
-      duration: Duration(seconds: 10),
+      duration: Duration(seconds: 5),
       action: SnackBarAction(
         label: 'OK',
         textColor: Colors.blue,
@@ -54,6 +50,7 @@ class _IssueState extends State<Issue> {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
+  List<String> issuedotTitle = ["주요 뉴스를 알려드릴게요!", "퀴즈를 풀어보자!"];
   @override
   Widget build(BuildContext context) {
     Crowling_Datas().callAPI();
@@ -93,7 +90,7 @@ class _IssueState extends State<Issue> {
                 color: Colors.white,
                 height: layoutSize.size.height * 0.15,
                 child: Text(
-                  "주요 뉴스를 알려드릴게요!",
+                  (isSelected[0]) ? issuedotTitle[0] : issuedotTitle[1],
                   style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
                 ),
               ),
@@ -117,17 +114,9 @@ class _IssueState extends State<Issue> {
                 ),
               ),
               IssueExpanded(),
-              IssueTitle("정치/시사"),
-              IssueContentRow(10, resultData),
-              // IssueTitle("경제"),
-              // IssueContentRow(2, business),
-              // IssueTitle("사회"),
-              // IssueContentRow(2, social),
-              // IssueTitle("세계"),
-              // IssueContentRow(2, world),
-              // IssueTitle("IT/과학"),
-              // IssueContentRow(2, science),
-              // TestData(split_summary, keywords),
+              // IssueTitle("정치/시사"),
+              IssueContent(10, resultData),
+              QuizContent(5, resultData)
             ],
           ),
         ],
@@ -205,11 +194,8 @@ class _IssueState extends State<Issue> {
   Widget IssueExpanded() {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
-          (context, index) => Visibility(
-                visible: isSelected[0],
-                child: Container(
-                  height: layoutSize.size.height * 0.25,
-                ),
+          (context, index) => Container(
+                height: layoutSize.size.height * 0.3,
               ),
           childCount: 1),
     );
@@ -238,7 +224,7 @@ class _IssueState extends State<Issue> {
     );
   }
 
-  Widget IssueContentRow(int count, List<dynamic> data) {
+  Widget IssueContent(int count, List<dynamic> data) {
     int SmaxLength = 0;
     for (var i = 0; i < count; i++) {
       (SmaxLength < data[i][1].length)
@@ -246,15 +232,13 @@ class _IssueState extends State<Issue> {
           : SmaxLength = SmaxLength;
     }
 
-    // print(SmaxLength);
-    // print(split_summary);
     return SliverToBoxAdapter(
       child: Visibility(
         visible: isSelected[0],
         child: Padding(
           padding: EdgeInsets.all(15),
           child: SizedBox(
-            height: layoutSize.size.height * dynamic_BoxH(200),
+            height: layoutSize.size.height * dynamic_BoxH(SmaxLength),
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: count,
@@ -271,6 +255,7 @@ class _IssueState extends State<Issue> {
                     child: Column(
                       children: [
                         Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Expanded(
                                 flex: 7,
@@ -293,7 +278,7 @@ class _IssueState extends State<Issue> {
                                           arguments: data[index][2]); // link
                                     },
                                     style: ButtonStyle(
-                                        alignment: Alignment.topRight),
+                                        alignment: Alignment.topCenter),
                                   ),
                                 ))
                           ],
@@ -324,33 +309,87 @@ class _IssueState extends State<Issue> {
       return 0.23;
     } else if (size <= 150) {
       return 0.26;
-    } else if (size < 200) {
+    } else if (size <= 200) {
       return 0.33;
     }
     return 1;
   }
 
-  Widget TestData(List<String> summary, List<String> split_data) {
-    return SliverList(
-      delegate: SliverChildBuilderDelegate(
-          (context, index) => Visibility(
-                visible: isSelected[1],
-                child: Container(
-                  height: layoutSize.size.height * 0.5,
-                  alignment: Alignment.bottomCenter,
-                  padding: EdgeInsets.only(top: 20),
-                  child: ListTile(
-                    title: Padding(
-                      padding: const EdgeInsets.only(left: 5.0, right: 5.0),
-                      child: TextButton(
-                        onPressed: () {},
-                        child: Text("test"),
-                      ),
+  Widget QuizContent(int count, List<dynamic> data) {
+    int SmaxLength = 0;
+    for (var i = 0; i < count; i++) {
+      (SmaxLength < data[i][1].length)
+          ? SmaxLength = data[i][1].length
+          : SmaxLength = SmaxLength;
+    }
+
+    return SliverToBoxAdapter(
+      child: Visibility(
+        visible: isSelected[1],
+        child: Padding(
+          padding: EdgeInsets.all(15),
+          child: SizedBox(
+            height: layoutSize.size.height * dynamic_BoxH(SmaxLength),
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: count,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.only(right: 15.0),
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(220, 245, 245, 250),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    width: layoutSize.size.width * 0.8,
+                    child: Column(
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                                flex: 7,
+                                child: Container(
+                                    alignment: Alignment.topLeft,
+                                    child: Text(
+                                      data[index][0], // Title
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold),
+                                    ))),
+                            Expanded(
+                                flex: 3,
+                                child: Container(
+                                  alignment: Alignment.topRight,
+                                  child: TextButton(
+                                    child: Text("원문 보기"),
+                                    onPressed: () {
+                                      Get.toNamed("/webview",
+                                          arguments: data[index][2]); // link
+                                    },
+                                    style: ButtonStyle(
+                                        alignment: Alignment.topCenter),
+                                  ),
+                                ))
+                          ],
+                        ),
+                        Container(
+                          padding: EdgeInsets.only(top: 15),
+                          child: Wrap(
+                            children:
+                                _createChildren(split_summary[index], keywords),
+                          ),
+                        )
+                      ],
                     ),
                   ),
-                ),
-              ),
-          childCount: 1),
+                );
+              },
+            ),
+          ),
+        ),
+      ),
     );
   }
 
