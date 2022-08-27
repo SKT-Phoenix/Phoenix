@@ -16,7 +16,7 @@ class Issue extends StatefulWidget {
 }
 
 class _IssueState extends State<Issue> {
-  void showSnackBar(BuildContext context, String text) {
+  void showSnackBar(BuildContext context, String text, String keyword_exp) {
     final snackBar = SnackBar(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
       backgroundColor: Color.fromARGB(255, 255, 241, 164),
@@ -34,7 +34,7 @@ class _IssueState extends State<Issue> {
           ),
           Padding(padding: EdgeInsets.only(bottom: 30)),
           Text(
-            " 정보를 공개하라는 뜻",
+            keyword_exp,
             style: TextStyle(color: Colors.black45),
           ),
         ],
@@ -97,7 +97,9 @@ class _IssueState extends State<Issue> {
               Center(
                   child: Container(
                       width: layoutSize.size.width * 0.5,
-                      child: Image.asset("assets/final_phoenix.gif"))),
+                      child: (isSelected[0])
+                          ? Image.asset("assets/final_phoenix.gif")
+                          : Image.asset("assets/quiz.png"))),
             ],
           ),
           CustomScrollView(
@@ -114,8 +116,8 @@ class _IssueState extends State<Issue> {
                 ),
               ),
               IssueExpanded(),
-              // IssueTitle("정치/시사"),
               IssueContent(10, resultData),
+              IssueTitle(quizNum[0]),
               QuizContent(5, resultData)
             ],
           ),
@@ -201,18 +203,17 @@ class _IssueState extends State<Issue> {
     );
   }
 
-  Widget IssueTitle(String string) {
+  Widget IssueTitle(String quiz) {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
           (context, index) => Visibility(
-                visible: isSelected[0],
+                visible: isSelected[1],
                 child: Container(
-                  padding: EdgeInsets.only(top: 20),
                   child: ListTile(
                     title: Padding(
                       padding: const EdgeInsets.only(left: 5.0, right: 5.0),
                       child: Text(
-                        string,
+                        quiz,
                         style: TextStyle(
                             fontSize: 30, fontWeight: FontWeight.bold),
                       ),
@@ -286,8 +287,8 @@ class _IssueState extends State<Issue> {
                         Container(
                           padding: EdgeInsets.only(top: 15),
                           child: Wrap(
-                            children:
-                                _createChildren(split_summary[index], keywords),
+                            children: _createChildren(
+                                split_summary[index], keywords, keywords_exp),
                           ),
                         )
                       ],
@@ -315,6 +316,17 @@ class _IssueState extends State<Issue> {
     return 1;
   }
 
+  List<String> quizNum = ["Quiz 1", "Quiz 2", "Quiz 3", "Quiz 4", "Quiz 5"];
+  List<String> quizProblem = [
+    "김찬은 바보다?\n맞다,아니다로 정답을 기재해주세요.",
+    "황현은 바보다?\n맞다,아니다로 정답을 기재해주세요.",
+    "김예지는 바보다?\n맞다,아니다로 정답을 기재해주세요.",
+    "이현우는 바보다?\n맞다,아니다로 정답을 기재해주세요.",
+    "박영원은 바보다?\n맞다,아니다로 정답을 기재해주세요."
+  ];
+  List<String> quizAnswer = ["맞다", "아니다", "맞다", "아니다", "맞다"];
+  List<bool> quizChecker = [false, false, false, false, false];
+  List<bool> quizVisible = [true, false, false, false, false];
   Widget QuizContent(int count, List<dynamic> data) {
     int SmaxLength = 0;
     for (var i = 0; i < count; i++) {
@@ -334,19 +346,19 @@ class _IssueState extends State<Issue> {
               scrollDirection: Axis.horizontal,
               itemCount: count,
               itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.only(right: 15.0),
-                  child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                    decoration: BoxDecoration(
-                      color: Color.fromARGB(220, 245, 245, 250),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    width: layoutSize.size.width * 0.8,
-                    child: Column(
-                      children: [
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                return Stack(
+                  children: [
+                    Visibility(
+                      visible: quizVisible[index],
+                      child: Container(
+                        padding:
+                            EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                        decoration: BoxDecoration(
+                          color: Color.fromARGB(220, 245, 245, 250),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        width: layoutSize.size.width * 0.9,
+                        child: Column(
                           children: [
                             Expanded(
                                 flex: 7,
@@ -361,29 +373,14 @@ class _IssueState extends State<Issue> {
                             Expanded(
                                 flex: 3,
                                 child: Container(
-                                  alignment: Alignment.topRight,
-                                  child: TextButton(
-                                    child: Text("원문 보기"),
-                                    onPressed: () {
-                                      Get.toNamed("/webview",
-                                          arguments: data[index][2]); // link
-                                    },
-                                    style: ButtonStyle(
-                                        alignment: Alignment.topCenter),
-                                  ),
-                                ))
+                                    alignment: Alignment.topRight,
+                                    // child: _buildTextComposer())),
+                                    child: Text("test"))),
                           ],
                         ),
-                        Container(
-                          padding: EdgeInsets.only(top: 15),
-                          child: Wrap(
-                            children:
-                                _createChildren(split_summary[index], keywords),
-                          ),
-                        )
-                      ],
+                      ),
                     ),
-                  ),
+                  ],
                 );
               },
             ),
@@ -393,18 +390,71 @@ class _IssueState extends State<Issue> {
     );
   }
 
-  List<Widget> _createChildren(List<String> summary, List<String> keyword) {
-    Crowling_Datas().callAPI();
-    print(summary);
+  Widget testetse() {
+    return TextField(
+      decoration: InputDecoration(
+        labelText: 'Email',
+        hintText: 'Enter your email',
+        labelStyle: TextStyle(color: Colors.redAccent),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+          borderSide: BorderSide(width: 1, color: Colors.redAccent),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+          borderSide: BorderSide(width: 1, color: Colors.redAccent),
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+        ),
+      ),
+      keyboardType: TextInputType.emailAddress,
+    );
+  }
 
+// Widget _buildTextComposer() {
+//     return IconTheme(
+//       data: IconThemeData(color: Theme.of(context).accentColor),
+//       child: Container(
+//           margin: const EdgeInsets.symmetric(horizontal: 8.0),
+//           child: Row(
+//             children: <Widget>[
+//               Flexible(
+//                 child: TextField(
+//                   controller: _textController,
+//                   onSubmitted: _handleSubmitted,
+//                   decoration: new InputDecoration.collapsed(
+//                       hintText: "Send a message"),
+//                 ),
+//               ),
+//               Container(
+//                 margin: const EdgeInsets.symmetric(horizontal: 4.0),
+//                 child: IconButton(
+//                     icon: Icon(Icons.send),
+//                     onPressed: () => _handleSubmitted(_textController.text)),
+//               ),
+//             ],
+//           )
+//       ),
+//     );
+//   }
+//
+  List<Widget> _createChildren(
+      List<String> summary, List<dynamic> keyword, List<dynamic> keyword_exp) {
+    Crowling_Datas().callAPI();
+    // print(summary);
+    // print(keyword);
+    // print(keyword_exp);
     return List<Widget>.generate(summary.length, (int index) {
       var buf = summary[0];
       for (var s in summary) {
         if (keyword.contains(s)) {
+          // 여기서 특정 단어들을 어떻게 매칭시킬건지(~가, ~로)
           summary.removeAt(0);
           return TextButton(
             onPressed: () {
-              showSnackBar(context, buf.toString());
+              showSnackBar(context, buf.toString(),
+                  keyword_exp[keyword.indexOf(buf.toString())]);
             },
             style: TextButton.styleFrom(
                 padding: EdgeInsets.zero,
