@@ -43,3 +43,5 @@ Q&amp;A 생성 모델
 ### 22/08/28
 * KeyBERT + KoGPT2 모델 추가
    * KeyBERT로 원문에서 키워드 찾기 + 키워드를 답으로 질문 생성
+* T5 모델 추가
+   * https://huggingface.co/Hyeoni/t5-e2e-questions-generation-KorQuAD
