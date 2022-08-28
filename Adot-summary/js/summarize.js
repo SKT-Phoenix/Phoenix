@@ -1,8 +1,7 @@
 function summarize_fn(text, deep, target_lang) {
     return new Promise(function (resolve, reject) {
         //-----send text to server and get result-----//
-        ssummary_url = "https://20.196.212.210:443/"
-        //ssummary_url = "http://127.0.0.1:8000/"
+        ssummary_url = "https://20.249.210.78:443/"
 
         $.ajax({
             type: 'POST',
