@@ -55,7 +55,8 @@ python -m scripts.run_generate_top5 --model-path $MODEL_PATH --output-path decod
 ```
 
 ### 학습된 QG 모델 다운로드
-* Hpyerparameter train batch size: 8, eval batch size: 8, epochs: 7
+* Hpyerparameter
+  * train batch size: 8, eval batch size: 8, epochs: 7
 - [모델 weight](https://drive.google.com/file/d/1-CqvHrpFpLt8KPTQSsnQKVERXokjHs5K/view?usp=sharing)
 - [학습 로그](https://drive.google.com/file/d/1-F73TqS1zGjdffz2vFPkgheClMDUf1TX/view?usp=sharing)
 
