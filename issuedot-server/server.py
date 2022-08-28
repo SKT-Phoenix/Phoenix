@@ -3,18 +3,19 @@ from flask import Flask, request, jsonify
 from datetime import date, timedelta
 from models import *
 
-
 import pymysql
 import time
 
 app = Flask(__name__)
 # app.config['JSON_AS_ASCII'] = False
 
+DATE = (date.today() - timedelta(1)).strftime("%Y-%m-%d")
+
 print(" "+"=" * 50)
 print("∥              [INFO] server 초기화 성공          ∥") 
 print(" "+"=" * 50)
 
-
+print(f"'{DATE}' news")
 # ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
 
@@ -27,7 +28,7 @@ def news():
                        db='news', charset='utf8mb4')
         curs = conn.cursor(pymysql.cursors.DictCursor)
         sql = "select * from `news`.summarized where 발행일자=%s"
-        curs.execute(sql, ((date.today() - timedelta(1)).strftime("%Y-%m-%d")))
+        curs.execute(sql, (DATE))
         
         result = curs.fetchall()
         
@@ -43,7 +44,7 @@ def qna():
                        db='news', charset='utf8mb4')
         curs = conn.cursor(pymysql.cursors.DictCursor)
         sql = "select * from `news`.qna where 발행일자=%s"
-        curs.execute(sql, ((date.today() - timedelta(1)).strftime("%Y-%m-%d")))
+        curs.execute(sql, (DATE))
         
         result = curs.fetchall()
         
@@ -60,6 +61,7 @@ def rank():
         # 테스트용
         # user = '아이유'
         user = request.form['user']
+        
         # point = request.form['point']
         point = 30
         
