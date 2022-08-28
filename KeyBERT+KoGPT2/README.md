@@ -42,6 +42,18 @@ MODEL_PATH = "artifacts/gpt2_xxxxxxxx/gpt2_step_x.pth"
 python -m scripts.run_generate --model-path $MODEL_PATH --output-path decoded.tsv
 ```
 
+### 질문 생성 (뉴스 원문 삽입)
+```shell
+MODEL_PATH = "artifacts/gpt2_xxxxxxxx/gpt2_step_x.pth"
+python -m scripts.run_generate_article --model-path $MODEL_PATH --output-path decoded.tsv
+```
+
+### KeyWord Top5에 대한 질문 생성
+```shell
+MODEL_PATH = "artifacts/gpt2_xxxxxxxx/gpt2_step_x.pth"
+python -m scripts.run_generate_top5 --model-path $MODEL_PATH --output-path decoded.tsv
+```
+
 ### 학습된 QG 모델 다운로드
 
 - [모델 weight](https://drive.google.com/file/d/1-CqvHrpFpLt8KPTQSsnQKVERXokjHs5K/view?usp=sharing)
