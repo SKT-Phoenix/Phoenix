@@ -17,6 +17,7 @@ List<dynamic> keywords_exp = [];
 List<List<String>> split_summary = [];
 List<dynamic> resultData = [];
 
+List<dynamic> quizData = [];
 List<dynamic> quizHeader = [];
 List<dynamic> quizBody = [];
 
@@ -62,5 +63,20 @@ class Crowling_Datas {
       }
       resultData.add(buffer);
     }
+  }
+
+  void callQuizAPI() async {
+    var url = Uri.parse(
+      'http://20.249.210.78:8000/qna',
+    );
+    var response = await http.get(url);
+
+    print('Response status: ${response.statusCode}');
+    final decodeData = utf8.decode(response.bodyBytes); // UTF8 변환
+    quizData = json.decode(decodeData);
+    print(quizData);
+    List<String> columns = ["발행일자", "분야", "정답", "질문", "타이틀"];
+
+    for (int x = 0; x < quizData.length; x++) {}
   }
 }

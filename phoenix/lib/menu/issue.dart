@@ -16,6 +16,7 @@ class Issue extends StatefulWidget {
 }
 
 class _IssueState extends State<Issue> {
+  var _controller = TextEditingController();
   void showSnackBar(BuildContext context, String text, String keyword_exp) {
     final snackBar = SnackBar(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
@@ -54,74 +55,80 @@ class _IssueState extends State<Issue> {
   @override
   Widget build(BuildContext context) {
     Crowling_Datas().callAPI();
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.black),
-        backgroundColor: Colors.white, //appbar 투명색
-        centerTitle: true,
-        elevation: 0.0, // 그림자 농도 0
-        leading: IconButton(
-          icon: Image.asset("assets/a_dot_menu.png"),
-          onPressed: () {
-            Get.offAndToNamed("menu");
-          },
-        ),
-        title: Text(
-          "이슈닷",
-          style: TextStyle(
-              color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
-        ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.close),
+    Crowling_Datas().callQuizAPI();
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          iconTheme: IconThemeData(color: Colors.black),
+          backgroundColor: Colors.white, //appbar 투명색
+          centerTitle: true,
+          elevation: 0.0, // 그림자 농도 0
+          leading: IconButton(
+            icon: Image.asset("assets/a_dot_menu.png"),
             onPressed: () {
-              Get.back();
+              Get.offAndToNamed("menu");
             },
-          )
-        ],
-      ),
-      body: Stack(
-        children: [
-          Column(
-            children: [
-              Container(
-                alignment: Alignment.bottomCenter,
-                color: Colors.white,
-                height: layoutSize.size.height * 0.15,
-                child: Text(
-                  (isSelected[0]) ? issuedotTitle[0] : issuedotTitle[1],
-                  style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
-                ),
-              ),
-              Center(
-                  child: Container(
-                      width: layoutSize.size.width * 0.5,
-                      child: (isSelected[0])
-                          ? Image.asset("assets/final_phoenix.gif")
-                          : Image.asset("assets/quiz.png"))),
-            ],
           ),
-          CustomScrollView(
-            slivers: [
-              SliverAppBar(
-                backgroundColor: Custom_Utils().Colors_SKT_Background(),
-                pinned: true,
-                flexibleSpace: Column(
-                  children: [NavBar(), Nav_Animation()],
-                ),
-                bottom: PreferredSize(
-                  preferredSize: Size.fromHeight(-6.0),
-                  child: SizedBox(),
-                ),
-              ),
-              IssueExpanded(),
-              IssueContent(10, resultData),
-              IssueTitle(quizNum[0]),
-              QuizContent(5, resultData)
-            ],
+          title: Text(
+            "이슈닷",
+            style: TextStyle(
+                color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
           ),
-        ],
+          actions: [
+            IconButton(
+              icon: Icon(Icons.close),
+              onPressed: () {
+                Get.back();
+              },
+            )
+          ],
+        ),
+        body: Stack(
+          children: [
+            Column(
+              children: [
+                Container(
+                  alignment: Alignment.bottomCenter,
+                  color: Colors.white,
+                  height: layoutSize.size.height * 0.15,
+                  child: Text(
+                    (isSelected[0]) ? issuedotTitle[0] : issuedotTitle[1],
+                    style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                Center(
+                    child: Container(
+                        width: layoutSize.size.width * 0.5,
+                        child: (isSelected[0])
+                            ? Image.asset("assets/final_phoenix.gif")
+                            : Image.asset("assets/quiz.png"))),
+              ],
+            ),
+            CustomScrollView(
+              slivers: [
+                SliverAppBar(
+                  backgroundColor: Custom_Utils().Colors_SKT_Background(),
+                  pinned: true,
+                  flexibleSpace: Column(
+                    children: [NavBar(), Nav_Animation()],
+                  ),
+                  bottom: PreferredSize(
+                    preferredSize: Size.fromHeight(-6.0),
+                    child: SizedBox(),
+                  ),
+                ),
+                IssueExpanded(),
+                IssueContent(10, resultData),
+                IssueTitle(quizNum[0]),
+                QuizContent(5, resultData)
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -361,21 +368,96 @@ class _IssueState extends State<Issue> {
                         child: Column(
                           children: [
                             Expanded(
-                                flex: 7,
+                                flex: 2,
                                 child: Container(
-                                    alignment: Alignment.topLeft,
+                                    alignment: Alignment.centerLeft,
                                     child: Text(
-                                      data[index][0], // Title
+                                      "경제", // Title
                                       style: TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold),
                                     ))),
                             Expanded(
-                                flex: 3,
+                                flex: 4,
+                                child: Container(
+                                    alignment: Alignment.topLeft,
+                                    child: Text(
+                                      "독점적 산업부문과 비독점적 산업부문 사이에 생산물의 가치실현력에 차이가 발생해 일정기간 양자의 생산물 가격지수에 격차가 생기는 현상은 무엇인가?", // Title
+                                      style: TextStyle(fontSize: 16),
+                                    ))),
+                            Expanded(
+                                flex: 2,
                                 child: Container(
                                     alignment: Alignment.topRight,
-                                    // child: _buildTextComposer())),
-                                    child: Text("test"))),
+                                    child: answerField())),
+                            Expanded(
+                                flex: 2,
+                                child: Container(
+                                    alignment: Alignment.center,
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          flex: 2,
+                                          child: IconButton(
+                                              onPressed: () {},
+                                              icon: Icon(
+                                                Icons.arrow_left,
+                                                size: 30,
+                                                color: Colors.grey,
+                                              )),
+                                        ),
+                                        Expanded(
+                                          flex: 6,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Expanded(
+                                                child: Text("1",
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.bold)),
+                                              ),
+                                              Expanded(
+                                                child: Text("2",
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                        fontSize: 16)),
+                                              ),
+                                              Expanded(
+                                                child: Text("3",
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                        fontSize: 16)),
+                                              ),
+                                              Expanded(
+                                                child: Text("4",
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                        fontSize: 16)),
+                                              ),
+                                              Expanded(
+                                                child: Text("5",
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                        fontSize: 16)),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                        Expanded(
+                                          flex: 2,
+                                          child: IconButton(
+                                              onPressed: () {},
+                                              icon: Icon(
+                                                Icons.arrow_right,
+                                                size: 30,
+                                              )),
+                                        ),
+                                      ],
+                                    ))),
                           ],
                         ),
                       ),
@@ -390,19 +472,38 @@ class _IssueState extends State<Issue> {
     );
   }
 
-  Widget testetse() {
+  Widget answerField() {
     return TextField(
+      controller: _controller,
       decoration: InputDecoration(
-        labelText: 'Email',
-        hintText: 'Enter your email',
-        labelStyle: TextStyle(color: Colors.redAccent),
+        labelText: '정답',
+        hintText: '정답을 입력해 주세요.',
+        suffixIcon: IconButton(
+          onPressed: (() => AlertDialog(
+              title: const Text('AlertDialog Title'),
+              content: SingleChildScrollView(
+                  child: ListBody(
+                children: const <Widget>[
+                  Text('This is a demo alert dialog.'),
+                  Text('Would you like to approve of this message?'),
+                ],
+              ))))
+
+          // print(_controller.toString());
+          ,
+          icon: Icon(
+            Icons.send_rounded,
+            color: Colors.green,
+          ),
+        ),
+        labelStyle: TextStyle(color: Colors.black),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(10.0)),
-          borderSide: BorderSide(width: 1, color: Colors.redAccent),
+          borderSide: BorderSide(width: 1, color: Colors.green),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(10.0)),
-          borderSide: BorderSide(width: 1, color: Colors.redAccent),
+          borderSide: BorderSide(width: 1, color: Colors.green),
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(10.0)),
@@ -412,33 +513,6 @@ class _IssueState extends State<Issue> {
     );
   }
 
-// Widget _buildTextComposer() {
-//     return IconTheme(
-//       data: IconThemeData(color: Theme.of(context).accentColor),
-//       child: Container(
-//           margin: const EdgeInsets.symmetric(horizontal: 8.0),
-//           child: Row(
-//             children: <Widget>[
-//               Flexible(
-//                 child: TextField(
-//                   controller: _textController,
-//                   onSubmitted: _handleSubmitted,
-//                   decoration: new InputDecoration.collapsed(
-//                       hintText: "Send a message"),
-//                 ),
-//               ),
-//               Container(
-//                 margin: const EdgeInsets.symmetric(horizontal: 4.0),
-//                 child: IconButton(
-//                     icon: Icon(Icons.send),
-//                     onPressed: () => _handleSubmitted(_textController.text)),
-//               ),
-//             ],
-//           )
-//       ),
-//     );
-//   }
-//
   List<Widget> _createChildren(
       List<String> summary, List<dynamic> keyword, List<dynamic> keyword_exp) {
     Crowling_Datas().callAPI();
