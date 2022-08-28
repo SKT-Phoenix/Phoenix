@@ -39,7 +39,11 @@ def crawling_main_text(url):
     return (text.text.replace('\n','').replace('\r','').replace('<br>','').replace('\t',''), date,title)
 
 
+<<<<<<< HEAD
 part_name = ['pol', 'eco', 'soc', 'int', 'its']
+=======
+part_name = ['pol'] # , 'eco', 'soc', 'int', 'its' 정치, 경제, 사회, 세계, IT/과학
+>>>>>>> fe9bd602c315e1e9d36948ce3ced8b99bb6fa8c3
 news_df=pd.DataFrame()
 
 
@@ -71,6 +75,7 @@ def news_crawling(part_name):
     
     for n in a_list:
         n_url = n.get_attribute('href')
+        print(f"분야: {part_name} / url: {n_url} / 결과: {crawling_main_text(n_url)}")
         news_dict[idx] = {'분야': part_name,
                         '타이틀' : crawling_main_text(n_url)[2],
                         '발행일자' : crawling_main_text(n_url)[1],
