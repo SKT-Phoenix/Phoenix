@@ -15,30 +15,31 @@ from selenium.webdriver.common.by import By
 
 sleep_sec = 0.5
 
-# User-Agent를 입력해주세요.
 headers = {'User-Agent' : '________________'}
 
-
 # 날짜 지정
-query = '(종합)'
 yesterday = (datetime.today() - timedelta(1)).strftime("%Y%m%d")
 
 def crawling_main_text(url):
 
-    req = requests.get(url,headers = headers)
+    req = requests.get(url, headers=headers)
     req.encoding = None
     soup = BeautifulSoup(req.text, 'html.parser')
 
-    text = soup.find('div', {'id' : 'realArtcContents'}).text
+    text = soup.find('div', {'id' : 'realArtcContents'})
     date = soup.find('em').text
     title = soup.find('h3', {'class' : 'articleSubecjt'}).text
     date = date[0:10]
 
+    a_tag = text.find_all('a')
+    for i in range(len(a_tag)):
+        text.find('a').decompose()
+
         
-    return (text.replace('\n','').replace('\r','').replace('<br>','').replace('\t',''), date,title)
+    return (text.text.replace('\n','').replace('\r','').replace('<br>','').replace('\t',''), date,title)
 
 
-part_name = ['pol', 'eco', 'soc', 'int', 'its'] # 정치, 경제, 사회, 세계, IT/과학
+part_name = ['pol', 'eco', 'soc', 'int', 'its']
 news_df=pd.DataFrame()
 
 
@@ -87,8 +88,7 @@ for pn in part_name:
     news_df = pd.concat([news_df,df])
 
 folder_path = os.getcwd()
-csv_file_name = '{0}.csv'.format(yesterday)
-news_df.to_csv(csv_file_name, index=False, encoding='utf-8')
+xlsx_file_name = '{0}.xlsx'.format(yesterday)
+news_df.to_excel(xlsx_file_name, index=False)
 
-print('CSV 저장 완료 | 경로 : {}\\{}\n'.format(folder_path, csv_file_name))
-
+print('Xlsx 저장 완료 | 경로 : {}\\{}\n'.format(folder_path, xlsx_file_name))
