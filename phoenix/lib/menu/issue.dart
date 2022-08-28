@@ -324,15 +324,6 @@ class _IssueState extends State<Issue> {
   }
 
   List<String> quizNum = ["Quiz 1", "Quiz 2", "Quiz 3", "Quiz 4", "Quiz 5"];
-  List<String> quizProblem = [
-    "김찬은 바보다?\n맞다,아니다로 정답을 기재해주세요.",
-    "황현은 바보다?\n맞다,아니다로 정답을 기재해주세요.",
-    "김예지는 바보다?\n맞다,아니다로 정답을 기재해주세요.",
-    "이현우는 바보다?\n맞다,아니다로 정답을 기재해주세요.",
-    "박영원은 바보다?\n맞다,아니다로 정답을 기재해주세요."
-  ];
-  List<String> quizAnswer = ["맞다", "아니다", "맞다", "아니다", "맞다"];
-  List<bool> quizChecker = [false, false, false, false, false];
   List<bool> quizVisible = [true, false, false, false, false];
   Widget QuizContent(int count, List<dynamic> data) {
     int SmaxLength = 0;
@@ -367,24 +358,14 @@ class _IssueState extends State<Issue> {
                         width: layoutSize.size.width * 0.9,
                         child: Column(
                           children: [
-                            Expanded(
-                                flex: 2,
-                                child: Container(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text(
-                                      "경제", // Title
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold),
-                                    ))),
-                            Expanded(
-                                flex: 4,
-                                child: Container(
-                                    alignment: Alignment.topLeft,
-                                    child: Text(
-                                      "독점적 산업부문과 비독점적 산업부문 사이에 생산물의 가치실현력에 차이가 발생해 일정기간 양자의 생산물 가격지수에 격차가 생기는 현상은 무엇인가?", // Title
-                                      style: TextStyle(fontSize: 16),
-                                    ))),
+                            quizUI(2, Alignment.centerLeft, "경제", 20,
+                                FontWeight.bold),
+                            quizUI(
+                                4,
+                                Alignment.topLeft,
+                                "독점적 산업부문과 비독점적 산업부문 사이에 생산물의 가치실현력에 차이가 발생해 일정기간 양자의 생산물 가격지수에 격차가 생기는 현상은 무엇인가?",
+                                16,
+                                FontWeight.normal),
                             Expanded(
                                 flex: 2,
                                 child: Container(
@@ -396,66 +377,30 @@ class _IssueState extends State<Issue> {
                                     alignment: Alignment.center,
                                     child: Row(
                                       children: [
+                                        quizMoveButton(
+                                            Icons.arrow_left,
+                                            (quizVisible[0])
+                                                ? Colors.grey
+                                                : Colors.black),
                                         Expanded(
-                                          flex: 2,
-                                          child: IconButton(
-                                              onPressed: () {},
-                                              icon: Icon(
-                                                Icons.arrow_left,
-                                                size: 30,
-                                                color: Colors.grey,
-                                              )),
-                                        ),
-                                        Expanded(
-                                          flex: 6,
+                                          flex: 8,
                                           child: Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
                                             children: [
-                                              Expanded(
-                                                child: Text("1",
-                                                    textAlign: TextAlign.center,
-                                                    style: TextStyle(
-                                                        fontSize: 16,
-                                                        fontWeight:
-                                                            FontWeight.bold)),
-                                              ),
-                                              Expanded(
-                                                child: Text("2",
-                                                    textAlign: TextAlign.center,
-                                                    style: TextStyle(
-                                                        fontSize: 16)),
-                                              ),
-                                              Expanded(
-                                                child: Text("3",
-                                                    textAlign: TextAlign.center,
-                                                    style: TextStyle(
-                                                        fontSize: 16)),
-                                              ),
-                                              Expanded(
-                                                child: Text("4",
-                                                    textAlign: TextAlign.center,
-                                                    style: TextStyle(
-                                                        fontSize: 16)),
-                                              ),
-                                              Expanded(
-                                                child: Text("5",
-                                                    textAlign: TextAlign.center,
-                                                    style: TextStyle(
-                                                        fontSize: 16)),
-                                              )
+                                              quizCount("1"),
+                                              quizCount("2"),
+                                              quizCount("3"),
+                                              quizCount("4"),
+                                              quizCount("5")
                                             ],
                                           ),
                                         ),
-                                        Expanded(
-                                          flex: 2,
-                                          child: IconButton(
-                                              onPressed: () {},
-                                              icon: Icon(
-                                                Icons.arrow_right,
-                                                size: 30,
-                                              )),
-                                        ),
+                                        quizMoveButton(
+                                            Icons.arrow_right,
+                                            (quizVisible[4])
+                                                ? Colors.grey
+                                                : Colors.black)
                                       ],
                                     ))),
                           ],
@@ -472,6 +417,45 @@ class _IssueState extends State<Issue> {
     );
   }
 
+  Widget quizUI(int flex, dynamic alignment, String text, double fontsize,
+      dynamic fontweight) {
+    return Expanded(
+        flex: flex,
+        child: Container(
+            alignment: alignment,
+            child: Text(
+              text, // Title
+              style: TextStyle(fontSize: fontsize, fontWeight: fontweight),
+            )));
+  }
+
+  Widget quizCount(String text) {
+    return Expanded(
+      child: Text(text,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              fontSize: 16,
+              fontWeight: (quizVisible[int.parse(text) - 1])
+                  ? FontWeight.bold
+                  : FontWeight.normal)),
+    );
+  }
+
+  Widget quizMoveButton(dynamic icon, dynamic color) {
+    return Expanded(
+      flex: 2,
+      child: IconButton(
+          onPressed: () {},
+          icon: Icon(
+            icon,
+            size: 30,
+            color: color,
+          )),
+    );
+  }
+
+  final quizColor = [Colors.redAccent, Colors.green];
+
   Widget answerField() {
     return TextField(
       controller: _controller,
@@ -479,31 +463,20 @@ class _IssueState extends State<Issue> {
         labelText: '정답',
         hintText: '정답을 입력해 주세요.',
         suffixIcon: IconButton(
-          onPressed: (() => AlertDialog(
-              title: const Text('AlertDialog Title'),
-              content: SingleChildScrollView(
-                  child: ListBody(
-                children: const <Widget>[
-                  Text('This is a demo alert dialog.'),
-                  Text('Would you like to approve of this message?'),
-                ],
-              ))))
-
-          // print(_controller.toString());
-          ,
+          onPressed: () => print(_controller.toString()),
           icon: Icon(
             Icons.send_rounded,
-            color: Colors.green,
+            color: quizColor[0],
           ),
         ),
         labelStyle: TextStyle(color: Colors.black),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(10.0)),
-          borderSide: BorderSide(width: 1, color: Colors.green),
+          borderSide: BorderSide(width: 1, color: quizColor[0]),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(10.0)),
-          borderSide: BorderSide(width: 1, color: Colors.green),
+          borderSide: BorderSide(width: 1, color: quizColor[0]),
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(10.0)),
