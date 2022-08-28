@@ -1,7 +1,7 @@
 # Question Generation(QG) Model with KorQuAD
 
 학습된 [SKT-AI/KoGPT2](https://github.com/SKT-AI/KoGPT2) 모델을 기반으로 질문 생성 QG(Question Generation) 모델을 만들었습니다. 
-QG 모델을 만들기 위해 Question Answering 데이터셋인 KorQuAD v1.0을 사용하였습니다.
+QG 모델을 만들기 위해 Question Answering 데이터셋인 KorQuAD v1.0을 사용하였습니다.  
 KeyBERT를 이용해 원문에서 키워드를 찾고 키워드를 답으로 하는 질문을 생성합니다.
 
 ## 사용 방법
@@ -49,5 +49,5 @@ python -m scripts.run_generate --model-path $MODEL_PATH --output-path decoded.ts
 
 ## Author
 
-by Junseong Kim (Scatter Lab, Pingpong AI) codertimo@gmail.com
+by Junseong Kim (Scatter Lab, Pingpong AI) codertimo@gmail.com  
 Rearranged by Hyeon Hwang
