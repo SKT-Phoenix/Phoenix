@@ -123,7 +123,7 @@ class _IssueState extends State<Issue> {
                 ),
                 IssueExpanded(),
                 IssueContent(10, resultData),
-                IssueTitle(quizNum[0]),
+                IssueTitle(quizNum[quizVisible.indexOf(true)]),
                 QuizContent(5, resultData)
               ],
             ),
@@ -358,14 +358,10 @@ class _IssueState extends State<Issue> {
                         width: layoutSize.size.width * 0.9,
                         child: Column(
                           children: [
-                            quizUI(2, Alignment.centerLeft, "경제", 20,
-                                FontWeight.bold),
-                            quizUI(
-                                4,
-                                Alignment.topLeft,
-                                "독점적 산업부문과 비독점적 산업부문 사이에 생산물의 가치실현력에 차이가 발생해 일정기간 양자의 생산물 가격지수에 격차가 생기는 현상은 무엇인가?",
-                                16,
-                                FontWeight.normal),
+                            quizUI(2, Alignment.centerLeft, quizLists[index],
+                                20, FontWeight.bold),
+                            quizUI(4, Alignment.topLeft, quizQuestions[index],
+                                16, FontWeight.normal),
                             Expanded(
                                 flex: 2,
                                 child: Container(
@@ -378,6 +374,7 @@ class _IssueState extends State<Issue> {
                                     child: Row(
                                       children: [
                                         quizMoveButton(
+                                            "left",
                                             Icons.arrow_left,
                                             (quizVisible[0])
                                                 ? Colors.grey
@@ -397,6 +394,7 @@ class _IssueState extends State<Issue> {
                                           ),
                                         ),
                                         quizMoveButton(
+                                            "right",
                                             Icons.arrow_right,
                                             (quizVisible[4])
                                                 ? Colors.grey
@@ -441,11 +439,25 @@ class _IssueState extends State<Issue> {
     );
   }
 
-  Widget quizMoveButton(dynamic icon, dynamic color) {
+  Widget quizMoveButton(String direction, dynamic icon, dynamic color) {
     return Expanded(
       flex: 2,
       child: IconButton(
-          onPressed: () {},
+          onPressed: () {
+            setState(() {
+              if (direction == "left" && count != 0) {
+                quizVisible[count] = false;
+                count -= 1;
+                quizVisible[count] = true;
+                print(quizVisible);
+              } else if (direction == "right" && count != 4) {
+                quizVisible[count] = false;
+                count += 1;
+                quizVisible[count] = true;
+                print(quizVisible);
+              }
+            });
+          },
           icon: Icon(
             icon,
             size: 30,
@@ -455,7 +467,7 @@ class _IssueState extends State<Issue> {
   }
 
   final quizColor = [Colors.redAccent, Colors.green];
-
+  int count = 0;
   Widget answerField() {
     return TextField(
       controller: _controller,
@@ -463,7 +475,9 @@ class _IssueState extends State<Issue> {
         labelText: '정답',
         hintText: '정답을 입력해 주세요.',
         suffixIcon: IconButton(
-          onPressed: () => print(_controller.toString()),
+          onPressed: () {
+            print(_controller.toString());
+          },
           icon: Icon(
             Icons.send_rounded,
             color: quizColor[0],

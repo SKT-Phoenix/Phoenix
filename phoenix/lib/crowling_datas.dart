@@ -18,8 +18,9 @@ List<List<String>> split_summary = [];
 List<dynamic> resultData = [];
 
 List<dynamic> quizData = [];
-List<dynamic> quizHeader = [];
-List<dynamic> quizBody = [];
+List<dynamic> quizLists = [];
+List<dynamic> quizAnswers = [];
+List<dynamic> quizQuestions = [];
 
 class Crowling_Datas {
   void callAPI() async {
@@ -77,6 +78,17 @@ class Crowling_Datas {
     print(quizData);
     List<String> columns = ["발행일자", "분야", "정답", "질문", "타이틀"];
 
-    for (int x = 0; x < quizData.length; x++) {}
+    for (int x = 0; x < quizData.length; x++) {
+      for (var y in columns) {
+        if (y == "분야") {
+          quizLists.add(quizData[x][y]);
+        } else if (y == "정답") {
+          quizAnswers.add(quizData[x][y]);
+        } else if (y == "질문") {
+          quizQuestions.add(quizData[x][y]);
+        }
+      }
+    }
+    print(quizQuestions);
   }
 }
