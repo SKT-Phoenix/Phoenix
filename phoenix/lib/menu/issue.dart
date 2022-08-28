@@ -313,7 +313,7 @@ class _IssueState extends State<Issue> {
     } else if (size <= 200) {
       return 0.33;
     }
-    return 1;
+    return 0.6;
   }
 
   List<String> quizNum = ["Quiz 1", "Quiz 2", "Quiz 3", "Quiz 4", "Quiz 5"];
@@ -442,19 +442,21 @@ class _IssueState extends State<Issue> {
   List<Widget> _createChildren(
       List<String> summary, List<dynamic> keyword, List<dynamic> keyword_exp) {
     Crowling_Datas().callAPI();
-    // print(summary);
-    // print(keyword);
-    // print(keyword_exp);
     return List<Widget>.generate(summary.length, (int index) {
       var buf = summary[0];
-      for (var s in summary) {
-        if (keyword.contains(s)) {
-          // 여기서 특정 단어들을 어떻게 매칭시킬건지(~가, ~로)
+      var key_buf = "";
+      for (String s in summary) {
+        for (String key in keyword) {
+          if (s.contains(key)) {
+            key_buf = key;
+          }
+        }
+        if (key_buf != "") {
           summary.removeAt(0);
           return TextButton(
             onPressed: () {
-              showSnackBar(context, buf.toString(),
-                  keyword_exp[keyword.indexOf(buf.toString())]);
+              showSnackBar(
+                  context, key_buf, keyword_exp[keyword.indexOf(key_buf)]);
             },
             style: TextButton.styleFrom(
                 padding: EdgeInsets.zero,
