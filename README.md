@@ -12,7 +12,7 @@ https://drive.google.com/file/d/1p0LYPBQE8OW6XRFEW5nxc8P03wgD_plE/view?usp=shari
 ### Train
 
 30% 확률로 input answer 대신 '[MASK]'를 넣어 질문 문장을 생성하도록 학습한다.  
-그 결과, input answer 없을 때도 적절히 answer을 찾아 질문을 생성할 수 있다.
+그 결과, input answer가 없을 때도 적절히 answer을 찾아 질문을 생성할 수 있다.
 
 ### Question Generation without Input Answer
 
