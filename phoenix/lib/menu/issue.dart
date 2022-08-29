@@ -11,6 +11,13 @@ import 'quest.dart';
 List<int> colorflag = [0, 0, 0, 0, 0];
 List<bool> qnaflag = [false, false, false, false, false];
 List<String> inputText = ["", "", "", "", ""];
+List<dynamic> qnanumcolor = [
+  Colors.black,
+  Colors.black,
+  Colors.black,
+  Colors.black,
+  Colors.black
+];
 
 class Issue extends StatefulWidget {
   const Issue({Key? key}) : super(key: key);
@@ -389,11 +396,11 @@ class _IssueState extends State<Issue> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
                                             children: [
-                                              quizCount("1"),
-                                              quizCount("2"),
-                                              quizCount("3"),
-                                              quizCount("4"),
-                                              quizCount("5")
+                                              quizCount("1", qnanumcolor[0]),
+                                              quizCount("2", qnanumcolor[1]),
+                                              quizCount("3", qnanumcolor[2]),
+                                              quizCount("4", qnanumcolor[3]),
+                                              quizCount("5", qnanumcolor[4])
                                             ],
                                           ),
                                         ),
@@ -431,11 +438,12 @@ class _IssueState extends State<Issue> {
             )));
   }
 
-  Widget quizCount(String text) {
+  Widget quizCount(String text, dynamic color) {
     return Expanded(
       child: Text(text,
           textAlign: TextAlign.center,
           style: TextStyle(
+              color: color,
               fontSize: 16,
               fontWeight: (quizVisible[int.parse(text) - 1])
                   ? FontWeight.bold
@@ -521,12 +529,12 @@ class _IssueState extends State<Issue> {
                   setState(() {
                     if (inputText[index] == quizAnswers[index]) {
                       print("정답!");
-
                       colorflag[index] = 1;
                     } else {
                       print("오답!");
                       colorflag[index] = 0;
                     }
+                    qnanumcolor[index] = quizColor[colorflag[index]];
                     qnaflag[index] = true;
                   });
                 },
