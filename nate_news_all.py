@@ -59,7 +59,7 @@ def news_crawling(part_num, yesterday):
     print('\n크롤링을 시작합니다.')
 
     #####동적 제어로 페이지 넘어가며 크롤링
-    tlt = str()
+    # tlt = str()
 
     page = 1
     news_num = 100
@@ -120,36 +120,24 @@ def news_crawling(part_num, yesterday):
 
 # 날짜 지정
 
+yesterday = (datetime.today() - timedelta(1)).strftime("%Y%m%d")
+print("\n" + "-"*10 + str(yesterday) + "크롤링" + "-"*10)
 
-for yes in range(1, 3):
-    yesterday = (datetime.today() - timedelta(yes)).strftime("%Y%m%d")
-    print("\n" + "-"*10 + str(yesterday) + "크롤링" + "-"*10)
+news_df=pd.DataFrame()
+all_df = pd.DataFrame()
 
-    news_df=pd.DataFrame()
-    all_df = pd.DataFrame()
+for index, pn in enumerate(part_num):
+    df = news_crawling(pn, yesterday)
+    news_df = pd.concat([news_df,df])
 
-    for index, pn in enumerate(part_num):
-        df = news_crawling(pn, yesterday)
-        news_df = pd.concat([news_df,df])
-
-        news_df['분야'].replace(pn, part_name[index], inplace=True)
-        
-    folder_path = os.getcwd()
-    xlsx_file_name = '{0}_all.xlsx'.format(yesterday)
-    news_df.to_excel(xlsx_file_name, index=False, encoding='utf-8')
-
-    print(news_df.head())
-    print('엑셀 저장 완료 | 경로 : {}\\{}\n'.format(folder_path, xlsx_file_name))
+    news_df['분야'].replace(pn, part_name[index], inplace=True)
     
+folder_path = os.getcwd()
+xlsx_file_name = '{0}_all.xlsx'.format(yesterday)
+news_df.to_excel(xlsx_file_name, index=False, encoding='utf-8')
 
-
-
-# news_df['분야'].replace('201', '정치', inplace=True)
-# news_df['분야'].replace('301', '경제', inplace=True)
-# news_df['분야'].replace('501', '세계', inplace=True)
-# news_df['분야'].replace('601', 'IT/과학', inplace=True)
-
-# news_df.to_excel(xlsx_file_name, index=False)
+print(news_df.head())
+print('엑셀 저장 완료 | 경로 : {}\\{}\n'.format(folder_path, xlsx_file_name))
 
 
 print("\n" + '='*30 + "\n")
