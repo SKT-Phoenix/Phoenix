@@ -16,7 +16,6 @@ class Issue extends StatefulWidget {
 }
 
 class _IssueState extends State<Issue> {
-  var _controller = TextEditingController();
   void showSnackBar(BuildContext context, String text, String keyword_exp) {
     final snackBar = SnackBar(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
@@ -316,9 +315,9 @@ class _IssueState extends State<Issue> {
     } else if (size <= 75) {
       return 0.23;
     } else if (size <= 150) {
-      return 0.26;
+      return 0.3;
     } else if (size <= 200) {
-      return 0.33;
+      return 0.35;
     }
     return 0.6;
   }
@@ -366,7 +365,8 @@ class _IssueState extends State<Issue> {
                                 flex: 2,
                                 child: Container(
                                     alignment: Alignment.topRight,
-                                    child: answerField())),
+                                    child: answerField(
+                                        quizVisible.indexOf(true)))),
                             Expanded(
                                 flex: 2,
                                 child: Container(
@@ -467,16 +467,23 @@ class _IssueState extends State<Issue> {
   }
 
   final quizColor = [Colors.redAccent, Colors.green];
+  List<dynamic> _controllers = [
+    TextEditingController(),
+    TextEditingController(),
+    TextEditingController(),
+    TextEditingController(),
+    TextEditingController(),
+  ];
   int count = 0;
-  Widget answerField() {
+  Widget answerField(int index) {
     return TextField(
-      controller: _controller,
+      controller: _controllers[index],
       decoration: InputDecoration(
         labelText: '정답',
         hintText: '정답을 입력해 주세요.',
         suffixIcon: IconButton(
           onPressed: () {
-            print(_controller.toString());
+            print(_controllers[index].toString());
           },
           icon: Icon(
             Icons.send_rounded,
