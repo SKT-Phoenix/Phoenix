@@ -135,7 +135,7 @@ for yes in range(1, 3):
         news_df['분야'].replace(pn, part_name[index], inplace=True)
 
         folder_path = os.getcwd()
-        xlsx_file_name = '{0}_all_{1}.xlsx'.format(yesterday, part_num)
+        xlsx_file_name = '{0}_all_{1}.xlsx'.format(yesterday, pn)
         news_df.to_excel(xlsx_file_name, index=False, encoding='utf-8')
 
     print(news_df.head())
