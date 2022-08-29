@@ -2,7 +2,7 @@
 ___
 
 This model is a fine-tuend version of paust/pko-t5-base on the KorQuAD v1.0 Dataset.
-https://github.com/KristiyanVachev/Leaf-Question-Generation
+Some ideas are inspired by [Leaf-Question-Generation]
 
 ### Dataset
 KorQuAD v1.0 Train / Valid Dataset (csv)
