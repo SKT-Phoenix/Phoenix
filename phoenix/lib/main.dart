@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:phoenix/menu/quest.dart';
 import 'package:phoenix/menu/webview.dart';
+import 'baner.dart';
 import 'home/home.dart';
 import 'menu/issue.dart';
 import 'menu/menu.dart';
@@ -20,12 +21,15 @@ class Phoenix extends StatelessWidget {
       title: '에이닷',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        scaffoldBackgroundColor: Colors.white,
         appBarTheme: AppBarTheme(
           systemOverlayStyle: SystemUiOverlayStyle.dark,
         ),
       ),
+      initialRoute: "/baner",
       home: Home(),
       getPages: [
+        getBaner("/baner", Baner()),
         getHome("/home", Home()),
         getMenu("/menu", Menu()),
         getQuest("/quest", Quest()),
@@ -35,10 +39,18 @@ class Phoenix extends StatelessWidget {
     );
   }
 
+  GetPage getBaner(String name, Widget pageName) {
+    return GetPage(
+      name: name,
+      page: () => pageName,
+    );
+  }
+
   GetPage getHome(String name, Widget pageName) {
     return GetPage(
         name: name,
         page: () => pageName,
+        transition: Transition.noTransition,
         transitionDuration: Duration(milliseconds: 300));
   }
 
@@ -46,7 +58,8 @@ class Phoenix extends StatelessWidget {
     return GetPage(
         name: name,
         page: () => pageName,
-        transition: Transition.leftToRightWithFade,
+        curve: Curves.decelerate,
+        transition: Transition.leftToRight,
         popGesture: false);
   }
 
@@ -62,7 +75,7 @@ class Phoenix extends StatelessWidget {
     return GetPage(
         name: name,
         page: () => pageName,
-        transition: Transition.leftToRight,
+        transition: Transition.cupertino,
         popGesture: false);
   }
 
