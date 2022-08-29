@@ -6,6 +6,7 @@ import 'package:phoenix/baner.dart';
 import 'package:phoenix/custom_utils.dart';
 
 import '../crowling_datas.dart';
+import 'package:http/http.dart' as http;
 
 var layoutSize;
 
@@ -22,6 +23,7 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     Crowling_Datas().callAPI();
+    Crowling_Datas().callRankAPI();
     super.initState();
   }
 

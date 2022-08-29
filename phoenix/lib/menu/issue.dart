@@ -8,6 +8,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 import '../crowling_datas.dart';
 import '../home/home.dart';
 import 'quest.dart';
+import 'package:http/http.dart' as http;
 
 List<int> colorflag = [0, 0, 0, 0, 0];
 List<bool> qnaflag = [false, false, false, false, false];
@@ -584,9 +585,11 @@ class _IssueState extends State<Issue> {
                   setState(() {
                     if (inputText[index] == quizAnswers[index]) {
                       print("정답!");
+                      _postRequest('20');
                       colorflag[index] = 1;
                     } else {
                       print("오답!");
+                      _postRequest('0');
                       colorflag[index] = 0;
                     }
                     qnanumcolor[index] = quizColor[colorflag[index]];
@@ -615,6 +618,18 @@ class _IssueState extends State<Issue> {
           ),
         ),
       ],
+    );
+  }
+
+  _postRequest(String point) async {
+    Uri url = Uri.parse('http://20.249.210.78:8000/rank');
+
+    http.Response response = await http.post(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: <String, String>{'user': userName, 'point': point},
     );
   }
 

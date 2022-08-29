@@ -5,6 +5,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:phoenix/baner.dart';
 // import 'package:path_provider/path_provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -136,7 +137,7 @@ class IssueWebMenu extends StatelessWidget {
     final WebViewRequest request = WebViewRequest(
       uri: Uri.parse('http://20.249.210.78:8000/rank'),
       method: WebViewRequestMethod.post,
-      headers: <String, String>{'hyeonu': 'babo', 'Content-Type': 'text/plain'},
+      headers: <String, String>{'user': 'kimchan', 'point': '20'},
       body: Uint8List.fromList('Test Body'.codeUnits),
     );
     await controller.loadRequest(request);

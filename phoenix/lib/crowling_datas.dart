@@ -22,6 +22,8 @@ List<dynamic> quizLists = [];
 List<dynamic> quizAnswers = [];
 List<dynamic> quizQuestions = [];
 
+List<dynamic> rankData = [];
+
 class Crowling_Datas {
   void callAPI() async {
     var url = Uri.parse(
@@ -93,5 +95,32 @@ class Crowling_Datas {
     }
     print(quizQuestions);
     print(quizAnswers);
+  }
+
+  void callRankAPI() async {
+    var url = Uri.parse(
+      'http://20.249.210.78:8000/rank',
+    );
+    var response = await http.get(url);
+
+    print('Response status: ${response.statusCode}');
+    final decodeData = utf8.decode(response.bodyBytes); // UTF8 변환
+    rankData = json.decode(decodeData);
+    print(rankData);
+    // List<String> columns = ["발행일자", "분야", "정답", "질문", "타이틀"];
+    // quizLists = [];
+    // quizAnswers = [];
+    // quizQuestions = [];
+    // for (int x = 0; x < quizData.length; x++) {
+    //   for (var y in columns) {
+    //     if (y == "분야") {
+    //       quizLists.add(quizData[x][y]);
+    //     } else if (y == "정답") {
+    //       quizAnswers.add(quizData[x][y]);
+    //     } else if (y == "질문") {
+    //       quizQuestions.add(quizData[x][y]);
+    //     }
+    //   }
+    // }
   }
 }
