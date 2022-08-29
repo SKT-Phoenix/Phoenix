@@ -27,8 +27,8 @@ category = {'정치': 0, '경제': 0, '사회': 0, '세계': 0, 'IT/과학': 0}
 
 i = 0
 for cate, text in zip(df['분야'], df['본문']):
-    # 본문길이가 900자 이하인 뉴스는 pass
-    if len(text) < 900:
+    # 본문길이가 500자 이하인 뉴스는 pass
+    if len(text) < 500:
         del_index.append(i)
         i += 1
         continue
@@ -52,7 +52,7 @@ for cate, text in zip(df['분야'], df['본문']):
     summarized.append(result)
     now = time.time()-start
     print(f'요약시간: {round(now, 2)}')
-    
+    print(result)
     # 주요단어 생성
     text_temp = [] # 주요 단어 담을 임시 리스트
     explain_temp = [] # 설명 담을 임시 str문
@@ -78,6 +78,7 @@ df['단어설명'] = text_explain
 
 df.reset_index(drop=True, inplace=True)
 
+
 # excel파일 변경
 yesterday = (datetime.today() - timedelta(1)).strftime("%Y-%m-%d")
 xlsx_file_name = 'static\{0}.xlsx'.format(yesterday)
@@ -90,6 +91,9 @@ conn = pymysql.connect(host='localhost', user='root', password='root',
 # Connection 으로부터 Dictoionary Cursor 생성
 curs = conn.cursor(pymysql.cursors.DictCursor)
 
+sql = "delete from `news`.summarized"
+curs.execute(sql)
+
 # insert summarized into db
 for i in range(len(df)):
     sql = "insert into `news`.summarized (발행일자, 분야, 타이틀, 링크, 요약문, 주요단어, 단어설명) values (%s, %s, %s, %s, %s, %s, %s)"
@@ -97,3 +101,9 @@ for i in range(len(df)):
 
 conn.commit()
 conn.close()
+
+
+
+print("\n "+"=" * 50)
+print("∥               [INFO] DB setting 완료            ∥") 
+print(" "+"=" * 50)
