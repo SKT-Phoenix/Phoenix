@@ -5,9 +5,9 @@ This model is a fine-tuend version of paust/pko-t5-base on the KorQuAD v1.0 Data
 Most ideas were inspired by [Leaf-Question-Generation](https://github.com/KristiyanVachev/Leaf-Question-Generation).
 
 ### Dataset
-KorQuAD v1.0 Train / Valid Dataset (csv)  
-https://drive.google.com/file/d/1O0-8BCsYn3PpEmIUjiEBnPz4sBBmQmud/view?usp=sharing  
-https://drive.google.com/file/d/1p0LYPBQE8OW6XRFEW5nxc8P03wgD_plE/view?usp=sharing
+KorQuAD v1.0 Dataset (csv)  
+[Train](https://drive.google.com/file/d/1O0-8BCsYn3PpEmIUjiEBnPz4sBBmQmud/view?usp=sharing)
+[Valid](https://drive.google.com/file/d/1p0LYPBQE8OW6XRFEW5nxc8P03wgD_plE/view?usp=sharing)
 
 ### Train
 
