@@ -15,7 +15,7 @@ from selenium.webdriver.common.by import By
 sleep_sec = 0.5
 
 # User-Agent를 입력해주세요.
-headers = {'User-Agent' : '________________'}
+headers = {'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36'}
 
 # 날짜 지정
 query = '(종합)'
@@ -47,10 +47,15 @@ def crawling_main_text(url):
     req = requests.get(url,headers = headers)
     req.encoding = None
     soup = BeautifulSoup(req.text, 'html.parser')
-
+    
     text = soup.find('div', {'id' : 'realArtcContents'})
-    # text.find('a').decompose()
-    text = text.text
+    
+    # a태그제거
+    a_tag = text.find_all('a')
+    for i in range(len(a_tag)):
+        text.find('a').decompose()
+    text= text.text
+    
     date = soup.find('em').text
     title = soup.find('h3', {'class' : 'articleSubecjt'}).text
     date = date[0:10]
