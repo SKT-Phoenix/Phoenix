@@ -16,7 +16,7 @@ from selenium.webdriver.common.by import By
 sleep_sec = 0.5
 
 # User-Agent를 입력해주세요.
-headers = {'User-Agent' : '________________'}
+headers = {'User-Agent' : 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36'}
 
 # # 날짜 지정
 # yesterday = (datetime.today() - timedelta(1)).strftime("%Y%m%d")
@@ -62,7 +62,7 @@ def news_crawling(part_num, yesterday):
     tlt = str()
 
     page = 1
-    news_num = 100000
+    news_num = 100
     news_dict = {}
     idx = 1
         
@@ -100,7 +100,7 @@ def news_crawling(part_num, yesterday):
             
         page += 1
 
-        if len(a_list) == 0: #  or idx >= 2001
+        if len(a_list) == 0 or idx >= 100: #  
             print(news_dict)
             print('\n브라우저를 종료합니다.\n' + '=' * 100)
             time.sleep(0.7)
@@ -134,10 +134,10 @@ for yes in range(1, 3):
 
         news_df['분야'].replace(pn, part_name[index], inplace=True)
 
-        folder_path = os.getcwd()
-        xlsx_file_name = '{0}_all_{1}.xlsx'.format(yesterday, part_num)
-        news_df.to_excel(xlsx_file_name, index=False, encoding='utf-8')
-
+        
+    folder_path = os.getcwd()
+    xlsx_file_name = '{0}_all.xlsx'.format(yesterday)
+    news_df.to_excel(xlsx_file_name, index=False, encoding='utf-8')
     print(news_df.head())
     print('엑셀 저장 완료 | 경로 : {}\\{}\n'.format(folder_path, xlsx_file_name))
     
