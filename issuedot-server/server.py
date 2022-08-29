@@ -62,8 +62,8 @@ def rank():
         # user = '아이유'
         user = request.form['user']
         
-        # point = request.form['point']
-        point = 30
+        point = request.form['point']
+        # point = 30
         
         
         conn = pymysql.connect(host='localhost', user='root', password='root',
