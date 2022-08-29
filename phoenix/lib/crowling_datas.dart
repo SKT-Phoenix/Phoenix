@@ -107,7 +107,7 @@ class Crowling_Datas {
     final decodeData = utf8.decode(response.bodyBytes); // UTF8 변환
     rankData = json.decode(decodeData);
     print(rankData);
-    // List<String> columns = ["발행일자", "분야", "정답", "질문", "타이틀"];
+    List<String> columns = ["ranking", "유저", "포인트"];
     // quizLists = [];
     // quizAnswers = [];
     // quizQuestions = [];
