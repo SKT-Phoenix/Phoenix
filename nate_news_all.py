@@ -133,11 +133,11 @@ for yes in range(1, 3):
         news_df = pd.concat([news_df,df])
 
         news_df['분야'].replace(pn, part_name[index], inplace=True)
-
         
     folder_path = os.getcwd()
     xlsx_file_name = '{0}_all.xlsx'.format(yesterday)
     news_df.to_excel(xlsx_file_name, index=False, encoding='utf-8')
+
     print(news_df.head())
     print('엑셀 저장 완료 | 경로 : {}\\{}\n'.format(folder_path, xlsx_file_name))
     
