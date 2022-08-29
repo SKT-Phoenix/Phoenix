@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:phoenix/baner.dart';
 import 'package:phoenix/custom_utils.dart';
 import 'package:phoenix/menu/webview.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -114,7 +115,7 @@ class _IssueState extends State<Issue> {
                     child: Container(
                         width: layoutSize.size.width * 0.5,
                         child: (isSelected[0])
-                            ? Image.asset("assets/final_phoenix.gif")
+                            ? adot_issue(userName)
                             : Image.asset("assets/quiz.png"))),
               ],
             ),
@@ -131,7 +132,7 @@ class _IssueState extends State<Issue> {
                     child: SizedBox(),
                   ),
                 ),
-                IssueExpanded(),
+                IssueExpanded((isSelected[0] == true) ? 0.32 : 0.3),
                 IssueContent(10, resultData),
                 IssueTitle(quizNum[quizVisible.indexOf(true)]),
                 QuizContent(5, resultData)
@@ -140,6 +141,60 @@ class _IssueState extends State<Issue> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget adot_issue(String name) {
+    String image_path = "assets/adot/kc_adot.gif";
+    String pet_image_path = "assets/pet/pet_9.gif";
+    final abots = [
+      "assets/adot/kc_adot.gif",
+      "assets/adot/hh_adot.gif",
+      "assets/adot/jk_adot.gif",
+      "assets/adot/yj_adot.gif",
+      "assets/adot/yo_adot.gif",
+      "assets/adot/hu_adot.gif",
+    ];
+    final abot_pets = [
+      "assets/pet/pet_0.gif",
+      "assets/pet/pet_2.gif",
+      "assets/pet/pet_4.gif",
+      "assets/pet/pet_6.gif",
+      "assets/pet/pet_8.gif",
+      "assets/pet/pet_9.gif",
+    ];
+    if (name == "김찬") {
+      image_path = abots[0];
+      pet_image_path = abot_pets[0];
+    } else if (name == "황현") {
+      image_path = abots[1];
+      pet_image_path = abot_pets[1];
+    } else if (name == "서진경") {
+      image_path = abots[2];
+      pet_image_path = abot_pets[2];
+    } else if (name == "김예지") {
+      image_path = abots[3];
+      pet_image_path = abot_pets[3];
+    } else if (name == "박영원" || name == "박원영") {
+      image_path = abots[4];
+      pet_image_path = abot_pets[4];
+    } else if (name == "이현우") {
+      image_path = abots[5];
+      pet_image_path = abot_pets[5];
+    } else {
+      image_path = abots[0];
+    }
+    return Stack(
+      children: [
+        Image.asset(image_path),
+        Padding(
+          padding: EdgeInsets.only(top: 10, right: 30),
+          child: Container(
+              alignment: Alignment.topRight,
+              height: layoutSize.size.height * 0.07,
+              child: Image.asset(pet_image_path)),
+        ),
+      ],
     );
   }
 
@@ -210,11 +265,11 @@ class _IssueState extends State<Issue> {
     );
   }
 
-  Widget IssueExpanded() {
+  Widget IssueExpanded(double size) {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
           (context, index) => Container(
-                height: layoutSize.size.height * 0.3,
+                height: layoutSize.size.height * size,
               ),
           childCount: 1),
     );
@@ -270,7 +325,7 @@ class _IssueState extends State<Issue> {
                       borderRadius: BorderRadius.circular(20),
                     ),
                     width: layoutSize.size.width * 0.8,
-                    child: Column(
+                    child: Wrap(
                       children: [
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -322,13 +377,13 @@ class _IssueState extends State<Issue> {
 
   double dynamic_BoxH(int size) {
     if (size <= 50) {
-      return 0.2;
-    } else if (size <= 75) {
       return 0.23;
+    } else if (size <= 75) {
+      return 0.26;
     } else if (size <= 150) {
-      return 0.3;
+      return 0.33;
     } else if (size <= 200) {
-      return 0.35;
+      return 0.38;
     }
     return 0.6;
   }

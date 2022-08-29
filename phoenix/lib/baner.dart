@@ -3,6 +3,8 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 
+import 'home/home.dart';
+
 var userName = "";
 
 class Baner extends StatefulWidget {
@@ -48,6 +50,7 @@ class _BanerState extends State<Baner> {
             hintText: '이름을 입력 해 주세요.',
             suffixIcon: IconButton(
               onPressed: () {
+                showSnackBar(context, "로그인 성공! $userName님 반가워요!");
                 Get.offAllNamed('/home');
               },
               icon: Icon(
@@ -72,5 +75,29 @@ class _BanerState extends State<Baner> {
         ),
       ),
     );
+  }
+
+  void showSnackBar(BuildContext context, String text) {
+    final snackBar = SnackBar(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+      content: Wrap(
+        children: [
+          Container(
+            width: layoutSize.size.width * 0.8,
+            child: Text(
+              text,
+            ),
+          ),
+        ],
+      ),
+      duration: Duration(seconds: 3),
+      action: SnackBarAction(
+        label: 'OK',
+        textColor: Colors.blue,
+        disabledTextColor: Colors.white,
+        onPressed: () {},
+      ),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }

@@ -46,7 +46,7 @@ class _MenuState extends State<Menu> {
                 color: Colors.white,
                 padding: EdgeInsets.only(bottom: 25),
                 child: Column(
-                  children: [profile(Get.arguments), points()],
+                  children: [profile(userName), points()],
                 ),
               ),
               Container(
@@ -195,8 +195,8 @@ class _MenuState extends State<Menu> {
             ),
             Expanded(
               flex: 4,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 20.0, right: 20),
+              child: Container(
+                alignment: Alignment.center,
                 child: customIconButton("75", Color.fromARGB(255, 0, 10, 62)),
               ),
             ),
@@ -217,8 +217,8 @@ class _MenuState extends State<Menu> {
             ),
             Expanded(
               flex: 4,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 20.0, right: 20),
+              child: Container(
+                alignment: Alignment.center,
                 child:
                     customIconButton("1,049", Color.fromARGB(255, 0, 10, 62)),
               ),

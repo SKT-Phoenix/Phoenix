@@ -58,8 +58,8 @@ class _HomeState extends State<Home> {
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            MainText("A.모르는 사람 없게 해주세요~\n 닷생살자 이벤트 🎁"),
-            Adot(userName, "assets/pet/pet_9.gif"),
+            MainText("갑자기 날씨가 추워졌어요!\n감기 조심하세요 💕"),
+            Adot(userName),
             SubMenu()
           ],
         ),
@@ -76,8 +76,9 @@ class _HomeState extends State<Home> {
     ));
   }
 
-  Widget Adot(String name, String pet_image_path) {
-    String image_path = "";
+  Widget Adot(String name) {
+    String image_path = "assets/adot/kc_adot.gif";
+    String pet_image_path = "assets/pet/pet_9.gif";
     final abots = [
       "assets/adot/kc_adot.gif",
       "assets/adot/hh_adot.gif",
@@ -86,18 +87,32 @@ class _HomeState extends State<Home> {
       "assets/adot/yo_adot.gif",
       "assets/adot/hu_adot.gif",
     ];
+    final abot_pets = [
+      "assets/pet/pet_0.gif",
+      "assets/pet/pet_2.gif",
+      "assets/pet/pet_4.gif",
+      "assets/pet/pet_6.gif",
+      "assets/pet/pet_8.gif",
+      "assets/pet/pet_9.gif",
+    ];
     if (name == "김찬") {
       image_path = abots[0];
+      pet_image_path = abot_pets[0];
     } else if (name == "황현") {
       image_path = abots[1];
+      pet_image_path = abot_pets[1];
     } else if (name == "서진경") {
       image_path = abots[2];
+      pet_image_path = abot_pets[2];
     } else if (name == "김예지") {
       image_path = abots[3];
+      pet_image_path = abot_pets[3];
     } else if (name == "박영원" || name == "박원영") {
       image_path = abots[4];
+      pet_image_path = abot_pets[4];
     } else if (name == "이현우") {
       image_path = abots[5];
+      pet_image_path = abot_pets[5];
     } else {
       image_path = abots[0];
     }
