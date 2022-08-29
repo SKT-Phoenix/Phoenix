@@ -6,8 +6,8 @@ Most ideas were inspired by [Leaf-Question-Generation](https://github.com/Kristi
 
 ### Dataset
 KorQuAD v1.0 Dataset (csv)  
-[Train](https://drive.google.com/file/d/1O0-8BCsYn3PpEmIUjiEBnPz4sBBmQmud/view?usp=sharing)
-[Valid](https://drive.google.com/file/d/1p0LYPBQE8OW6XRFEW5nxc8P03wgD_plE/view?usp=sharing)
+[Train](https://drive.google.com/file/d/1p0LYPBQE8OW6XRFEW5nxc8P03wgD_plE/view?usp=sharing)  
+[Valid](https://drive.google.com/file/d/1O0-8BCsYn3PpEmIUjiEBnPz4sBBmQmud/view?usp=sharing)  
 
 ### Train
 
