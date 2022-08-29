@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
+import 'package:phoenix/baner.dart';
 import '../custom_utils.dart';
 
 class Menu extends StatefulWidget {
@@ -45,7 +46,7 @@ class _MenuState extends State<Menu> {
                 color: Colors.white,
                 padding: EdgeInsets.only(bottom: 25),
                 child: Column(
-                  children: [profile(), points()],
+                  children: [profile(Get.arguments), points()],
                 ),
               ),
               Container(
@@ -66,7 +67,31 @@ class _MenuState extends State<Menu> {
     );
   }
 
-  Widget profile() {
+  Widget profile(String name) {
+    String image_path = "";
+    final abot_profiles = [
+      "assets/adot_profile/kc_profile.png",
+      "assets/adot_profile/hh_profile.png",
+      "assets/adot_profile/jk_profile.png",
+      "assets/adot_profile/yj_profile.png",
+      "assets/adot_profile/yo_profile.png",
+      "assets/adot_profile/hu_profile.png",
+    ];
+    if (name == "김찬") {
+      image_path = abot_profiles[0];
+    } else if (name == "황현") {
+      image_path = abot_profiles[1];
+    } else if (name == "서진경") {
+      image_path = abot_profiles[2];
+    } else if (name == "김예지") {
+      image_path = abot_profiles[3];
+    } else if (name == "박영원" || name == "박원영") {
+      image_path = abot_profiles[4];
+    } else if (name == "이현우") {
+      image_path = abot_profiles[5];
+    } else {
+      image_path = abot_profiles[0];
+    }
     return Padding(
       padding: const EdgeInsets.only(left: 20.0, right: 20.0),
       child: Row(
@@ -76,7 +101,7 @@ class _MenuState extends State<Menu> {
             child: Container(
               height: 80,
               child: Image.asset(
-                "assets/profile.png",
+                image_path,
               ),
             ),
           ),
@@ -89,11 +114,11 @@ class _MenuState extends State<Menu> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "김찬님의",
+                    "${name}님의",
                     style: TextStyle(fontSize: 16),
                   ),
                   Text(
-                    "닷쥐가뭐에요",
+                    "에이닷",
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
                   )
                 ],

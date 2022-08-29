@@ -39,7 +39,7 @@ class _HomeState extends State<Home> {
           icon: Image.asset("assets/a_dot_menu.png"),
           onPressed: () {
             print("메뉴진입");
-            Get.toNamed("/menu");
+            Get.toNamed("/menu", arguments: userName);
           },
         ),
         actions: [
@@ -59,7 +59,7 @@ class _HomeState extends State<Home> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             MainText("A.모르는 사람 없게 해주세요~\n 닷생살자 이벤트 🎁"),
-            Adot("assets/a_dot_gif.gif"),
+            Adot(userName, "assets/pet/pet_9.gif"),
             SubMenu()
           ],
         ),
@@ -76,16 +76,55 @@ class _HomeState extends State<Home> {
     ));
   }
 
-  Widget Adot(String image_path) {
-    return Center(
-      child: Container(
-        height: layoutSize.size.height * 0.5,
-        child: Center(
-          child: Image(
-            image: AssetImage(image_path),
+  Widget Adot(String name, String pet_image_path) {
+    String image_path = "";
+    final abots = [
+      "assets/adot/kc_adot.gif",
+      "assets/adot/hh_adot.gif",
+      "assets/adot/jk_adot.gif",
+      "assets/adot/yj_adot.gif",
+      "assets/adot/yo_adot.gif",
+      "assets/adot/hu_adot.gif",
+    ];
+    if (name == "김찬") {
+      image_path = abots[0];
+    } else if (name == "황현") {
+      image_path = abots[1];
+    } else if (name == "서진경") {
+      image_path = abots[2];
+    } else if (name == "김예지") {
+      image_path = abots[3];
+    } else if (name == "박영원" || name == "박원영") {
+      image_path = abots[4];
+    } else if (name == "이현우") {
+      image_path = abots[5];
+    } else {
+      image_path = abots[0];
+    }
+
+    return Stack(
+      children: [
+        Center(
+          child: Container(
+            height: layoutSize.size.height * 0.5,
+            child: Center(
+              child: Image(
+                image: AssetImage(image_path),
+              ),
+            ),
           ),
         ),
-      ),
+        Padding(
+          padding: EdgeInsets.only(top: 10, right: 30),
+          child: Container(
+            alignment: Alignment.topRight,
+            height: layoutSize.size.height * 0.15,
+            child: Image(
+              image: AssetImage(pet_image_path),
+            ),
+          ),
+        ),
+      ],
     );
   }
 

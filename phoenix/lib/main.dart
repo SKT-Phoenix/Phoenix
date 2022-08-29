@@ -40,10 +40,7 @@ class Phoenix extends StatelessWidget {
   }
 
   GetPage getBaner(String name, Widget pageName) {
-    return GetPage(
-      name: name,
-      page: () => pageName,
-    );
+    return GetPage(name: name, page: () => pageName);
   }
 
   GetPage getHome(String name, Widget pageName) {
