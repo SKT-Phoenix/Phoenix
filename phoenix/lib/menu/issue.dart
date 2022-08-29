@@ -8,6 +8,10 @@ import '../crowling_datas.dart';
 import '../home/home.dart';
 import 'quest.dart';
 
+List<int> colorflag = [0, 0, 0, 0, 0];
+List<bool> qnaflag = [false, false, false, false, false];
+List<String> inputText = ["", "", "", "", ""];
+
 class Issue extends StatefulWidget {
   const Issue({Key? key}) : super(key: key);
 
@@ -474,9 +478,7 @@ class _IssueState extends State<Issue> {
     TextEditingController(),
     TextEditingController(),
   ];
-  List<int> colorflag = [0, 0, 0, 0, 0];
-  List<bool> qnaflag = [false, false, false, false, false];
-  List<String> inputText = ["", "", "", "", ""];
+
   int count = 0;
   Widget answerField(int index) {
     return Stack(
