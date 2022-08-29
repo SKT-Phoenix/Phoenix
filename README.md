@@ -1,7 +1,7 @@
 # Question Generation Model with KorQuAD
 ___
 
-This is finetuend version of paust/pko-t5-base on the KorQuADv1.0 Dataset.
+This is finetuend version of paust/pko-t5-base on the KorQuAD v1.0 Dataset.
 
 ### Train
 
