@@ -474,36 +474,82 @@ class _IssueState extends State<Issue> {
     TextEditingController(),
     TextEditingController(),
   ];
+  List<int> colorflag = [0, 0, 0, 0, 0];
+  List<bool> qnaflag = [false, false, false, false, false];
+  List<String> inputText = ["", "", "", "", ""];
   int count = 0;
   Widget answerField(int index) {
-    return TextField(
-      controller: _controllers[index],
-      decoration: InputDecoration(
-        labelText: '정답',
-        hintText: '정답을 입력해 주세요.',
-        suffixIcon: IconButton(
-          onPressed: () {
-            print(_controllers[index].toString());
-          },
-          icon: Icon(
-            Icons.send_rounded,
-            color: quizColor[0],
+    return Stack(
+      children: [
+        Visibility(
+          visible: (qnaflag[index] == true) ? true : false,
+          child: Container(
+            width: layoutSize.size.width * 0.8,
+            height: 50,
+            child: Center(
+              child: Text(
+                (colorflag == 1) ? inputText[index] : quizAnswers[index],
+                style: TextStyle(
+                    fontSize: 18,
+                    color: quizColor[colorflag[index]],
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(
+                width: 1,
+                color: quizColor[colorflag[index]],
+              ),
+            ),
           ),
         ),
-        labelStyle: TextStyle(color: Colors.black),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-          borderSide: BorderSide(width: 1, color: quizColor[0]),
+        Visibility(
+          visible: (qnaflag[index] == false) ? true : false,
+          child: TextField(
+            controller: _controllers[index],
+            onChanged: (text) {
+              inputText[index] = text;
+            },
+            decoration: InputDecoration(
+              labelText: '정답',
+              hintText: '정답을 입력해 주세요.',
+              suffixIcon: IconButton(
+                onPressed: () {
+                  setState(() {
+                    if (inputText[index] == quizAnswers[index]) {
+                      print("정답!");
+
+                      colorflag[index] = 1;
+                    } else {
+                      print("오답!");
+                      colorflag[index] = 0;
+                    }
+                    qnaflag[index] = true;
+                  });
+                },
+                icon: Icon(
+                  Icons.send_rounded,
+                  color: Colors.grey,
+                ),
+              ),
+              labelStyle: TextStyle(color: Colors.grey),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                borderSide: BorderSide(width: 1, color: Colors.grey),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                borderSide: BorderSide(width: 1, color: Colors.grey),
+              ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10.0)),
+              ),
+            ),
+            keyboardType: TextInputType.emailAddress,
+          ),
         ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-          borderSide: BorderSide(width: 1, color: quizColor[0]),
-        ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-        ),
-      ),
-      keyboardType: TextInputType.emailAddress,
+      ],
     );
   }
 

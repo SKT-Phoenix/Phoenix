@@ -77,7 +77,9 @@ class Crowling_Datas {
     quizData = json.decode(decodeData);
     print(quizData);
     List<String> columns = ["발행일자", "분야", "정답", "질문", "타이틀"];
-
+    quizLists = [];
+    quizAnswers = [];
+    quizQuestions = [];
     for (int x = 0; x < quizData.length; x++) {
       for (var y in columns) {
         if (y == "분야") {
@@ -90,5 +92,6 @@ class Crowling_Datas {
       }
     }
     print(quizQuestions);
+    print(quizAnswers);
   }
 }
