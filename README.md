@@ -3,6 +3,12 @@ ___
 
 This model is a fine-tuend version of paust/pko-t5-base on the KorQuAD v1.0 Dataset.
 
+
+### Dataset
+KorQuAD v1.0 Train / Valid Dataset  
+https://drive.google.com/file/d/1O0-8BCsYn3PpEmIUjiEBnPz4sBBmQmud/view?usp=sharing  
+https://drive.google.com/file/d/1p0LYPBQE8OW6XRFEW5nxc8P03wgD_plE/view?usp=sharing
+
 ### Train
 
 30% 확률로 input answer 대신 '[MASK]'를 넣어 질문 문장을 생성하도록 학습한다.  
