@@ -8,7 +8,6 @@ import 'dart:core';
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-
 import 'menu/quest.dart';
 
 List<dynamic> crowlingdata = [];
@@ -23,6 +22,9 @@ List<dynamic> quizAnswers = [];
 List<dynamic> quizQuestions = [];
 
 List<dynamic> rankData = [];
+List<dynamic> rankings = [];
+List<dynamic> rankusers = [];
+List<dynamic> rankpoints = [];
 
 class Crowling_Datas {
   void callAPI() async {
@@ -107,20 +109,23 @@ class Crowling_Datas {
     final decodeData = utf8.decode(response.bodyBytes); // UTF8 변환
     rankData = json.decode(decodeData);
     print(rankData);
+    rankings = [];
+    rankusers = [];
+    rankpoints = [];
     List<String> columns = ["ranking", "유저", "포인트"];
-    // quizLists = [];
-    // quizAnswers = [];
-    // quizQuestions = [];
-    // for (int x = 0; x < quizData.length; x++) {
-    //   for (var y in columns) {
-    //     if (y == "분야") {
-    //       quizLists.add(quizData[x][y]);
-    //     } else if (y == "정답") {
-    //       quizAnswers.add(quizData[x][y]);
-    //     } else if (y == "질문") {
-    //       quizQuestions.add(quizData[x][y]);
-    //     }
-    //   }
-    // }
+    for (int x = 0; x < rankData.length; x++) {
+      for (var y in columns) {
+        if (y == "ranking") {
+          rankings.add(rankData[x][y]);
+        } else if (y == "유저") {
+          rankusers.add(rankData[x][y]);
+        } else if (y == "포인트") {
+          rankpoints.add(rankData[x][y]);
+        }
+      }
+    }
+    print(rankings);
+    print(rankusers);
+    print(rankpoints);
   }
 }

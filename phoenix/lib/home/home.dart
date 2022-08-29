@@ -23,12 +23,13 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     Crowling_Datas().callAPI();
-    Crowling_Datas().callRankAPI();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    Crowling_Datas().callRankAPI();
+
     layoutSize = MediaQuery.of(context);
     return Scaffold(
       backgroundColor: Colors.white,
@@ -88,6 +89,7 @@ class _HomeState extends State<Home> {
       "assets/adot/yj_adot.gif",
       "assets/adot/yo_adot.gif",
       "assets/adot/hu_adot.gif",
+      "assets/adot/default_adot.gif",
     ];
     final abot_pets = [
       "assets/pet/pet_0.gif",
@@ -116,7 +118,8 @@ class _HomeState extends State<Home> {
       image_path = abots[5];
       pet_image_path = abot_pets[5];
     } else {
-      image_path = abots[0];
+      image_path = abots[6];
+      pet_image_path = abot_pets[0];
     }
 
     return Stack(

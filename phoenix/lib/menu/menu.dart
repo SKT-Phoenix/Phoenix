@@ -76,6 +76,7 @@ class _MenuState extends State<Menu> {
       "assets/adot_profile/yj_profile.png",
       "assets/adot_profile/yo_profile.png",
       "assets/adot_profile/hu_profile.png",
+      "assets/adot_profile/default_profile.png",
     ];
     if (name == "김찬") {
       image_path = abot_profiles[0];
@@ -90,7 +91,7 @@ class _MenuState extends State<Menu> {
     } else if (name == "이현우") {
       image_path = abot_profiles[5];
     } else {
-      image_path = abot_profiles[0];
+      image_path = abot_profiles[6];
     }
     return Padding(
       padding: const EdgeInsets.only(left: 20.0, right: 20.0),
