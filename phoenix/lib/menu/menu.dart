@@ -4,6 +4,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:phoenix/baner.dart';
+import 'package:phoenix/crowling_datas.dart';
 import '../custom_utils.dart';
 
 class Menu extends StatefulWidget {
@@ -268,13 +269,16 @@ class _MenuState extends State<Menu> {
         width: double.infinity,
         child: TextButton.icon(
             onPressed: () {
-              if (name == "퀘스트") {
-                Get.offAndToNamed("/quest");
-              } else if (name == "이슈닷") {
-                Get.offAndToNamed("/issue");
-              } else if (name == "랭킹") {
-                Get.offAndToNamed("/rank");
-              }
+              setState(() {
+                if (name == "퀘스트") {
+                  Get.offAndToNamed("/quest");
+                } else if (name == "이슈닷") {
+                  Get.offAndToNamed("/issue");
+                } else if (name == "랭킹") {
+                  Crowling_Datas().callRankAPI();
+                  Get.offAndToNamed("/rank");
+                }
+              });
             },
             icon: Image.asset(image_path, height: 38),
             label: Text(

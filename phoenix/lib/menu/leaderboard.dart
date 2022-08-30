@@ -88,9 +88,9 @@ class _LeaderBoardState extends State<LeaderBoard> {
             child: ListView.builder(
               itemCount: rankusers.length,
               itemBuilder: (context, index) {
-                // if (index < 3) {
-                //   return Container();
-                // }
+                if (index < 3) {
+                  return Container();
+                }
                 return Column(
                   children: [
                     Container(
