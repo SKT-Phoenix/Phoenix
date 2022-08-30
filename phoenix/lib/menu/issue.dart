@@ -392,6 +392,10 @@ class _IssueState extends State<Issue> {
       return 0.33;
     } else if (size <= 200) {
       return 0.38;
+    } else if (size <= 250) {
+      return 0.43;
+    } else if (size <= 300) {
+      return 0.5;
     }
     return 0.6;
   }
@@ -399,20 +403,13 @@ class _IssueState extends State<Issue> {
   List<String> quizNum = ["Quiz 1", "Quiz 2", "Quiz 3", "Quiz 4", "Quiz 5"];
   List<bool> quizVisible = [true, false, false, false, false];
   Widget QuizContent(int count, List<dynamic> data) {
-    int SmaxLength = 0;
-    for (var i = 0; i < count; i++) {
-      (SmaxLength < data[i][1].length)
-          ? SmaxLength = data[i][1].length
-          : SmaxLength = SmaxLength;
-    }
-
     return SliverToBoxAdapter(
       child: Visibility(
         visible: isSelected[1],
         child: Padding(
           padding: EdgeInsets.all(15),
           child: SizedBox(
-            height: layoutSize.size.height * dynamic_BoxH(SmaxLength),
+            height: layoutSize.size.height * 0.35,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: count,

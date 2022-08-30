@@ -25,9 +25,7 @@ class _IssueWebViewState extends State<IssueWebView> {
   @override
   void initState() {
     super.initState();
-    if (Platform.isAndroid) {
-      WebView.platform = SurfaceAndroidWebView();
-    }
+    if (Platform.isAndroid) WebView.platform = AndroidWebView();
   }
 
   @override

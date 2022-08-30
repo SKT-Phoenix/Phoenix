@@ -70,7 +70,7 @@ class _LeaderBoardState extends State<LeaderBoard> {
                       //leading. 타일 앞에 표시되는 위젯. 참고로 타일 뒤에는 trailing 위젯으로 사용 가능
                       leading: Image.asset(ranking_profile(rankusers[0])),
                       title: Text(
-                        '현재 1등은 \n${rankusers[0]}님!',
+                        '현재 1등은 \n${rankusers[0]}님',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                         ),
@@ -268,7 +268,12 @@ class _LeaderBoardState extends State<LeaderBoard> {
           height: rankheight,
           decoration: BoxDecoration(
             color: leaderColor[rankusers.indexOf(rankuser)],
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(10),
+              topRight: Radius.circular(10),
+              bottomRight: Radius.circular(5),
+              bottomLeft: Radius.circular(5),
+            ),
             boxShadow: [
               BoxShadow(
                   color:
