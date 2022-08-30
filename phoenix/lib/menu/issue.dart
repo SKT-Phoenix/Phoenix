@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:phoenix/baner.dart';
@@ -346,7 +348,12 @@ class _IssueState extends State<Issue> {
                                 child: Container(
                                   alignment: Alignment.topRight,
                                   child: TextButton(
-                                    child: Text("원문 보기"),
+                                    child: Text(
+                                      "원문 보기",
+                                      style: (Platform.isAndroid)
+                                          ? TextStyle(fontSize: 12)
+                                          : TextStyle(fontSize: 14),
+                                    ),
                                     onPressed: () {
                                       Get.toNamed("/webview",
                                           arguments: data[index][2]); // link
