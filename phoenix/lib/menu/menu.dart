@@ -253,6 +253,7 @@ class _MenuState extends State<Menu> {
             service_item("assets/qpeed.png", "큐피드"),
             service_item("assets/quest.png", "퀘스트"),
             service_item("assets/issuedot.png", "이슈닷"),
+            service_item("assets/rank.png", "랭킹"),
             service_item("assets/reword.png", "리워드"),
           ],
         ),
@@ -271,6 +272,8 @@ class _MenuState extends State<Menu> {
                 Get.offAndToNamed("/quest");
               } else if (name == "이슈닷") {
                 Get.offAndToNamed("/issue");
+              } else if (name == "랭킹") {
+                Get.offAndToNamed("/rank");
               }
             },
             icon: Image.asset(image_path, height: 38),

@@ -6,6 +6,7 @@ import 'package:phoenix/menu/webview.dart';
 import 'baner.dart';
 import 'home/home.dart';
 import 'menu/issue.dart';
+import 'menu/leaderboard.dart';
 import 'menu/menu.dart';
 
 void main() {
@@ -34,6 +35,7 @@ class Phoenix extends StatelessWidget {
         getMenu("/menu", Menu()),
         getQuest("/quest", Quest()),
         getIssue("/issue", Issue()),
+        getIssue("/rank", LeaderBoard()),
         getWebview("/webview", IssueWebView()),
       ],
     );
