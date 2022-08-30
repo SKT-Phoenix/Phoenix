@@ -21,6 +21,19 @@ headers = {'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit
 query = '(종합)'
 yesterday = (datetime.today() - timedelta(1)).strftime("%Y%m%d")
 
+def title_pre(title):
+    temp = ""
+    key = False
+    
+    for text in title:
+        if text == '[' or text == ']':
+            key = True if key==False else False
+            continue
+        
+        if key == False:
+            temp += str(text)
+    
+    return temp
 
 def crawling_dic(str_dic):
 
@@ -92,10 +105,13 @@ def news_crawling(part_name):
     for n in a_list:
         n_url = n.get_attribute('href')
         texts = crawling_main_text(n_url)[0]
-        texts = texts[:]  # 뒷 문장(추천 기사 자르기)
+        title = crawling_main_text(n_url)[2]
+        
+        title = title_pre(title)
+        print(title)
         news_dict[idx] = {'발행일자' : str(date.today() - timedelta(1)),
                         '분야': part_name,
-                        '타이틀' : crawling_main_text(n_url)[2],
+                        '타이틀' : title.strip(),
                         '링크' : n_url,
                         '본문' : texts.strip()}
             
