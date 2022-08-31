@@ -52,7 +52,7 @@ class Summarizer_with_KoBart(Summarizer_with_Bart):
                 text = text[:input_size*index]
         
         # text길이 확인    
-        print(F"text길이 : {len(text)}")
+        print(f"after  text길이 : {len(text)}")
         
         result = ""
         
