@@ -1,5 +1,10 @@
-# Stack
+<h1> Example </h1>
 
+<video width="100%" height="100%" controls="controls">
+  <source src="example.mp4" type="video/mp4">
+</video>
+
+# Stack
 - **Front-End**
     - **Application**:
         - Framework: `Flutter`
