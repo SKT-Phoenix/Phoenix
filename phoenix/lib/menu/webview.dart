@@ -118,9 +118,9 @@ class _IssueWebViewState extends State<IssueWebView> {
 
     // Your asynchronous computation here (fetching data from an API, processing files, inserting something to the database, etc)
     // await Future.delayed(const Duration(milliseconds: 100));
-    await (progress_data == 100)
-        ? Navigator.of(context).pop()
-        : Future.delayed(const Duration(seconds: 10));
+    // await (progress_data == 100)
+    // ? Navigator.of(context).pop()
+    // : Future.delayed(const Duration(seconds: 10));
 
     // Close the dialog programmatically
     // Navigator.of(context).pop();
