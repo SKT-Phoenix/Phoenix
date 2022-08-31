@@ -199,3 +199,4 @@ final_news = final_dataset(fin_df, clus_group)
 
 
 final_news.to_excel(f"static/selected/selected_{yesterday}.xlsx", index=False, encoding = "utf-8")
+final_news.to_csv(f"static/selected/selected_{yesterday}.csv", index=False, encoding = "utf-8")
