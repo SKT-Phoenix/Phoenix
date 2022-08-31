@@ -9,6 +9,9 @@ import 'package:phoenix/baner.dart';
 // import 'package:path_provider/path_provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+int progress_data = 0;
+bool progress_flag = false;
+
 class IssueWebView extends StatefulWidget {
   const IssueWebView({Key? key, this.cookieManager}) : super(key: key);
 
@@ -50,6 +53,15 @@ class _IssueWebViewState extends State<IssueWebView> {
           _controller.complete(webViewController);
         },
         onProgress: (int progress) {
+          progress_data = progress;
+          if (progress_flag == false) {
+            _fetchData(context);
+            progress_flag = true;
+          }
+          if (progress_flag == true && progress == 100) {
+            progress_flag = false;
+            Get.back();
+          }
           print('WebView is loading (progress : $progress%)');
         },
         javascriptChannels: <JavascriptChannel>{
@@ -73,6 +85,45 @@ class _IssueWebViewState extends State<IssueWebView> {
         backgroundColor: const Color(0x00000000),
       ),
     );
+  }
+
+  void _fetchData(BuildContext context) async {
+    // show the loading dialog
+
+    showDialog(
+        // The user CANNOT close this dialog  by pressing outsite it
+        barrierDismissible: false,
+        context: context,
+        builder: (_) {
+          return Dialog(
+            // The background color
+            backgroundColor: Colors.white,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: const [
+                  // The loading indicator
+                  CircularProgressIndicator(),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  // Some text
+                  Text("Loading...")
+                ],
+              ),
+            ),
+          );
+        });
+
+    // Your asynchronous computation here (fetching data from an API, processing files, inserting something to the database, etc)
+    // await Future.delayed(const Duration(milliseconds: 100));
+    await (progress_data == 100)
+        ? Navigator.of(context).pop()
+        : Future.delayed(const Duration(seconds: 10));
+
+    // Close the dialog programmatically
+    // Navigator.of(context).pop();
   }
 
   JavascriptChannel _toasterJavascriptChannel(BuildContext context) {

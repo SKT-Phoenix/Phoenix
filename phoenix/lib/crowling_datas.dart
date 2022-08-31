@@ -79,7 +79,6 @@ class Crowling_Datas {
     print('Response status: ${response.statusCode}');
     final decodeData = utf8.decode(response.bodyBytes); // UTF8 변환
     quizData = json.decode(decodeData);
-    print(quizData);
     List<String> columns = ["발행일자", "분야", "정답", "질문", "타이틀"];
     quizLists = [];
     quizAnswers = [];
@@ -95,8 +94,6 @@ class Crowling_Datas {
         }
       }
     }
-    print(quizQuestions);
-    print(quizAnswers);
   }
 
   void callRankAPI() async {
@@ -108,7 +105,6 @@ class Crowling_Datas {
     print('Response status: ${response.statusCode}');
     final decodeData = utf8.decode(response.bodyBytes); // UTF8 변환
     rankData = json.decode(decodeData);
-    print(rankData);
     rankings = [];
     rankusers = [];
     rankpoints = [];
@@ -124,8 +120,5 @@ class Crowling_Datas {
         }
       }
     }
-    print(rankings);
-    print(rankusers);
-    print(rankpoints);
   }
 }
