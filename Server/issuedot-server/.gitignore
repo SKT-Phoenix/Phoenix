@@ -1,0 +1,10 @@
+# 폴더 ignore
+# /static
+
+# 파일 ignore
+*.ipynb
+
+debug.py
+dbset_debug.py
+ranking_crawler.py
+test.py
