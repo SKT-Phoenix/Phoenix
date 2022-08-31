@@ -203,6 +203,7 @@ class _IssueState extends State<Issue> {
 
   final List<bool> isSelected = [true, false];
   Widget NavBar() {
+    (isSelected[0]) ? print(crowlingdata) : print(quizData);
     return Container(
       color: Colors.white,
       child: ToggleButtons(
