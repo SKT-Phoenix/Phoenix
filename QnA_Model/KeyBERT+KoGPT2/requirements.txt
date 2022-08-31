@@ -1,7 +1,0 @@
--f https://download.pytorch.org/whl/torch_stable.html
-transformers
-tokenizers
-tqdm
-sentencepiece
-sentence_transformers
-konlpy
