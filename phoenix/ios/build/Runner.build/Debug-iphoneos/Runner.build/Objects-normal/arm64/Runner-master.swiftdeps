@@ -1,0 +1,6 @@
+version: "Apple Swift version 5.6.1 (swiftlang-5.6.0.323.66 clang-1316.0.20.12)"
+options: "2b5e44d00e5aaf869086c162b892b3a75ce712ed92a4b0cc36331011896ffae3"
+build_start_time: [1661088940, 585876941]
+build_end_time: [1661088940, 848781108]
+inputs:
+  "/Users/chankim/SKTFLYAI/App_Client/phoenix/ios/Runner/AppDelegate.swift": [1626594620, 303741931]
