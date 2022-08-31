@@ -43,8 +43,8 @@ def qna():
         conn = pymysql.connect(host='localhost', user='root', password='root',
                        db='news', charset='utf8mb4')
         curs = conn.cursor(pymysql.cursors.DictCursor)
-        sql = "select * from `news`.qna where 발행일자=%s"
-        curs.execute(sql, (DATE))
+        sql = "select * from `news`.qna"
+        curs.execute(sql)
         
         result = curs.fetchall()
         

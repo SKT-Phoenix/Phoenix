@@ -2,8 +2,9 @@
 # /static
 
 # 파일 ignore
-test.py
-test2.py
 *.ipynb
 
 debug.py
+dbset_debug.py
+ranking_crawler.py
+test.py

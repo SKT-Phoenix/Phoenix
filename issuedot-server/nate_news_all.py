@@ -1,16 +1,17 @@
-import os
+
 from bs4 import BeautifulSoup
-import requests
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
 from datetime import datetime, timedelta
-import pandas as pd
 from pandas import DataFrame
+import os
 import time
-from selenium.webdriver.common.by import By
+import pandas as pd
+import requests
+
 
 
 start = time.time()
@@ -24,7 +25,6 @@ headers = {'User-Agent' : 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/
 # yesterday = (datetime.today() - timedelta(1)).strftime("%Y%m%d")
 
 part_num = ['201', '301', '401', '501', '601'] #  정치, 경제, 사회, 세계, IT/과학
-part_name = ['pol', 'eco', 'soc', 'int', 'its'] #  정치, 경제, 사회, 세계, IT/과학
 part_name = ['정치', '경제', '사회', '세계', 'IT/과학']
 # news_df=pd.DataFrame()
 # all_df = pd.DataFrame()
@@ -58,8 +58,12 @@ def crawling_dic(str_dic):
         dic = table.find_element(By.XPATH,'.//span[@class="txt_search"]').text
         
     except:
-        table = browser.find_element(By.XPATH,'//ul[@class="list_mean"]')
-        dic = table.find_element(By.XPATH,'.//span[@class="txt_mean"]').text
+        try:
+            table = browser.find_element(By.XPATH,'//ul[@class="list_mean"]')
+            dic = table.find_element(By.XPATH,'.//span[@class="txt_mean"]').text
+        except:
+            table = browser.find_element(By.XPATH,'//ul[@class="list_search"]')
+            dic = table.find_element(By.XPATH,'.//span[@class="txt_search"]').text
     
     return dic
 
@@ -153,7 +157,7 @@ def news_crawling(part_num, yesterday):
             browser.close()
 
             part_df = DataFrame(news_dict).T
-            # print(news_dict)
+            
             print("--------------------")
             print(part_df)
 
@@ -179,13 +183,23 @@ for index, pn in enumerate(part_num):
     news_df['분야'].replace(pn, part_name[index], inplace=True)
     
 folder_path = os.getcwd()
-xlsx_file_name = 'static\{0}_all.xlsx'.format(yesterday)
+xlsx_file_name = 'static/crawling/{0}_all.xlsx'.format(yesterday)
 news_df.to_excel(xlsx_file_name, index=False, encoding='utf-8')
 
 print(news_df.head())
 print('엑셀 저장 완료 | 경로 : {}\\{}\n'.format(folder_path, xlsx_file_name))
 now = time.time()
 
-print("걸린시간 : ", now-start)
+crawl_time = now - start
 
-print("\n" + '='*30 + "\n")
+hour = crawl_time//3600
+crawl_time = 13567 % 3600
+minute = crawl_time // 60
+crawl_time = crawl_time % 60
+sec = crawl_time
+
+print(f"걸린시간 : {hour}시간 {minute}분 {sec}초")
+
+print("\n "+"=" * 50)
+print("∥               [INFO] crwaling 완료             ∥") 
+print(" "+"=" * 50)

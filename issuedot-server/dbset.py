@@ -1,9 +1,17 @@
+from datetime import datetime, timedelta
+from models import *
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium import webdriver
+from news_select import *
+
+import os
 import pymysql
 import pandas as pd
 import time
-from datetime import date, timedelta
-from models import *
-from crawler import *
+
+
 
 # java 환경변수 설정
 os.environ['JAVA_HOME'] = r'C:\Program Files\Java\jdk-18.0.2.1\bin\server'
@@ -16,7 +24,8 @@ model = SentenceTransformer('sentence-transformers/xlm-r-100langs-bert-base-nli-
 
 
 # 읽어올 엑셀 파일 지정 (어제자 뉴스)
-filename = f'./static/{date.today() - timedelta(1)}.xlsx'
+yesterday = (datetime.today() - timedelta(1)).strftime("%Y%m%d")
+filename = f'static/selected/selected_{yesterday}.xlsx'
 
 # 엑셀 파일 읽어 오기
 df = pd.read_excel(filename, engine='openpyxl')
@@ -34,6 +43,30 @@ answer = []   # 정답
 
 del_index = []
 category = {'정치': 0, '경제': 0, '사회': 0, '세계': 0, 'IT/과학': 0}
+
+def crawling_dic(str_dic):
+
+    service = Service(executable_path=ChromeDriverManager().install())
+    browser = webdriver.Chrome(service=service)
+
+    news_url = 'https://dic.daum.net/search.do?q={0}&dic=kor'.format(str_dic)
+
+    browser.get(news_url)
+    time.sleep(0.5)
+    
+    try:
+        table = browser.find_element(By.XPATH,'//div[@class="cleanword_type kokk_type"]')
+        dic = table.find_element(By.XPATH,'.//span[@class="txt_search"]').text
+        
+    except:
+        try:
+            table = browser.find_element(By.XPATH,'//ul[@class="list_mean"]')
+            dic = table.find_element(By.XPATH,'.//span[@class="txt_mean"]').text
+        except:
+            table = browser.find_element(By.XPATH,'//ul[@class="list_search"]')
+            dic = table.find_element(By.XPATH,'.//span[@class="txt_search"]').text
+    
+    return dic
 
 def max_sum_sim(doc_embedding, candidate_embeddings, words, top_n, nr_candidates):
     # 문서와 각 키워드들 간의 유사도
@@ -62,33 +95,31 @@ def max_sum_sim(doc_embedding, candidate_embeddings, words, top_n, nr_candidates
 i = 0
 for cate, text in zip(df['분야'], df['본문']):
     # 본문길이가 500자 이하인 뉴스는 pass
-    print("text길이 : ", len(text))
-    if len(text) < 500:
-        del_index.append(i)
-        i += 1
-        continue
+    # print("text길이 : ", len(text))
+    # if len(text) < 500:
+    #     del_index.append(i)
+    #     i += 1
+    #     continue
     
     # 3번째이상 뉴스는 pass
-    category[cate] += 1
-    if category[cate] >= 3:
-        del_index.append(i)
-        i += 1
-        continue
+    # category[cate] += 1
+    # if category[cate] >= 3:
+    #     del_index.append(i)
+    #     i += 1
+    #     continue
     
     # 본문길이가 2500자 이상이면 본문길이 3/4로 축소
     text_len = len(text)
     if(text_len) > 2500:
         text = text[:int(text_len/1.5)]
+    
     # 요약문 생성
-    print(f"\n{cate}{category[cate]}번째뉴스 요약")
     start = time.time()
-    print("요약전 text: ", text, "\n")
     result = summarizer.generate(text, input_size=1024)
     summarized.append(result)
     now = time.time()-start
     print(f'요약시간: {round(now, 2)}')
     print(result)
-    print("요약후 text: ", text, "\n")
     
     # 주요단어 생성
     text_temp = [] # 주요 단어 담을 임시 리스트
@@ -105,6 +136,9 @@ for cate, text in zip(df['분야'], df['본문']):
             
     main_text.append('§'.join(text_temp))
     text_explain.append('§'.join(explain_temp))
+    
+    
+    
     
     # quiz 생성
     okt = Okt()
@@ -146,8 +180,7 @@ df.reset_index(drop=True, inplace=True)
 
 
 # excel파일 변경
-yesterday = (datetime.today() - timedelta(1)).strftime("%Y-%m-%d")
-xlsx_file_name = 'static\{0}.xlsx'.format(yesterday)
+xlsx_file_name = 'static/updated/completed_{0}.xlsx'.format(yesterday)
 df.to_excel(xlsx_file_name, index=False)
 
 # DB connection

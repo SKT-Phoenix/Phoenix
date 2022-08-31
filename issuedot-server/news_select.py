@@ -1,13 +1,12 @@
-import pandas as pd
-import numpy as np
-
-import konlpy
 from tqdm import tqdm
 from konlpy.tag import Okt
-
 from sklearn.feature_extraction.text import TfidfVectorizer
-
 from sklearn.cluster import DBSCAN
+from datetime import datetime, timedelta
+from nate_news_all import *
+
+import pandas as pd
+import numpy as np
 import os
 
 os.environ['JAVA_HOME'] = r'C:\Program Files\Java\jdk-18.0.2.1\bin\server'
@@ -140,7 +139,9 @@ def cluster_result(df):
 
   return cluster_nums
 
-df = pd.read_excel("static/20220830_all.xlsx") # , encoding = "CP949"
+
+yesterday = (datetime.today() - timedelta(1)).strftime("%Y%m%d")
+df = pd.read_excel(f"static/crawling/{yesterday}_all.xlsx") # , encoding = "CP949"
 
 part_name = ['all', 'int'] # 
 
@@ -196,4 +197,5 @@ def final_dataset(fin_df, clus_group):
 
 final_news = final_dataset(fin_df, clus_group)
 
-final_news.to_excel("static/news_0830.xlsx", encoding = "utf-8")
+
+final_news.to_excel(f"static/selected/selected_{yesterday}.xlsx", index=False, encoding = "utf-8")
