@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 # from flask_sslify import SSLify
 from datetime import date, timedelta
-from models import *
+# from models import *
 
 import pymysql
 import time
@@ -27,8 +27,8 @@ def news():
         conn = pymysql.connect(host='localhost', user='root', password='root',
                        db='news', charset='utf8mb4')
         curs = conn.cursor(pymysql.cursors.DictCursor)
-        sql = "select * from `news`.summarized where 발행일자=%s"
-        curs.execute(sql, (DATE))
+        sql = "select * from `news`.summarized"
+        curs.execute(sql)
         
         result = curs.fetchall()
         
@@ -97,7 +97,7 @@ def rank():
 
         # # 테스트용
         # result = 'bye'
-        # return jsonify(result)
+        return jsonify("success")
     
     
     # user point return
@@ -111,7 +111,6 @@ def rank():
         result = curs.fetchall()
         
         conn.close()
-        print(result)
         
         return jsonify(result)
         # return 형식 ex) [{'유저': '아이유', '포인트': 150, 'ranking': 1}, {'유저': '현우', '포인트': 90, 'ranking': 2}]

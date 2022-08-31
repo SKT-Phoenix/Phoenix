@@ -18,6 +18,11 @@ def summary(request):
         text = request.POST['content']
         deep = True if request.POST['deep'] == 'true' else False
         target_lang = request.POST['target_lang']
+        
+        text = text[:-100]
+        text_len = len(text)
+        if(text_len) > 2500:
+            text = text[:int(text_len/1.5)]
 
         print("요약 start")
         start = time.time()
