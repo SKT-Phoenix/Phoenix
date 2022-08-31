@@ -4,7 +4,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium import webdriver
-# from news_select import *
+from news_select import *
 
 import os
 import pymysql
@@ -95,7 +95,7 @@ def max_sum_sim(doc_embedding, candidate_embeddings, words, top_n, nr_candidates
 i = 0
 for cate, text in zip(df['분야'], df['본문']):
     # 본문길이가 500자 이하인 뉴스는 pass
-    print("\nbefore text길이 :", len(text))
+    print("\nbefore text길이 : ", len(text))
     # if len(text) < 500:
     #     del_index.append(i)
     #     i += 1
@@ -156,9 +156,9 @@ for cate, text in zip(df['분야'], df['본문']):
     print(keyword)
     
     
-    input_answer = '[MASK]'
+    # input_answer = '[MASK]'
     # input_answer = max(keyword, key=len)
-    # input_answer = keyword[0]
+    input_answer = keyword[0]
     generated = generate(best_model, input_answer, text)
     quiz = generated.split(" <sep> ")
     
