@@ -25,10 +25,10 @@ model = SentenceTransformer('sentence-transformers/xlm-r-100langs-bert-base-nli-
 
 # 읽어올 엑셀 파일 지정 (어제자 뉴스)
 yesterday = (datetime.today() - timedelta(1)).strftime("%Y%m%d")
-filename = f'static/selected/selected_{yesterday}.xlsx'
+filename = f'static/selected/selected_{yesterday}.csv'
 
 # 엑셀 파일 읽어 오기
-df = pd.read_excel(filename, engine='openpyxl')
+df = pd.read_csv(filename)
 major = pd.read_excel("static/용어.xlsx")
 
 
@@ -95,7 +95,7 @@ def max_sum_sim(doc_embedding, candidate_embeddings, words, top_n, nr_candidates
 i = 0
 for cate, text in zip(df['분야'], df['본문']):
     # 본문길이가 500자 이하인 뉴스는 pass
-    # print("text길이 : ", len(text))
+    print("\nbefore text길이 : ", len(text))
     # if len(text) < 500:
     #     del_index.append(i)
     #     i += 1
@@ -125,7 +125,7 @@ for cate, text in zip(df['분야'], df['본문']):
     text_temp = [] # 주요 단어 담을 임시 리스트
     explain_temp = [] # 설명 담을 임시 str문
     
-    print('주요 단어 검색')
+    print('☆주요 단어 검색☆')
     for idx, j in enumerate(major.iloc[:, 1]):
         if j in result:
             print(j, end=' ')
@@ -157,7 +157,8 @@ for cate, text in zip(df['분야'], df['본문']):
     
     
     # input_answer = '[MASK]'
-    input_answer = max(keyword, key=len)
+    # input_answer = max(keyword, key=len)
+    input_answer = keyword[0]
     generated = generate(best_model, input_answer, text)
     quiz = generated.split(" <sep> ")
     
