@@ -11,13 +11,24 @@ KorQuAD v1.0 Dataset (csv)
 
 ### Train
 
-30% 확률로 input answer 대신 '[MASK]'를 넣어 질문 문장을 생성하도록 학습한다.  
-그 결과, input answer가 없을 때도 적절히 answer을 찾아 질문을 생성할 수 있다.
+30% 확률로 input answer 대신 '[MASK]'를 넣어 질문 문장을 생성하도록 학습시켰습니다.
+그 결과, input answer가 없을 때도 Context에서 적절한 answer을 찾아 질문을 생성할 수 있습니다.
+
+### Question Generation
+
+```python
+context = """ CONTEXT """
+input_answer = 'Target Answer
+        
+generated = generate(best_model, input_answer, context)
+        
+show_result(generated)
+```
 
 ### Question Generation without Input Answer
 
 ```python
-context = """ CONTEXT """"
+context = """ CONTEXT """
 input_answer = '[MASK]'
         
 generated = generate(best_model, input_answer, context)
