@@ -1,8 +1,7 @@
 # Question Generation Model with KorQuAD
 ___
 
-This model is a fine-tuend version of paust/pko-t5-base on the KorQuAD v1.0 Dataset.  
-Most ideas were inspired by [Leaf-Question-Generation](https://github.com/KristiyanVachev/Leaf-Question-Generation).
+This model is a fine-tuend version of paust/pko-t5-base on the KorQuAD v1.0 Dataset.
 
 ### Dataset
 KorQuAD v1.0 Dataset (csv)  
