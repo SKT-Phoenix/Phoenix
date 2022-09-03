@@ -18,7 +18,7 @@ KorQuAD v1.0 Dataset (csv)
 
 ```python
 context = """ CONTEXT """
-input_answer = 'Target Answer
+input_answer = 'Target Answer'
         
 generated = generate(best_model, input_answer, context)
         
