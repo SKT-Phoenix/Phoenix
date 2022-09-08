@@ -1,8 +1,6 @@
 <h1> Example </h1>
 
-<video width="100%" height="100%" controls="controls">
-  <source src="example.mp4" type="video/mp4">
-</video>
+https://user-images.githubusercontent.com/83276163/189039905-79d90a03-d6cd-455c-8e03-efd282f9ec63.MP4
 
 # Stack
 - **Front-End**
